@@ -1,0 +1,19 @@
+{
+    "name": "luisp/sdk-simple-factura",
+    "description": "SDK para integrar Simple Factura",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Luisp\\SdkSimpleFactura\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luis Pinedo",
+            "email": "pinedo.zavala.bas@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
