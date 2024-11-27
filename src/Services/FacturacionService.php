@@ -6,81 +6,76 @@ use SDKSimpleFactura\Interfaces\IFacturacionService;
 use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
 use SDKSimpleFactura\Enum\TipoSobreEnvio;
+use GuzzleHttp\Promise\PromiseInterface;
 
 class FacturacionService implements IFacturacionService
 {
-    private $apiService;
+    private IApiService $apiService;
 
     public function __construct(IApiService $apiService)
     {
         $this->apiService = $apiService;
     }
 
-    public function ObtenerPdfDteAsync($solicitud)
+    public function ObtenerPdfDteAsync($solicitud): PromiseInterface
     {
         $url = '/dte/pdf';
-        $result = $this->apiService->postForByteArrayAsync($url, $solicitud);
-
-        if ($result->IsSuccess) {
-            return new Response(200, $result->Data);
-        } else {
-            return new Response($result->StatusCode, null, $result->Errores);
-        }
+        return $this->apiService->PostForByteArrayAsync($url, $solicitud)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return new Response($result->StatusCode, null, $result->Errores);
+                }
+            }
+        );
     }
 
-    public function obtenerTimbreDteAsync($solicitud)
+    public function ObtenerTimbreDteAsync($solicitud): PromiseInterface
     {
         $url = '/dte/timbre';
-        $result = $this->apiService->postForByteArrayAsync($url, $solicitud);
-
-        if ($result->IsSuccess) {
-            return new Response(200, $result->Data);
-        } else {
-            return new Response($result->StatusCode, null, $result->Errores);
-        }
+        return $this->apiService->PostForByteArrayAsync($url, $solicitud)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return new Response($result->StatusCode, null, $result->Errores);
+                }
+            }
+        );
     }
 
-
-    public function obtenerXmlDteAsync($solicitud)
+    public function ObtenerXmlDteAsync($solicitud): PromiseInterface
     {
         $url = '/dte/xml';
-        $result = $this->apiService->postForByteArrayAsync($url, $solicitud);
-
-        if ($result->IsSuccess) {
-            return new Response(200, $result->Data);
-        } else {
-            return new Response($result->StatusCode, null, $result->Errores);
-        }
+        return $this->apiService->PostForByteArrayAsync($url, $solicitud)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return new Response($result->StatusCode, null, $result->Errores);
+                }
+            }
+        );
     }
 
-    public function obtenerDteAsync($solicitud)
+    public function ObtenerDteAsync($solicitud): PromiseInterface
     {
         $url = '/documentIssued';
-        $result = $this->apiService->postAsync($url, $solicitud);
-
-        if ($result->IsSuccess) {
-            // Data ya está decodificado; no usar json_decode
-            $decodedData = $result->Data;
-
-            return new Response(200, $decodedData); // Devuelve los datos
-        } else {
-            return new Response($result->StatusCode, null, $result->Errores);
-        }
+        return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\DteEnt');
     }
 
-
-    public function obtenerSobreXmlDteAsync($solicitud, TipoSobreEnvio $tipoSobre)
+    public function ObtenerSobreXmlDteAsync($solicitud, TipoSobreEnvio $tipoSobre): PromiseInterface
     {
         $url = "/dte/xml/sobre/{$tipoSobre->value}";
-
-        $result = $this->apiService->postForByteArrayAsync($url, $solicitud);
-
-        if ($result->IsSuccess) {
-            return new Response(200, $result->Data);
-        } else {
-            return new Response($result->StatusCode, null, $result->Errores);
-        }
+        return $this->apiService->PostForByteArrayAsync($url, $solicitud)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return new Response($result->StatusCode, null, $result->Errores);
+                }
+            }
+        );
     }
-
-
 }

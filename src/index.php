@@ -30,15 +30,14 @@ $solicitud = new SolicitudDte(
 );
 
 // Llamar al método obtenerPdfDteAsync
-$response = $client->Facturacion->ObtenerPdfDteAsync($solicitud);
+$response = $client->Facturacion->ObtenerPdfDteAsync($solicitud)->wait();
 
 if ($response->Status === 200) {
     $pdfData = $response->Data;
-    // Guardar el PDF en un archivo
-    file_put_contents('dte.pdf', $pdfData);
-    echo "PDF guardado exitosamente. \n";
+    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\dte.pdf', $pdfData);
+    echo "PDF guardado exitosamente.\n";
 } else {
-    echo "Error ({$response->Status}): {$response->Message}";
+    echo "Error ({$response->Status}): {$response->Message}\n";
 }
 
 
@@ -60,13 +59,13 @@ $solicitud = new SolicitudDte(
 );
 
 
-$response = $client->Facturacion->obtenerTimbreDteAsync($solicitud);
+$response = $client->Facturacion->ObtenerTimbreDteAsync($solicitud)->wait();
 
 if ($response->Status === 200) {
     $timbreData = json_decode($response->Data, true);
     $timbreBase64 = $timbreData['data'];
     $decodedData = base64_decode($timbreBase64);
-    file_put_contents('timbre.png', $decodedData);
+    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\timbre.png', $decodedData);
 
     echo "Timbre guardado exitosamente en timbre.png.\n";
 } else {
@@ -75,11 +74,11 @@ if ($response->Status === 200) {
 
 
 // Obtener Xml
-$response = $client->Facturacion->obtenerXmlDteAsync($solicitud);
+$response = $client->Facturacion->ObtenerXmlDteAsync($solicitud)->wait();
 
 if ($response->Status === 200) {
     $xmlData = $response->Data;
-    $ruta = 'xml.xml';
+    $ruta = 'C:\Proyectos\SDKSimpleFactura\data\xml.xml';
     file_put_contents($ruta, $xmlData);
 
     echo "XML guardado exitosamente en: $ruta \n";
@@ -103,20 +102,13 @@ $solicitud = new SolicitudDte(
     dteReferenciadoExterno: $dteReferenciadoExterno
 );
 
-$response = $client->Facturacion->obtenerDteAsync($solicitud);
+$response = $client->Facturacion->ObtenerDteAsync($solicitud)->wait();
 
-if ($response->Status === 200) {
-    $dteData = $response->Data['data'];
-
+if ($response) {
+    //$dteData = $response->Data['data'];
     echo "Status: {$response->Status}\n";
     echo "Message: {$response->Message}\n";
-    echo "TipoDTE: {$dteData['tipoDte']}\n";
-    echo "Folio Reutilizado: {$dteData['folioReutilizado']}\n";
-    echo "Fecha Creación: {$dteData['fechaCreacion']}\n";
-    echo "Folio: {$dteData['folio']}\n";
-    echo "Razón Social Receptor: {$dteData['razonSocialReceptor']}\n";
-    echo "IVA: {$dteData['iva']}\n";
-    print_r($dteData);
+    print_r($response);
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
 }
@@ -124,11 +116,11 @@ if ($response->Status === 200) {
 
 //Obtener sobre XML
 $tipoSobre = TipoSobreEnvio::AlSII;
-$response = $client->Facturacion->obtenerSobreXmlDteAsync($solicitud, $tipoSobre);
+$response = $client->Facturacion->ObtenerSobreXmlDteAsync($solicitud, $tipoSobre)->wait();
 
 if ($response->Status === 200) {
     // Guardar el archivo XML como un sobre
-    $ruta = 'sobre.xml';
+    $ruta = 'C:\Proyectos\SDKSimpleFactura\data\sobre.xml';
     file_put_contents($ruta, $response->Data);
 
     echo "Sobre XML guardado exitosamente en: $ruta\n";

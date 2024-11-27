@@ -2,8 +2,10 @@
 // src/Interfaces/IApiService.php
 namespace SDKSimpleFactura\Interfaces;
 
+use GuzzleHttp\Promise\PromiseInterface;
+
 interface IApiService
 {
-    public function postAsync(string $url, $request);
-    public function postForByteArrayAsync(string $url, $request);
+    public function PostAsync(string $url, $request, string $responseClass): PromiseInterface;
+    public function PostForByteArrayAsync(string $url, $request): PromiseInterface;
 }
