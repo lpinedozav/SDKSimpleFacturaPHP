@@ -71,15 +71,14 @@ class FacturacionService implements IFacturacionService
 
     public function obtenerSobreXmlDteAsync($solicitud, TipoSobreEnvio $tipoSobre)
     {
-        // Usa el valor del enum (int) en la URL
         $url = "/dte/xml/sobre/{$tipoSobre->value}";
 
         $result = $this->apiService->postForByteArrayAsync($url, $solicitud);
 
         if ($result->IsSuccess) {
-            return new Response(200, $result->Data); // Devuelve los datos binarios
+            return new Response(200, $result->Data);
         } else {
-            return new Response($result->StatusCode, null, $result->Errores); // Devuelve el error
+            return new Response($result->StatusCode, null, $result->Errores);
         }
     }
 
