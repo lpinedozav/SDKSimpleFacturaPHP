@@ -1,6 +1,6 @@
 <?php
+namespace SDKSimpleFactura\Models\Facturacion;
 
-namespace SDKSimpleFactura\Models;
 
 class Documento
 {
@@ -10,7 +10,7 @@ class Documento
      * Identificación y totales del documento.
      * @var Encabezado
      */
-    public Encabezado $Encabezado;
+    public ?Encabezado $Encabezado;
 
     /**
      * Detalle de ítems del DTE.
@@ -30,20 +30,20 @@ class Documento
      * Descuentos y/o recargos que afectan al total del documento.
      * @var DescuentosRecargos[]
      */
-    public array $DscRcgGlobal = [];
+    public ?array $DscRcgGlobal = [];
 
     /**
      * Identificación de otros documentos referenciados por este documento.
      * @var Referencia[]
      */
-    public array $Referencia = [];
+    public ?array $Referencia = [];
 
     /**
      * Comisiones y otros cargos.
      * Es obligatoria para liquidaciones de factura.
      * @var ComisionRecargo[]
      */
-    public array $Comisiones = [];
+    public ?array $Comisiones = [];
 
     /**
      * Constructor para inicializar las propiedades con valores predeterminados.

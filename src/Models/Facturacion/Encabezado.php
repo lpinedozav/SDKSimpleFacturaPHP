@@ -1,6 +1,6 @@
 <?php
 
-namespace SDKSimpleFactura\Models;
+namespace SDKSimpleFactura\Models\Facturacion;
 
 class Encabezado
 {

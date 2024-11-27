@@ -1,11 +1,13 @@
 <?php
 
-namespace SDKSimpleFactura\Models;
+namespace SDKSimpleFactura\Models\Facturacion;
+
+use DateTime;
 
 class IdentificacionDTE
 {
     /**
-     * Tipo de DTE.
+     * Tipo de DTE Enum.
      * @var string
      */
     public string $TipoDTE;
@@ -24,9 +26,9 @@ class IdentificacionDTE
 
     /**
      * Fecha Emisión Contable del DTE.
-     * @var string
+     * @var DateTime
      */
-    public string $FchEmis;
+    public DateTime $FchEmis;
 
     /**
      * Sólo para Notas de Crédito que no tienen derecho a Rebaja del Débito.
@@ -35,25 +37,25 @@ class IdentificacionDTE
     public int $IndNoRebaja;
 
     /**
-     * Tipo de despacho.
+     * Tipo de despacho Enum.
      * @var string
      */
     public string $TipoDespacho;
 
     /**
-     * Indicador de traslado.
+     * Indicador de traslado Enum.
      * @var string
      */
     public string $IndTraslado;
 
     /**
-     * Modalidad de impresión.
+     * Modalidad de impresión Enum.
      * @var string
      */
     public string $TpoImpresion;
 
     /**
-     * Indicador de servicio.
+     * Indicador de servicio Enum.
      * @var string
      */
     public string $IndServicio;
@@ -65,22 +67,22 @@ class IdentificacionDTE
     public int $MntBruto;
 
     /**
-     * Forma de pago.
+     * Forma de pago Enum.
      * @var string
      */
     public string $FmaPago;
 
     /**
-     * Forma de pago exportación.
+     * Forma de pago exportación Enum.
      * @var string
      */
     public string $FmaPagExp;
 
     /**
      * Fecha de cancelación.
-     * @var string
+     * @var DateTime
      */
-    public string $FechaCancelacionString;
+    public DateTime $FchCancel;
 
     /**
      * Al momento de emitirse el documento.
@@ -103,24 +105,24 @@ class IdentificacionDTE
 
     /**
      * Periodo de facturación para servicios periódicos. Fecha desde.
-     * @var string
+     * @var DateTime
      */
-    public string $PeriodoDesdeString;
+    public DateTime $PeriodoDesde;
 
     /**
      * Periodo de facturación para servicios periódicos. Fecha hasta.
-     * @var string
+     * @var DateTime
      */
-    public string $PeriodoHastaString;
+    public DateTime $PeriodoHasta;
 
     /**
-     * Medio de pago.
+     * Medio de pago Enum.
      * @var string
      */
     public string $MedioPago;
 
     /**
-     * Tipo de cuenta de pago.
+     * Tipo de cuenta de pago Enum.
      * @var string
      */
     public string $TpoCtaPago;
@@ -157,9 +159,9 @@ class IdentificacionDTE
 
     /**
      * Fecha de vencimiento.
-     * @var string
+     * @var DateTime
      */
-    public string $FechaVencimientoString;
+    public DateTime $FchVenc;
 
     /**
      * Indicador de montos netos.
@@ -184,12 +186,12 @@ class IdentificacionDTE
         $this->MntBruto = 0;
         $this->FmaPago = '';
         $this->FmaPagExp = '';
-        $this->FechaCancelacionString = '';
+        $this->FchCancel = '';
         $this->MntCancel = 0;
         $this->SaldoInsol = 0;
         $this->MntPagos = [];
-        $this->PeriodoDesdeString = '';
-        $this->PeriodoHastaString = '';
+        $this->PeriodoDesde = '';
+        $this->PeriodoHasta = '';
         $this->MedioPago = '';
         $this->TpoCtaPago = '';
         $this->NumCtaPago = '';
@@ -197,7 +199,7 @@ class IdentificacionDTE
         $this->TermPagoCdg = '';
         $this->TermPagoGlosa = '';
         $this->TermPagoDias = 0;
-        $this->FechaVencimientoString = '';
+        $this->FchVenc = '';
         $this->IndMntNeto = 0;
     }
 }

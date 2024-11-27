@@ -2,6 +2,8 @@
 
 namespace SDKSimpleFactura\Models\Response;
 
+use SDKSimpleFactura\Models\Facturacion\DetalleDte;
+
 class DteEnt
 {
     public ?string $ambiente = null;

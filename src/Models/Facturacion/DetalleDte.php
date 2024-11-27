@@ -1,11 +1,11 @@
 <?php
 
-namespace SDKSimpleFactura\Models\Response;
+namespace SDKSimpleFactura\Models\Facturacion;
 
 use DateTime;
 use SDKSimpleFactura\Enum\DTEType;
 
-class DetalleEnt
+class DetalleDte
 {
     public ?string $nombre = null;
     public ?string $descripcion = null;
