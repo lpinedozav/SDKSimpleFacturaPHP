@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace SDKSimpleFactura;
 
 use SDKSimpleFactura\src\Services\FacturacionService;
@@ -22,3 +22,4 @@ class SimpleFacturaClient
         // Inicializa los demás servicios.
     }
 }
+*/

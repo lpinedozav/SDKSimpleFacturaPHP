@@ -1,0 +1,25 @@
+{
+    "name": "simplefactura/sdk",
+    "description": "SDK para integrar Simple Factura",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SdkSimpleFactura\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luis Pinedo",
+            "email": "pinedo.zavala.bas@gmail.com"
+        },
+        {
+            "name": "Carlos Perea",
+            "email": "pereacarlos685@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
