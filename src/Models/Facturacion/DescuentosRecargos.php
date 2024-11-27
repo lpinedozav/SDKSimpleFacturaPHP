@@ -2,6 +2,9 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\ExpresionDinero;
+use SDKSimpleFactura\Enum\TipoMovimiento;
+
 class DescuentosRecargos
 {
     /**
@@ -13,9 +16,9 @@ class DescuentosRecargos
 
     /**
      * Tipo de movimiento Enum.
-     * @var string
+     * @var TipoMovimiento
      */
-    public string $TpoMov;
+    public TipoMovimiento $TpoMov;
 
     /**
      * Descripción del descuento o recargo.
@@ -25,9 +28,9 @@ class DescuentosRecargos
 
     /**
      * Unidad en que se expresa el valor Enum.
-     * @var string
+     * @var ExpresionDinero
      */
-    public string $TpoValor;
+    public ExpresionDinero $TpoValor;
 
     /**
      * Valor del descuento o recargo.
@@ -74,7 +77,7 @@ class DescuentosRecargos
     {
         $this->GlosaDR = $this->truncate($value, length: 45);
     }
-    
+
     public function getValorDR(): float
     {
         return round($this->ValorDR, 2);
@@ -93,6 +96,4 @@ class DescuentosRecargos
     {
         $this->ValorDROtrMnda = $value;
     }
-
-
 }

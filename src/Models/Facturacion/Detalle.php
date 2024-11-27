@@ -3,6 +3,9 @@
 namespace SDKSimpleFactura\Models\Facturacion;
 
 use DateTime;
+use SDKSimpleFactura\Enum\IndicadorFacturacionExencion;
+use SDKSimpleFactura\Enum\TipoImpuesto;
+
 
 class Detalle
 {
@@ -17,9 +20,9 @@ class Detalle
     public array $CdgItem = [];
     /**
      * Indicador de exención/facturación Enum.
-     * @var string
+     * @var IndicadorFacturacionExencion
      */
-    public string $IndExe;
+    public IndicadorFacturacionExencion $IndExe;
 
     /**
      * Retenedor.
@@ -78,7 +81,7 @@ class Detalle
      * @var DateTime
      */
     public DateTime $FchVencim;
-    
+
     /**
      * Unidad de medida.
      * @var string
@@ -91,7 +94,7 @@ class Detalle
      */
     public float $PrcItem = 0.0;
 
-     /**
+    /**
      * OtramonedaDetalle.
      * @var OtraMonedaDetalle|null
      */
@@ -109,8 +112,8 @@ class Detalle
      */
     public int $DescuentoMonto;
 
-    
-     /**
+
+    /**
      * SubDescuento.
      * @var SubDescuento|null
      */
@@ -136,7 +139,7 @@ class Detalle
     public ?SubRecargo $SubRecargo = null;
 
 
-    /** @var TipoImpuesto[] Enum */
+    /** @var TipoImpuesto[] */
     public ?array $CodImpAdic = [];
 
     /**
@@ -189,7 +192,7 @@ class Detalle
         return $this->DscItem;
     }
 
-      /**
+    /**
      * Setter para DscItem con truncamiento.
      * @param string|null $value
      * @return void
@@ -199,7 +202,7 @@ class Detalle
         $this->DscItem = $this->truncate($value, 1000);
     }
 
-    
+
     /**
      * Getter para UnmdRef.
      * @return string|null
@@ -220,8 +223,8 @@ class Detalle
     }
 
 
-    
-  
+
+
 
     /**
      * Trunca una cadena al tamaño máximo especificado.

@@ -3,6 +3,7 @@
 namespace SDKSimpleFactura\Models\Facturacion;
 
 use DateTime;
+use SDKSimpleFactura\Enum\CodigoTraslado;
 
 class GuiaExportacion
 {
@@ -10,7 +11,7 @@ class GuiaExportacion
      * Código de traslado Enum.
      * @var string
      */
-    public string $CdgTraslado;
+    public CodigoTraslado $CdgTraslado;
 
     /**
      * Folio de autorización del SII.

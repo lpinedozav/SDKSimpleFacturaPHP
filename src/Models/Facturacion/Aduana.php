@@ -2,19 +2,26 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\ClausulaCompraVenta;
+use SDKSimpleFactura\Enum\ModalidadVenta;
+use SDKSimpleFactura\Enum\Paises;
+use SDKSimpleFactura\Enum\Puertos;
+use SDKSimpleFactura\Enum\UnidadMedida;
+use SDKSimpleFactura\Enum\ViasDeTransporte;
+
 class Aduana
 {
     /**
      * Código según tabla "Modalidad de Venta" de Aduana Enum.
-     * @var int
+     * @var ModalidadVenta
      */
-    public int $CodModVenta;
+    public ModalidadVenta $CodModVenta;
 
     /**
      * Código según tabla "Cláusula compra-venta" de Aduana Enum.
-     * @var int
+     * @var ClausulaCompraVenta
      */
-    public int $CodClauVenta;
+    public ClausulaCompraVenta $CodClauVenta;
 
     /**
      * Total cláusula de venta.
@@ -24,9 +31,9 @@ class Aduana
 
     /**
      * Código de la vía de transporte utilizada Enum.
-     * @var int
+     * @var ViasDeTransporte
      */
-    public int $CodViaTransp;
+    public ViasDeTransporte $CodViaTransp;
 
     /**
      * Nombre o identificación del medio de transporte.
@@ -66,9 +73,9 @@ class Aduana
 
     /**
      * Código del puerto de embarque Enum.
-     * @var int
+     * @var Puertos
      */
-    public int $CodPtoEmbarque;
+    public Puertos $CodPtoEmbarque;
 
     /**
      * Identificador adicional del puerto de embarque.
@@ -78,9 +85,9 @@ class Aduana
 
     /**
      * Código del puerto de desembarque Enum.
-     * @var int
+     * @var Puertos
      */
-    public int $CodPtoDesemb;
+    public Puertos $CodPtoDesemb;
 
     /**
      * Identificador adicional del puerto de desembarque.
@@ -96,9 +103,9 @@ class Aduana
 
     /**
      * Código de la unidad de medida según tabla de Aduana Enum.
-     * @var int
+     * @var UnidadMedida
      */
-    public int $CodUnidMedTara;
+    public UnidadMedida $CodUnidMedTara;
 
     /**
      * Peso bruto.
@@ -108,9 +115,9 @@ class Aduana
 
     /**
      * Código de la unidad de medida del peso bruto Enum.
-     * @var int
+     * @var UnidadMedida
      */
-    public int $CodUnidPesoBruto;
+    public UnidadMedida $CodUnidPesoBruto;
 
     /**
      * Peso neto.
@@ -120,9 +127,9 @@ class Aduana
 
     /**
      * Código de la unidad de medida del peso neto Enum.
-     * @var int
+     * @var UnidadMedida
      */
-    public int $CodUnidPesoNeto;
+    public UnidadMedida $CodUnidPesoNeto;
 
     /**
      * Total de ítems del documento.
@@ -153,15 +160,15 @@ class Aduana
 
     /**
      * Código del país del receptor extranjero Enum.
-     * @var int
+     * @var Paises
      */
-    public int $CodPaisRecep;
+    public Paises $CodPaisRecep;
 
     /**
      * Código del país de destino extranjero Enum.
-     * @var int
+     * @var Paises
      */
-    public int $CodPaisDestin;
+    public Paises $CodPaisDestin;
 
     /**
      * Constructor para inicializar valores predeterminados.

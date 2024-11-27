@@ -2,7 +2,8 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
-use DateTime;
+use SDKSimpleFactura\Enum\IndicadorFacturacionExencion;
+use SDKSimpleFactura\Enum\TipoImpuesto;
 
 class DetalleExportacion
 {
@@ -18,9 +19,9 @@ class DetalleExportacion
 
     /**
      * Indicador de exención/facturación Enum.
-     * @var int
+     * @var IndicadorFacturacionExencion
      */
-    public int $IndExe;
+    public IndicadorFacturacionExencion $IndExe;
 
     /**
      * Solo para transacciones realizadas por agentes retenedores.
@@ -64,8 +65,8 @@ class DetalleExportacion
      */
     public float $QtyItem;
 
-   /** @var SubCantidad[] */
-   public ?array $Subcantidad = [];
+    /** @var SubCantidad[] */
+    public ?array $Subcantidad = [];
 
     /**
      * Fecha de elaboración del ítem.
@@ -110,7 +111,7 @@ class DetalleExportacion
     public int $DescuentoMonto;
 
     /** @var SubDescuento[] */
-   public ?array $SubDscto = [];
+    public ?array $SubDscto = [];
 
     /**
      * Porcentaje de recargo.
@@ -124,12 +125,12 @@ class DetalleExportacion
      */
     public int $RecargoMonto;
 
-   
+
     /** @var SubRecargo[] */
     public ?array $SubRecargo = [];
 
-     /** @var TipoImpuesto[]  Enum*/
-     public ?array $CodigoImpuestoAdicional = [];
+    /** @var TipoImpuesto[]  Enum*/
+    public ?array $CodigoImpuestoAdicional = [];
 
     /**
      * Monto por línea de detalle.

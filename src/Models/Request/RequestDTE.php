@@ -1,8 +1,9 @@
 <?php
 
-namespace SDKSimpleFactura\Models\Request;
+namespace SDKSimpleFactura\Models;
 
-use SDKSimpleFactura\Models\Documento;
+use SDKSimpleFactura\Models\Facturacion\Documento;
+use SDKSimpleFactura\Models\Facturacion\Exportaciones;
 
 class RequestDTE
 {

@@ -3,6 +3,14 @@
 namespace SDKSimpleFactura\Models\Facturacion;
 
 use DateTime;
+use SDKSimpleFactura\Enum\DTEType;
+use SDKSimpleFactura\Enum\FormaPago;
+use SDKSimpleFactura\Enum\FormaPagoExportacion;
+use SDKSimpleFactura\Enum\IndicadorServicio;
+use SDKSimpleFactura\Enum\MedioPago;
+use SDKSimpleFactura\Enum\TipoDespacho;
+use SDKSimpleFactura\Enum\TipoImpresion;
+use SDKSimpleFactura\Enum\TipoTraslado;
 
 class IdentificacionDTE
 {
@@ -10,7 +18,7 @@ class IdentificacionDTE
      * Tipo de DTE Enum.
      * @var string
      */
-    public string $TipoDTE;
+    public DTEType $TipoDTE;
 
     /**
      * Folio del Documento Electrónico.
@@ -40,25 +48,25 @@ class IdentificacionDTE
      * Tipo de despacho Enum.
      * @var string
      */
-    public string $TipoDespacho;
+    public TipoDespacho $TipoDespacho;
 
     /**
      * Indicador de traslado Enum.
-     * @var string
+     * @var TipoTraslado
      */
-    public string $IndTraslado;
+    public TipoTraslado $IndTraslado;
 
     /**
      * Modalidad de impresión Enum.
-     * @var string
+     * @var TipoImpresion
      */
-    public string $TpoImpresion;
+    public TipoImpresion $TpoImpresion;
 
     /**
      * Indicador de servicio Enum.
-     * @var string
+     * @var IndicadorServicio
      */
-    public string $IndServicio;
+    public IndicadorServicio $IndServicio;
 
     /**
      * Montos brutos.
@@ -68,15 +76,15 @@ class IdentificacionDTE
 
     /**
      * Forma de pago Enum.
-     * @var string
+     * @var FormaPago
      */
-    public string $FmaPago;
+    public FormaPago $FmaPago;
 
     /**
      * Forma de pago exportación Enum.
-     * @var string
+     * @var FormaPagoExportacion
      */
-    public string $FmaPagExp;
+    public FormaPagoExportacion $FmaPagExp;
 
     /**
      * Fecha de cancelación.
@@ -117,9 +125,9 @@ class IdentificacionDTE
 
     /**
      * Medio de pago Enum.
-     * @var string
+     * @var MedioPago
      */
-    public string $MedioPago;
+    public MedioPago $MedioPago;
 
     /**
      * Tipo de cuenta de pago Enum.

@@ -2,6 +2,8 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\Paises;
+
 class Extranjero
 {
     /**
@@ -14,7 +16,7 @@ class Extranjero
      * Nacionalidad del receptor extranjero Enum.
      * @var string
      */
-    public string $Nacionalidad;
+    public Paises $Nacionalidad;
 
     /**
      * Constructor para inicializar valores predeterminados.
