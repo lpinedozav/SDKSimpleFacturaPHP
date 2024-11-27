@@ -1,124 +1,97 @@
 <?php
-
-namespace SDKSimpleFactura;
+// src/Services/ApiService.php
+namespace SDKSimpleFactura\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use SDKSimpleFactura\Interfaces\IApiService;
 
-class ApiService
+class ApiService implements IApiService
 {
     private $httpClient;
 
-    public function __construct()
+    public function __construct($config)
     {
-        // Configura el cliente HTTP con una base URI
         $this->httpClient = new Client([
-            'base_uri' => 'https://api.example.com', // Cambia por la URL base de tu API
-            'headers' => [
+            'base_uri' => $config['BaseUrl'],
+            'timeout'  => 300,
+            'auth'     => [$config['Username'], $config['Password']],
+            'headers'  => [
+                'Accept'       => 'application/json',
                 'Content-Type' => 'application/json',
             ],
+            'verify' => __DIR__ . '/../../cacert.pem', // Ruta al archivo cacert.pem
         ]);
     }
 
-    /**
-     * Método POST para enviar datos JSON.
-     *
-     * @param string $url La URL del endpoint.
-     * @param array $request El cuerpo de la petición en formato array.
-     * @return array Respuesta con éxito o errores.
-     */
-    public function post(string $url, array $request)
+    public function postAsync(string $url, $request)
     {
         try {
             $response = $this->httpClient->post($url, [
                 'json' => $request,
             ]);
 
-            $responseContent = json_decode($response->getBody(), true);
+            $statusCode = $response->getStatusCode();
+            $body = $response->getBody()->getContents();
 
-            return [
-                'isSuccess' => true,
-                'data' => $responseContent,
-            ];
-        } catch (RequestException $e) {
-            return [
-                'isSuccess' => false,
-                'statusCode' => $e->getResponse()->getStatusCode(),
-                'errores' => $e->getMessage(),
-            ];
-        }
-    }
-
-    /**
-     * Método POST para descargar datos binarios (byte array).
-     *
-     * @param string $url La URL del endpoint.
-     * @param array $request El cuerpo de la petición en formato array.
-     * @return array Respuesta con datos binarios o errores.
-     */
-    public function postForByteArray(string $url, array $request)
-    {
-        try {
-            $response = $this->httpClient->post($url, [
-                'json' => $request,
-            ]);
-
-            $responseContent = $response->getBody()->getContents();
-
-            return [
-                'isSuccess' => true,
-                'data' => $responseContent,
-            ];
-        } catch (RequestException $e) {
-            return [
-                'isSuccess' => false,
-                'statusCode' => $e->getResponse()->getStatusCode(),
-                'errores' => $e->getMessage(),
-            ];
-        }
-    }
-
-    /**
-     * Método POST para enviar datos multipart/form-data.
-     *
-     * @param string $url La URL del endpoint.
-     * @param array $formData El contenido del formulario en formato array.
-     * @return array Respuesta con éxito o errores.
-     */
-    public function postMultipart(string $url, array $formData)
-    {
-        try {
-            $multipart = [];
-            foreach ($formData as $name => $value) {
-                if (is_array($value) && isset($value['content']) && isset($value['filename'])) {
-                    $multipart[] = [
-                        'name' => $name,
-                        'contents' => fopen($value['content'], 'r'),
-                        'filename' => $value['filename'],
-                    ];
-                } else {
-                    $multipart[] = [
-                        'name' => $name,
-                        'contents' => $value,
-                    ];
-                }
+            if ($statusCode >= 200 && $statusCode < 300) {
+                $data = json_decode($body, true);
+                return (object)[
+                    'IsSuccess' => true,
+                    'Data'      => $data,
+                ];
+            } else {
+                return (object)[
+                    'IsSuccess' => false,
+                    'StatusCode' => $statusCode,
+                    'Errores'   => $body,
+                ];
             }
+        } catch (RequestException $e) {
+            $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
+            $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
 
+            return (object)[
+                'IsSuccess' => false,
+                'StatusCode' => $statusCode,
+                'Errores'   => $errorMessage,
+            ];
+        }
+    }
+
+    public function postForByteArrayAsync(string $url, $request)
+    {
+        try {
             $response = $this->httpClient->post($url, [
-                'multipart' => $multipart,
+                'json' => $request,
+                'headers' => [
+                    'Accept' => 'application/octet-stream',
+                ],
             ]);
 
-            $responseContent = json_decode($response->getBody(), true);
+            $statusCode = $response->getStatusCode();
+            $body = $response->getBody()->getContents();
 
-            return [
-                'isSuccess' => true,
-                'data' => $responseContent,
-            ];
+            if ($statusCode >= 200 && $statusCode < 300) {
+                return (object)[
+                    'IsSuccess' => true,
+                    'Data'      => $body,
+                ];
+            } else {
+                return (object)[
+                    'IsSuccess' => false,
+                    'StatusCode' => $statusCode,
+                    'Errores'   => $body,
+                ];
+            }
         } catch (RequestException $e) {
-            return [
-                'isSuccess' => false,
-                'statusCode' => $e->getResponse()->getStatusCode(),
-                'errores' => $e->getMessage(),
+            $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
+            $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
+
+            return (object)[
+                'IsSuccess' => false,
+                'StatusCode' => $statusCode,
+                'Errores'   => $errorMessage,
             ];
         }
     }

@@ -1,16 +1,20 @@
 <?php
 /*bdsidns*/
-namespace SdkSimpleFactura\Models\Request;
+
+namespace SDKSimpleFactura\Models\Request;
 
 class Credenciales
 {
-    public string $emailUsuario;
-    public string $rutEmisor;
-    public string $rutContribuyente;
-    public string $nombreSucursal;
-
-    public function __construct(string $emailUsuario, string $rutEmisor, string $rutContribuyente, string $nombreSucursal)
-    {
+    public ?string $emailUsuario;
+    public ?string $rutEmisor;
+    public ?string $rutContribuyente;
+    public ?string $nombreSucursal;
+    public function __construct(
+        ?string $emailUsuario = null,
+        ?string $rutEmisor = null,
+        ?string $rutContribuyente = null,
+        ?string $nombreSucursal = null
+    ) {
         $this->emailUsuario = $emailUsuario;
         $this->rutEmisor = $rutEmisor;
         $this->rutContribuyente = $rutContribuyente;

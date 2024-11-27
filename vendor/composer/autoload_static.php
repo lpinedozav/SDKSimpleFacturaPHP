@@ -10,17 +10,27 @@ class ComposerStaticInit4ba9c146e276bed33429fdea459f8850
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        'b33e3d135e5d9e47d845c576147bda89' => __DIR__ . '/..' . '/php-di/php-di/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'SdkSimpleFactura\\' => 17,
+            'SDKSimpleFactura\\' => 17,
         ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
+            'Psr\\Container\\' => 14,
+        ),
+        'L' => 
+        array (
+            'Laravel\\SerializableClosure\\' => 28,
+        ),
+        'I' => 
+        array (
+            'Invoker\\' => 8,
         ),
         'G' => 
         array (
@@ -28,21 +38,37 @@ class ComposerStaticInit4ba9c146e276bed33429fdea459f8850
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'D' => 
+        array (
+            'DI\\' => 3,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'SdkSimpleFactura\\' => 
+        'SDKSimpleFactura\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Laravel\\SerializableClosure\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravel/serializable-closure/src',
+        ),
+        'Invoker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/invoker/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -55,6 +81,10 @@ class ComposerStaticInit4ba9c146e276bed33429fdea459f8850
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'DI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/php-di/src',
         ),
     );
 

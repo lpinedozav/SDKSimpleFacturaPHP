@@ -6,10 +6,14 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'SdkSimpleFactura\\' => array($baseDir . '/src'),
-    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src', $vendorDir . '/psr/http-factory/src'),
+    'SDKSimpleFactura\\' => array($baseDir . '/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Laravel\\SerializableClosure\\' => array($vendorDir . '/laravel/serializable-closure/src'),
+    'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
+    'DI\\' => array($vendorDir . '/php-di/php-di/src'),
 );
