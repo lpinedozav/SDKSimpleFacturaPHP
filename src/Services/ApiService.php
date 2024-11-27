@@ -14,10 +14,10 @@ class ApiService implements IApiService
     {
         $this->httpClient = new Client([
             'base_uri' => $config['BaseUrl'],
-            'timeout'  => 300,
-            'auth'     => [$config['Username'], $config['Password']],
-            'headers'  => [
-                'Accept'       => 'application/json',
+            'timeout' => 300,
+            'auth' => [$config['Username'], $config['Password']],
+            'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ],
             'verify' => __DIR__ . '/../../cacert.pem', // Ruta al archivo cacert.pem
@@ -36,25 +36,25 @@ class ApiService implements IApiService
 
             if ($statusCode >= 200 && $statusCode < 300) {
                 $data = json_decode($body, true);
-                return (object)[
+                return (object) [
                     'IsSuccess' => true,
-                    'Data'      => $data,
+                    'Data' => $data,
                 ];
             } else {
-                return (object)[
+                return (object) [
                     'IsSuccess' => false,
                     'StatusCode' => $statusCode,
-                    'Errores'   => $body,
+                    'Errores' => $body,
                 ];
             }
         } catch (RequestException $e) {
             $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
             $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
 
-            return (object)[
+            return (object) [
                 'IsSuccess' => false,
                 'StatusCode' => $statusCode,
-                'Errores'   => $errorMessage,
+                'Errores' => $errorMessage,
             ];
         }
     }
@@ -73,25 +73,25 @@ class ApiService implements IApiService
             $body = $response->getBody()->getContents();
 
             if ($statusCode >= 200 && $statusCode < 300) {
-                return (object)[
+                return (object) [
                     'IsSuccess' => true,
-                    'Data'      => $body,
+                    'Data' => $body,
                 ];
             } else {
-                return (object)[
+                return (object) [
                     'IsSuccess' => false,
                     'StatusCode' => $statusCode,
-                    'Errores'   => $body,
+                    'Errores' => $body,
                 ];
             }
         } catch (RequestException $e) {
             $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
             $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
 
-            return (object)[
+            return (object) [
                 'IsSuccess' => false,
                 'StatusCode' => $statusCode,
-                'Errores'   => $errorMessage,
+                'Errores' => $errorMessage,
             ];
         }
     }
