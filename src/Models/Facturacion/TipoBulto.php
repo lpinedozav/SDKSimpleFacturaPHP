@@ -2,13 +2,15 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\TipoBulto as TipoBultoEnum;
+
 class TipoBulto
 {
     /**
      * Código según tabla "Tipos de bultos" de Aduana Enum.
-     * @var string
+     * @var TipoBultoEnum
      */
-    public string $CodTpoBultos;
+    public TipoBultoEnum $CodTpoBultos;
 
     /**
      * Cantidad de Bultos.
@@ -45,7 +47,7 @@ class TipoBulto
      */
     public function __construct()
     {
-        $this->CodTpoBultos = '';
+        $this->CodTpoBultos = TipoBultoEnum::NotSet;
         $this->CantBultos = 0;
         $this->Marcas = '';
         $this->IdContainer = '';

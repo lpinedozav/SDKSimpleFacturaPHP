@@ -2,14 +2,16 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\TipoImpuesto;
+
 class ImpuestosRetenciones
 {
     /**
      * Tipo de impuesto o retención adicional  Enum.
      * Código del impuesto o retención de acuerdo a la codificación detallada en la tabla de códigos.
-     * @var string
+     * @var TipoImpuesto
      */
-    public string $TipoImp;
+    public TipoImpuesto $TipoImp;
 
     /**
      * Tasa de impuesto o retención.
@@ -32,7 +34,7 @@ class ImpuestosRetenciones
      */
     public function __construct()
     {
-        $this->TipoImp = ''; // Puedes usar 'NotSet' como en C# si defines una constante.
+        $this->TipoImp = TipoImpuesto::NotSet; // Puedes usar 'NotSet' como en C# si defines una constante.
         $this->TasaImp = 0.0;
         $this->MontoImp = 0;
     }

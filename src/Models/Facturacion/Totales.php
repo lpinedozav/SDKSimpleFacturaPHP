@@ -2,13 +2,15 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\Moneda;
+
 class Totales
 {
     /**
      * Tipo de moneda.
-     * @var string
+     * @var Moneda
      */
-    public string $TpoMoneda;
+    public Moneda $TpoMoneda;
 
     /**
      * Monto neto del DTE.

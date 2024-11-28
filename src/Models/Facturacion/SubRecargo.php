@@ -2,13 +2,15 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\ExpresionDinero;
+
 class SubRecargo
 {
     /**
      * Tipo de subrecargo Enum.
-     * @var string
+     * @var ExpresionDinero
      */
-    public string $TipoRecargo;
+    public ExpresionDinero $TipoRecargo;
 
     /**
      * Valor de subrecargo.
@@ -21,7 +23,7 @@ class SubRecargo
      */
     public function __construct()
     {
-        $this->TipoRecargo = 'NotSet'; // Representación inicial de Enum.ExpresionDinero.ExpresionDineroEnum
+        $this->TipoRecargo = ExpresionDinero::NotSet; // Representación inicial de Enum.ExpresionDinero.ExpresionDineroEnum
         $this->ValorRecargo = 0.0;
     }
 }

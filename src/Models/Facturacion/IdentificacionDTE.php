@@ -8,6 +8,7 @@ use SDKSimpleFactura\Enum\FormaPago;
 use SDKSimpleFactura\Enum\FormaPagoExportacion;
 use SDKSimpleFactura\Enum\IndicadorServicio;
 use SDKSimpleFactura\Enum\MedioPago;
+use SDKSimpleFactura\Enum\TipoCuentaPago;
 use SDKSimpleFactura\Enum\TipoDespacho;
 use SDKSimpleFactura\Enum\TipoImpresion;
 use SDKSimpleFactura\Enum\TipoTraslado;
@@ -46,7 +47,7 @@ class IdentificacionDTE
 
     /**
      * Tipo de despacho Enum.
-     * @var string
+     * @var TipoDespacho
      */
     public TipoDespacho $TipoDespacho;
 
@@ -131,9 +132,9 @@ class IdentificacionDTE
 
     /**
      * Tipo de cuenta de pago Enum.
-     * @var string
+     * @var TipoCuentaPago
      */
-    public string $TpoCtaPago;
+    public TipoCuentaPago $TpoCtaPago;
 
     /**
      * Número de cuenta de pago.
