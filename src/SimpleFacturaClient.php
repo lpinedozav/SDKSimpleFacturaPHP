@@ -9,7 +9,7 @@ use SDKSimpleFactura\Interfaces\IProductosService;
 class SimpleFacturaClient
 {
     public $Facturacion;
-    public $ProductosService;
+    public $Productos;
     // ... otras propiedades de servicios
 
     public function __construct()
@@ -17,7 +17,7 @@ class SimpleFacturaClient
         $container = DependencyInjectionConfig::configureServices();
 
         $this->Facturacion = $container->get(IFacturacionService::class);
-        $this->ProductosService = $container->get(IProductosService::class);
+        $this->Productos = $container->get(IProductosService::class);
         // ... obtener otros servicios de manera similar
     }
 }

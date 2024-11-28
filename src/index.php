@@ -217,7 +217,7 @@ $request = new RequestDTE(
 $response = $client->Facturacion->FacturacionIndividualV2DTEAsync($sucursal, $request)->wait();
 
 if ($response) {
-    print_r($response);
+    //print_r($response);
     echo "Status: {$response->Status}\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
@@ -324,7 +324,7 @@ $requestExp = new RequestDTE(
 $response = $client->Facturacion->FacturacionIndividualV2ExportacionAsync($sucursalExportacion, $requestExp)->wait();
 
 if ($response) {
-    print_r($response);
+    //print_r($response);
     echo "Status: {$response->Status}\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
@@ -365,17 +365,18 @@ $request = new DatoExternoRequest(
 
 // Llamar al servicio
 
-$response = $client->$ProductosService->agregarProductosAsync($request)->wait();
+$response = $client->Productos->agregarProductosAsync($request)->wait();
 
 if ($response) {
-    print_r($response);
+    //print_r($response);
     echo 'Status: ' . $response->Status . "\n";
     echo "Message: {$response->Message}\n";
 
     if ($response->Status === 200) {
         echo "Producto agregado exitosamente.\n";
+    } else {
+        echo "Error ({$response->Status}): {$response->Message}\n";
     }
-    echo "Error ({$response->Status}): {$response->Message}\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
 }
