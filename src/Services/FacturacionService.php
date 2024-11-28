@@ -5,12 +5,14 @@ namespace SDKSimpleFactura\Services;
 use SDKSimpleFactura\Interfaces\IFacturacionService;
 use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
+use SDKSimpleFactura\Models\Response\DteEnt;
 use SDKSimpleFactura\Enum\TipoSobreEnvio;
 use GuzzleHttp\Promise\PromiseInterface;
 use SDKSimpleFactura\Enum\ReasonType;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
+use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 
 class FacturacionService implements IFacturacionService
 {
@@ -115,6 +117,12 @@ class FacturacionService implements IFacturacionService
     {
         $url = "/invoiceCreditDebitNotesV2/{$sucursal}/{$motivo->value}";
         return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
+    }
+
+    public function ListadoDtesEmitidosAsync(ListadoDteRequest $request): PromiseInterface
+    {
+        $url = "/documentsIssued";
+        return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\DteEnt');
     }
 
 }

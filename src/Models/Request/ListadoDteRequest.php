@@ -2,22 +2,23 @@
 
 namespace SDKSimpleFactura\Models\Request;
 
+use DateTime;
 use SDKSimpleFactura\Enum\Ambiente;
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Enum\TipoSalida;
 use SDKSimpleFactura\Models\Request\Credenciales;
 
-class ListaDteRequest
+class ListadoDteRequest
 {
     /**
      * @var Credenciales
      */
-    public Credenciales $credenciales;
+    public ?Credenciales $credenciales;
 
     /**
-     * @var AmbienteEnum
+     * @var Ambiente
      */
-    public Ambiente $ambiente;
+    public ?Ambiente $ambiente;
 
     /**
      * @var ?int
@@ -32,17 +33,17 @@ class ListaDteRequest
     /**
      * @var ?\DateTime
      */
-    public ?\DateTime $desde;
+    public ?DateTime $desde;
 
     /**
      * @var ?\DateTime
      */
-    public ?\DateTime $hasta;
+    public ?DateTime $hasta;
 
     /**
      * @var TipoSalida
      */
-    public TipoSalida $salida;
+    public ?TipoSalida $salida;
 
     /**
      * @var ?string
@@ -52,15 +53,25 @@ class ListaDteRequest
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(
+        ?Credenciales $credenciales = null,
+        ?Ambiente $ambiente = null,
+        ?int $folio = null,
+        ?DTEType $codigoTipoDte = null,
+        ?DateTime $desde = null,
+        ?DateTime $hasta = null,
+        ?TipoSalida $salida = null,
+        ?string $rutEmisor = null
+    )
     {
-        $this->credenciales = new Credenciales();
-        $this->ambiente = Ambiente::Certificacion; // Suponiendo que AmbienteEnum tiene una constante NotSet
-        $this->folio = null;
-        $this->codigoTipoDte = null;
-        $this->desde = null;
-        $this->hasta = null;
-        $this->salida = TipoSalida::Base64; // Suponiendo que TipoSalida tiene una constante NotSet
-        $this->rutEmisor = null;
+        $this->credenciales = $credenciales;
+        $this->ambiente = $ambiente;
+        $this->folio = $folio;
+        $this->codigoTipoDte = $codigoTipoDte;
+        $this->desde = $desde;
+        $this->hasta = $hasta;
+        $this->salida = $salida;
+        $this->rutEmisor = $rutEmisor;
     }
+
 }

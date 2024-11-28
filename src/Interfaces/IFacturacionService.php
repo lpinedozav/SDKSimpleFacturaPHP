@@ -8,6 +8,7 @@ use SDKSimpleFactura\Enum\TipoSobreEnvio;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
+use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 
 interface IFacturacionService
 {
@@ -22,5 +23,6 @@ interface IFacturacionService
     public function facturacionMasiva(Credenciales $credenciales, string $filePath): PromiseInterface;
 
     public function EmisionNC_NDV2Async(string $sucursal, ReasonType $motivo, RequestDTE $solicitud): PromiseInterface;
+    public function ListadoDtesEmitidosAsync(ListadoDteRequest $request): PromiseInterface;
 
 }
