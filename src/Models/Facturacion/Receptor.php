@@ -8,19 +8,19 @@ class Receptor
      * Rut del receptor del DTE.
      * @var string
      */
-    public string $RUTRecep;
+    public ?string $RUTRecep;
 
     /**
      * Código interno del receptor.
      * @var string
      */
-    public string $CdgIntRecep;
+    public ?string $CdgIntRecep;
 
     /**
      * Nombre o razón social del receptor.
      * @var string
      */
-    public string $RznSocRecep;
+    public ?string $RznSocRecep;
 
     /**
      * Receptor extranjero.
@@ -32,7 +32,7 @@ class Receptor
      * Giro comercial del receptor.
      * @var string
      */
-    public string $GiroRecep;
+    public ?string $GiroRecep;
 
     /**
      * Teléfono e Email del contacto del receptor.
@@ -56,94 +56,58 @@ class Receptor
      * Comuna de recepción.
      * @var string
      */
-    public string $CmnaRecep;
+    public ?string $CmnaRecep;
 
     /**
      * Ciudad de recepción.
      * @var string
      */
-    public string $CiudadRecep;
+    public ?string $CiudadRecep;
 
     /**
      * Dirección postal.
      * @var string
      */
-    public string $DirPostal;
+    public ?string $DirPostal;
 
     /**
      * Comuna postal.
      * @var string
      */
-    public string $CmnaPostal;
+    public ?string $CmnaPostal;
 
     /**
      * Ciudad postal.
      * @var string
      */
-    public string $CiudadPostal;
-
-    /**
-     * Constructor para inicializar valores predeterminados.
-     */
-    public function __construct()
-    {
-        $this->RUTRecep = '';
-        $this->CdgIntRecep = '';
-        $this->RznSocRecep = '';
-        $this->Extranjero = null;
-        $this->GiroRecep = '';
-        $this->Contacto = '';
-        $this->CorreoRecep = '';
-        $this->DirRecep = '';
-        $this->CmnaRecep = '';
-        $this->CiudadRecep = '';
-        $this->DirPostal = '';
-        $this->CmnaPostal = '';
-        $this->CiudadPostal = '';
-    }
-
-    /**
-     * Trunca una cadena al tamaño máximo especificado.
-     * @param string|null $string
-     * @param int $maxLength
-     * @return string|null
-     */
-    private function truncate(?string $string, int $maxLength): ?string
-    {
-        return $string ? mb_substr($string, 0, $maxLength) : null;
-    }
-
-    // Métodos "getters" y "setters" con truncamiento para las propiedades correspondientes.
-
-    public function setCdgIntRecep(string $value): void
-    {
-        $this->CdgIntRecep = $this->truncate($value, 20);
-    }
-
-    public function setGiroRecep(string $value): void
-    {
-        $this->GiroRecep = $this->truncate($value, 40);
-    }
-
-    public function setContacto(?string $value): void
-    {
-        $this->Contacto = $this->truncate($value, 80);
-    }
-
-    public function setDirRecep(?string $value): void
-    {
-        $this->DirRecep = $this->truncate($value, 70);
-    }
-
-    public function setCmnaRecep(string $value): void
-    {
-        $this->CmnaRecep = $this->truncate($value, 20);
-    }
-
-    public function setDirPostal(string $value): void
-    {
-        $this->DirPostal = $this->truncate($value, 70);
+    public ?string $CiudadPostal;
+    public function __construct(
+        ?string $RUTRecep = null,
+        ?string $CdgIntRecep = null,
+        ?string $RznSocRecep = null,
+        ?Extranjero $Extranjero = null,
+        ?string $GiroRecep = null,
+        ?string $Contacto = null,
+        ?string $CorreoRecep = null,
+        ?string $DirRecep = null,
+        ?string $CmnaRecep = null,
+        ?string $CiudadRecep = null,
+        ?string $DirPostal = null,
+        ?string $CmnaPostal = null,
+        ?string $CiudadPostal = null
+    ) {
+        $this->RUTRecep = $RUTRecep;
+        $this->CdgIntRecep = $CdgIntRecep;
+        $this->RznSocRecep = $RznSocRecep;
+        $this->Extranjero = $Extranjero;
+        $this->GiroRecep = $GiroRecep;
+        $this->Contacto = $Contacto;
+        $this->CorreoRecep = $CorreoRecep;
+        $this->DirRecep = $DirRecep;
+        $this->CmnaRecep = $CmnaRecep;
+        $this->CiudadRecep = $CiudadRecep;
+        $this->DirPostal = $DirPostal;
+        $this->CmnaPostal = $CmnaPostal;
+        $this->CiudadPostal = $CiudadPostal;
     }
 }
-
-

@@ -7,6 +7,8 @@ use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
 use SDKSimpleFactura\Enum\TipoSobreEnvio;
 use GuzzleHttp\Promise\PromiseInterface;
+use SDKSimpleFactura\Models\Request\RequestDTE;
+use SDKSimpleFactura\Models\Request\SolicitudDte;
 
 class FacturacionService implements IFacturacionService
 {
@@ -65,7 +67,7 @@ class FacturacionService implements IFacturacionService
         return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\DteEnt');
     }
 
-    public function ObtenerSobreXmlDteAsync($solicitud, TipoSobreEnvio $tipoSobre): PromiseInterface
+    public function ObtenerSobreXmlDteAsync(SolicitudDte $solicitud, TipoSobreEnvio $tipoSobre): PromiseInterface
     {
         $url = "/dte/xml/sobre/{$tipoSobre->value}";
         return $this->apiService->PostForByteArrayAsync($url, $solicitud)->then(
@@ -77,5 +79,10 @@ class FacturacionService implements IFacturacionService
                 }
             }
         );
+    }
+    public function FacturacionIndividualV2DTEAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface
+    {
+        $url = "/invoiceV2/{$sucursal}";
+        return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
     }
 }

@@ -7,10 +7,26 @@ use SDKSimpleFactura\Models\Facturacion\Exportaciones;
 
 class RequestDTE
 {
-    public ?Documento $Documento = null;
-    public ?Exportaciones $Exportaciones = null;
-    public ?string $Observaciones = null;
-    public ?string $Cajero = null;
-    public ?string $TipoPago = null;
-    public ?int $Propina = null;
+    public ?Documento $Documento;
+    public ?Exportaciones $Exportaciones;
+    public ?string $Cajero;
+    public ?int $Propina;
+    public ?string $Observaciones;
+    public ?string $TipoPago;
+
+    public function __construct(
+        ?Documento $Documento = null,
+        ?Exportaciones $Exportaciones = null,
+        ?string $Cajero = null,
+        ?int $Propina = null,
+        ?string $Observaciones = null,
+        ?string $TipoPago = null
+    ) {
+        $this->Documento = $Documento;
+        $this->Exportaciones = $Exportaciones;
+        $this->Observaciones = $Observaciones;
+        $this->Cajero = $Cajero;
+        $this->TipoPago = $TipoPago;
+        $this->Propina = $Propina;
+    }
 }
