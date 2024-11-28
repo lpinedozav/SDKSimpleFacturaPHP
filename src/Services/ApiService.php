@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
+use SDKSimpleFactura\Utils\Serializer as Serializador; // Asegúrate de incluir esta referencia
 
 class ApiService implements IApiService
 {
@@ -33,11 +34,14 @@ class ApiService implements IApiService
 
     public function PostAsync(string $url, $request, ?string $responseClass = null): PromiseInterface
     {
+        $serializedRequest = Serializador::serializeToJson($request);
         return $this->httpClient->postAsync($url, [
             'json' => $request,
+            print_r($request),
         ])->then(
             function ($response) use ($responseClass) {
                 $body = $response->getBody()->getContents();
+                //print_r($body);
                 $data = json_decode($body, true);
                 $mappedData = $responseClass && isset($data['data'])
                     ? $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json')

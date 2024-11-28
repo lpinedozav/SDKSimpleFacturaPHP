@@ -1,4 +1,5 @@
 <?php
+
 namespace SDKSimpleFactura\Models\Facturacion;
 
 
@@ -17,44 +18,50 @@ class Documento
      * Corresponde a la información de un ítem. Debe ir al menos una línea de detalle.
      * @var Detalle[]
      */
-    public array $Detalle = [];
+    public array $Detalle;
 
     /**
      * Subtotales informativos.
      * Estos subtotales no aumentan o disminuyen la base del impuesto.
      * @var SubTotal[]
      */
-    public array $SubTotInfo = [];
+    public array $SubTotInfo;
 
     /**
      * Descuentos y/o recargos que afectan al total del documento.
      * @var DescuentosRecargos[]
      */
-    public ?array $DscRcgGlobal = [];
+    public ?array $DscRcgGlobal;
 
     /**
      * Identificación de otros documentos referenciados por este documento.
      * @var Referencia[]
      */
-    public ?array $Referencia = [];
+    public ?array $Referencia;
 
     /**
      * Comisiones y otros cargos.
      * Es obligatoria para liquidaciones de factura.
      * @var ComisionRecargo[]
      */
-    public ?array $Comisiones = [];
+    public ?array $Comisiones;
 
     /**
      * Constructor para inicializar las propiedades con valores predeterminados.
      */
-    public function __construct()
-    {
-        $this->Encabezado = new Encabezado();
-        $this->Detalle = [];
-        $this->SubTotInfo = [];
-        $this->DscRcgGlobal = [];
-        $this->Referencia = [];
-        $this->Comisiones = [];
+    public function __construct(
+        ?Encabezado $Encabezado = null,
+        ?array $Detalle = null,
+        ?array $SubTotInfo = null,
+        ?array $DscRcgGlobal = null,
+        ?array $Referencia = null,
+        ?array $Comisiones = null
+    ) {
+        $this->Encabezado = $Encabezado;
+        $this->Detalle = $Detalle ?? [];
+        $this->SubTotInfo = $SubTotInfo ?? [];
+        $this->DscRcgGlobal = $DscRcgGlobal ?? [];
+        $this->Referencia = $Referencia ?? [];
+        $this->Comisiones = $Comisiones ?? [];
     }
 }
