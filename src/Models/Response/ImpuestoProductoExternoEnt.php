@@ -1,6 +1,6 @@
 <?php
 
-namespace SDKSimpleFactura\Models\Request;
+namespace SDKSimpleFactura\Models\Response;
 
 class ImpuestoProductoExternoEnt
 {
@@ -8,31 +8,28 @@ class ImpuestoProductoExternoEnt
      * Código SII del impuesto.
      * @var int
      */
-    public int $CodigoSii;
+    public ?int $codigoSii;
 
     /**
      * Nombre del impuesto.
      * @var string
      */
-    public string $NombreImp;
+    public ?string $nombreImp;
 
     /**
      * Tasa del impuesto.
      * @var float
      */
-    public float $Tasa;
+    public ?float $tasa;
 
-    /**
-     * Constructor para inicializar valores predeterminados.
-     *
-     * @param int $codigoSii
-     * @param string $nombreImp
-     * @param float $tasa
-     */
-    public function __construct(int $codigoSii = 0, string $nombreImp = '', float $tasa = 0.0)
-    {
-        $this->CodigoSii = $codigoSii;
-        $this->NombreImp = $nombreImp;
-        $this->Tasa = $tasa;
+
+    public function __construct(
+        ?int $codigoSii = null,
+        ?string $nombreImp = null,
+        ?float $tasa = null
+    ) {
+        $this->codigoSii = $codigoSii;
+        $this->nombreImp = $nombreImp;
+        $this->tasa = $tasa;
     }
 }

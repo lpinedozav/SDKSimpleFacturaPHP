@@ -21,4 +21,14 @@ class EmisorEnt
      * @var string|null
      */
     public ?string $RazonSocial = null;
+
+    public function __construct(
+        ?string $rutEmisor = null,
+        ?string $direccion = null,
+        ?string $RazonSocial = null
+    ) {
+        $this->rutEmisor = $rutEmisor;
+        $this->Direccion = $direccion;
+        $this->RazonSocial = $RazonSocial;
+    }
 }
