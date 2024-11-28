@@ -7,6 +7,7 @@ use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
 use SDKSimpleFactura\Enum\TipoSobreEnvio;
 use GuzzleHttp\Promise\PromiseInterface;
+use SDKSimpleFactura\Enum\ReasonType;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
@@ -109,4 +110,11 @@ class FacturacionService implements IFacturacionService
 
         return  $this->apiService->PostAsyncMultipart($url, $multipart);
     }
+
+    public function EmisionNC_NDV2Async(string $sucursal, ReasonType $motivo, RequestDTE $solicitud): PromiseInterface
+    {
+        $url = "/invoiceCreditDebitNotesV2/{$sucursal}/{$motivo->value}";
+        return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
+    }
+
 }

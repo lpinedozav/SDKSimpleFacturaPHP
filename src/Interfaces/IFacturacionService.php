@@ -21,5 +21,6 @@ interface IFacturacionService
 
     public function facturacionMasiva(Credenciales $credenciales, string $filePath): PromiseInterface;
 
+    public function EmisionNC_NDV2Async(string $sucursal, ReasonType $motivo, RequestDTE $solicitud): PromiseInterface;
 
 }

@@ -2,25 +2,54 @@
 
 namespace SDKSimpleFactura\Enum;
 
+/**
+ * Enum ReasonType
+ */
 enum ReasonType: int
 {
-    const NotSet = 0;
-    const ErrorDigitacion = 1;
-    const ReclamoCliente = 2;
-    const DatosDesactualizados = 3;
-    const InteresesMora = 4;
-    const InteresesCambioFecha = 5;
-    const Otros = 6;
+    /**
+     * No se ha asignado un valor aún.
+     */
+    case NotSet = 0;
 
     /**
-     * Devuelve la descripción del valor dado.
+     * Error de digitación.
+     */
+    case ErrorDigitacion = 1;
+
+    /**
+     * Reclamo de cliente.
+     */
+    case ReclamoCliente = 2;
+
+    /**
+     * Datos desactualizados.
+     */
+    case DatosDesactualizados = 3;
+
+    /**
+     * Intereses por mora.
+     */
+    case InteresesMora = 4;
+
+    /**
+     * Intereses por cambio de fecha.
+     */
+    case InteresesCambioFecha = 5;
+
+    /**
+     * Otros motivos.
+     */
+    case Otros = 6;
+
+    /**
+     * Devuelve la descripción del valor del enum.
      *
-     * @param int $value El valor del enum.
      * @return string La descripción asociada.
      */
-    public static function getDescription($value)
+    public function getDescription(): string
     {
-        $descriptions = [
+        return match ($this) {
             self::NotSet => "No Asignado",
             self::ErrorDigitacion => "Error de digitación",
             self::ReclamoCliente => "Reclamo de Cliente",
@@ -28,8 +57,6 @@ enum ReasonType: int
             self::InteresesMora => "Intereses por Mora",
             self::InteresesCambioFecha => "Intereses por Cambio de Fecha",
             self::Otros => "Otros",
-        ];
-
-        return $descriptions[$value] ?? "Valor desconocido";
+        };
     }
 }
