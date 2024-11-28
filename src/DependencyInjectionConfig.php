@@ -7,6 +7,9 @@ use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Services\ApiService;
 use SDKSimpleFactura\Services\FacturacionService;
 use SDKSimpleFactura\Interfaces\IFacturacionService;
+use SDKSimpleFactura\Interfaces\IProductosService;
+use SDKSimpleFactura\Services\ProductosService;
+
 
 class DependencyInjectionConfig
 {
@@ -24,6 +27,8 @@ class DependencyInjectionConfig
             IApiService::class => \DI\create(ApiService::class)
                 ->constructor(\DI\get('config')),
             IFacturacionService::class => \DI\autowire(FacturacionService::class)
+                ->constructor(\DI\get(IApiService::class)),
+            IProductosService::class => \DI\autowire(ProductosService::class)
                 ->constructor(\DI\get(IApiService::class)),
         ]);
 

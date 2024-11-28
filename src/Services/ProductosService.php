@@ -3,7 +3,6 @@
 namespace SDKSimpleFactura\Services;
 
 use SDKSimpleFactura\Interfaces\IApiService;
-use SDKSimpleFactura\Models\Response\Response;
 use GuzzleHttp\Promise\PromiseInterface;
 use SDKSimpleFactura\Interfaces\IProductosService;
 use SDKSimpleFactura\Models\Request\DatoExternoRequest;
@@ -22,14 +21,14 @@ class ProductosService implements IProductosService
 
     public function agregarProductosAsync(DatoExternoRequest $request): PromiseInterface
     {
-        $url = '/productos/agregar';
+        $url =  "/addProducts";
         return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\ProductoEnt');
             
     }
 
     public function listarProductosAsync(Credenciales $credenciales): PromiseInterface
     {
-        $url = '/productos/listar';
+        $url = "/products";
         return $this->apiService->PostAsync($url, $credenciales,'SDKSimpleFactura\Models\Response\ProductoExternoEnt');
     }
 }

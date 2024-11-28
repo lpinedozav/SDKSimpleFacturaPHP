@@ -3,7 +3,7 @@
         'name' => 'simplefactura/sdk',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '83108fab3b672b8fc66a7d8cc056939852bbb72a',
+        'reference' => '6abb9216e9fd7f0bc1600e6662f0a18c1543f279',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -169,7 +169,7 @@
         'simplefactura/sdk' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '83108fab3b672b8fc66a7d8cc056939852bbb72a',
+            'reference' => '6abb9216e9fd7f0bc1600e6662f0a18c1543f279',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
