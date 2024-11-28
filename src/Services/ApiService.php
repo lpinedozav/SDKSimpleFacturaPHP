@@ -36,8 +36,8 @@ class ApiService implements IApiService
     {
         $serializedRequest = Serializador::serializeToJson($request);
         return $this->httpClient->postAsync($url, [
-            'json' => $request,
-            print_r($request),
+            'body' => $serializedRequest,
+            print_r($serializedRequest),
         ])->then(
             function ($response) use ($responseClass) {
                 $body = $response->getBody()->getContents();
