@@ -23,6 +23,6 @@
         "guzzlehttp/guzzle": "^7.9",
         "php-di/php-di": "^7.0",
         "symfony/serializer": "^7.1",
-        "symfony/property-access": "^7.1"
+        "symfony/property-access": "*"
     }
 }
