@@ -1,6 +1,6 @@
 <?php
 
-namespace SDKSimpleFactura\Models;
+namespace SDKSimpleFactura\Models\Request;
 
 use SDKSimpleFactura\Models\Facturacion\Documento;
 use SDKSimpleFactura\Models\Facturacion\Exportaciones;
