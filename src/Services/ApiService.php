@@ -106,4 +106,44 @@ class ApiService implements IApiService
                 }
             );
     }
+
+
+    public function PostAsyncMultipart(string $url, array $multipart): PromiseInterface
+    {
+        return $this->httpClient->postAsync($url, [
+            'multipart' => $multipart,
+
+        ])->then(
+         
+            function ($response) {
+                $body = $response->getBody()->getContents();
+                $data = json_decode($body, true);
+                print_r($data);
+
+                // Verificar si la decodificación del JSON fue exitosa
+                if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+                    throw new \RuntimeException('Error al decodificar JSON: ' . json_last_error_msg());
+                }
+
+                return new Response(
+                    $data['status'],
+                    $data['data'] ?? null, // Devolver el `data` tal cual
+                    $data['message'] ?? '',
+                    $data['errors'] ?? []
+                );
+            },
+            function (RequestException $e) {
+                $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
+                $data = json_decode($errorMessage, true);
+                return new Response(
+                    $data['status'] ?? 500,
+                    null,
+                    $data['message'] ?? 'Error interno',
+                    $data['errors'] ?? []
+                );
+            }
+        );
+    }
+
+
 }

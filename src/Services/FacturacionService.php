@@ -7,6 +7,7 @@ use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
 use SDKSimpleFactura\Enum\TipoSobreEnvio;
 use GuzzleHttp\Promise\PromiseInterface;
+use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
 
@@ -89,5 +90,23 @@ class FacturacionService implements IFacturacionService
     {
         $url = "/dte/exportacion/{$sucursal}";
         return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
+    }
+
+    public function facturacionMasiva(Credenciales $credenciales, string $filePath): PromiseInterface
+    {
+        $url = "/massiveInvoice";
+        $multipart = [
+            [
+                'name' => 'data', // Clave como aparece en Postman
+                'contents' => json_encode($credenciales)
+            ],
+            [
+                'name' => 'input', // Clave como aparece en Postman
+                'contents' => fopen($filePath, 'r'),
+                'filename' => basename($filePath)
+            ]
+        ];
+
+        return  $this->apiService->PostAsyncMultipart($url, $multipart);
     }
 }

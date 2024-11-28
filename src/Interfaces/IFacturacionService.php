@@ -18,4 +18,8 @@ interface IFacturacionService
     public function ObtenerSobreXmlDteAsync(SolicitudDte $solicitud, TipoSobreEnvio $tipoSobre): PromiseInterface;
     public function FacturacionIndividualV2DTEAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface;
     public function FacturacionIndividualV2ExportacionAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface;
+
+    public function facturacionMasiva(Credenciales $credenciales, string $filePath): PromiseInterface;
+
+
 }

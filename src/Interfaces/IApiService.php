@@ -8,4 +8,6 @@ interface IApiService
 {
     public function PostAsync(string $url, $request, string $responseClass): PromiseInterface;
     public function PostForByteArrayAsync(string $url, $request): PromiseInterface;
+
+    public function PostAsyncMultipart(string $url, array $multipart): PromiseInterface;
 }

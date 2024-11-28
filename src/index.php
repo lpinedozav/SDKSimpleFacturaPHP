@@ -326,16 +326,36 @@ $response = $client->Facturacion->FacturacionIndividualV2ExportacionAsync($sucur
 if ($response) {
     //print_r($response);
     echo "Status: {$response->Status}\n";
+    echo "Status: {$response->Message}\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
 }
 
 
 
+///Facturacion masiva
+// Crear las credenciales
+$credenciales = new Credenciales(
+    rutEmisor: '76269769-6',
+    nombreSucursal: 'Casa Matriz'
+);
+
+// Ruta al archivo CSV
+$pathCsv = "C:\\Users\\perea\\Downloads\\ejemplo_carga_masiva_nacional.csv";
+
+$response = $client->Facturacion->facturacionMasiva($credenciales, $pathCsv)->wait();
+
+if ($response->Status === 200) {
+    echo "Facturación masiva exitosa.\n";
+    print_r($response->Data); // Aquí se imprimirá el `data` sin mapear
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
 
 
 
-
+/*
 
 //Productos
 $name = bin2hex(random_bytes(3)); // Genera un string aleatorio de 6 caracteres
@@ -419,4 +439,4 @@ if ($response) {
     } else {
         echo "Error: No se pudo obtener una respuesta.\n";
     }
-}
+}*/
