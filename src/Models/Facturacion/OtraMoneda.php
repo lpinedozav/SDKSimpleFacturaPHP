@@ -2,13 +2,15 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\Moneda;
+
 class OtraMoneda
 {
     /**
      * Tipo de moneda (Tabla de monedas de aduana) Enum.
-     * @var string
+     * @var Moneda
      */
-    public string $TpoMoneda;
+    public Moneda $TpoMoneda;
 
     /**
      * Tipo de cambio fijado por el Banco Central de Chile.
@@ -66,7 +68,7 @@ class OtraMoneda
      */
     public function __construct()
     {
-        $this->TpoMoneda = 'NotSet';
+        $this->TpoMoneda = Moneda::NotSet;
         $this->TpoCambio = 0;
         $this->MntNetoOtrMnda = 0;
         $this->MntExeOtrMnda = 0;

@@ -3,6 +3,7 @@
 namespace SDKSimpleFactura\Models\Facturacion;
 
 use DateTime;
+use SDKSimpleFactura\Enum\TipoReferencia;
 
 class Referencia
 {
@@ -45,9 +46,9 @@ class Referencia
 
     /**
      * Código de referencia Enum.
-     * @var string
+     * @var TipoReferencia
      */
-    public string $CodRef;
+    public TipoReferencia $CodRef;
 
     /**
      * Razón de la referencia.
@@ -66,7 +67,7 @@ class Referencia
         $this->FolioRef = '';
         $this->RUTOtr = '';
         $this->FchRef = '';
-        $this->CodRef = 'NotSet';
+        $this->CodRef = TipoReferencia::NotSet;
         $this->RazonRef = '';
     }
 }

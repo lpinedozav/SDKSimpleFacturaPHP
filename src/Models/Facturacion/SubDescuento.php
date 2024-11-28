@@ -2,13 +2,15 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+use SDKSimpleFactura\Enum\ExpresionDinero;
+
 class SubDescuento
 {
     /**
      * Indica en qué está expresado el descuento, en porcentaje (%) o pesos ($) Enum.
-     * @var string
+     * @var ExpresionDinero
      */
-    public string $TipoDscto;
+    public ExpresionDinero $TipoDscto;
 
     /**
      * Valor de subdescuento.
@@ -21,7 +23,7 @@ class SubDescuento
      */
     public function __construct()
     {
-        $this->TipoDscto = 'NotSet'; // Representación inicial de Enum.ExpresionDinero.ExpresionDineroEnum
+        $this->TipoDscto = ExpresionDinero::NotSet; // Representación inicial de Enum.ExpresionDinero.ExpresionDineroEnum
         $this->ValorDscto = 0.0;
     }
 }
