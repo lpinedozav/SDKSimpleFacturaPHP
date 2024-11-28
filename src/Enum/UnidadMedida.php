@@ -8,7 +8,6 @@ namespace SDKSimpleFactura\Enum;
 enum UnidadMedida: int
 {
     case NotSet = 0;
-    case SUM = 0;
     case TMB = 1;
     case QMB = 2;
     case MKWH = 3;
@@ -31,4 +30,5 @@ enum UnidadMedida: int
     case KWH = 20;
     case BAR = 23;
     case M2_1MM = 24;
+    case SUM = 25;
 }

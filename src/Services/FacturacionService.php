@@ -85,4 +85,9 @@ class FacturacionService implements IFacturacionService
         $url = "/invoiceV2/{$sucursal}";
         return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
     }
+    public function FacturacionIndividualV2ExportacionAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface
+    {
+        $url = "/dte/exportacion/{$sucursal}";
+        return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
+    }
 }
