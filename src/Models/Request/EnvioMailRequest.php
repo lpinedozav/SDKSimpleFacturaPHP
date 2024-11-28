@@ -10,27 +10,27 @@ class EnvioMailRequest
     /**
      * @var string
      */
-    public string $rutEmpresa;
+    public ?string $rutEmpresa;
 
     /**
      * @var DteClass
      */
-    public DteClass $dte;
+    public ?DteClass $dte;
 
     /**
      * @var MailClass
      */
-    public MailClass $mail;
+    public ?MailClass $mail;
 
     /**
      * @var bool
      */
-    public bool $xml;
+    public ?bool $xml;
 
     /**
      * @var bool
      */
-    public bool $pdf;
+    public ?bool $pdf;
 
     /**
      * @var string|null
@@ -40,13 +40,20 @@ class EnvioMailRequest
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->dte = new DteClass();
-        $this->mail = new MailClass();
-        $this->rutEmpresa = '';
-        $this->xml = false;
-        $this->pdf = false;
-        $this->comments = null;
-    }
+    public function __construct(
+        ?string $rutEmpresa = null,
+        ?DteClass $dte = null,
+        ?MailClass $mail = null,
+        ?bool $xml = null,
+        ?bool $pdf = null,
+        ?string $comments = null
+        ){
+            $this->rutEmpresa = $rutEmpresa;
+            $this->dte = $dte;
+            $this->mail = $mail;
+            $this->xml = $xml;
+            $this->pdf = $pdf;
+            $this->comments = $comments;
+
+        }
 }

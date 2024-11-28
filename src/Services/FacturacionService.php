@@ -13,6 +13,7 @@ use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
+use SDKSimpleFactura\Models\Request\EnvioMailRequest;
 
 class FacturacionService implements IFacturacionService
 {
@@ -123,6 +124,11 @@ class FacturacionService implements IFacturacionService
     {
         $url = "/documentsIssued";
         return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\DteEnt');
+    }
+    public function EnvioMailAsync(EnvioMailRequest $request): PromiseInterface
+    {
+        $url = "/dte/enviar/mail";
+        return $this->apiService->PostAsync($url, $request, '');
     }
 
 }

@@ -9,6 +9,7 @@ use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
+use SDKSimpleFactura\Models\Request\EnvioMailRequest;
 
 interface IFacturacionService
 {
@@ -24,5 +25,7 @@ interface IFacturacionService
 
     public function EmisionNC_NDV2Async(string $sucursal, ReasonType $motivo, RequestDTE $solicitud): PromiseInterface;
     public function ListadoDtesEmitidosAsync(ListadoDteRequest $request): PromiseInterface;
+
+    public function EnvioMailAsync(EnvioMailRequest $request): PromiseInterface;
 
 }
