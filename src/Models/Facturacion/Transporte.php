@@ -26,7 +26,7 @@ class Transporte
      * Dirección de destino.
      * @var string|null
      */
-    private ?string $DirDest = null;
+    public ?string $DirDest = null;
 
     /**
      * Comuna de destino.
@@ -49,47 +49,21 @@ class Transporte
     /**
      * Constructor para inicializar valores predeterminados.
      */
-    public function __construct()
-    {
-        $this->Patente = null;
-        $this->RUTTrans = null;
-        $this->Chofer = null;
-        $this->DirDest = null;
-        $this->CmnaDest = null;
-        $this->CiudadDest = null;
-        $this->Aduana = null;
-    }
-
-    /**
-     * Trunca una cadena al tamaño máximo especificado.
-     * @param string|null $string
-     * @param int $maxLength
-     * @return string|null
-     */
-    private function truncate(?string $string, int $maxLength): ?string
-    {
-        return $string ? mb_substr($string, 0, $maxLength) : null;
-    }
-
-    // Métodos "getters" y "setters" para las propiedades privadas con truncamiento.
-
-    public function getPatente(): ?string
-    {
-        return $this->Patente;
-    }
-
-    public function setPatente(?string $value): void
-    {
-        $this->Patente = $this->truncate($value, 8);
-    }
-
-    public function getDirDest(): ?string
-    {
-        return $this->DirDest;
-    }
-
-    public function setDirDest(?string $value): void
-    {
-        $this->DirDest = $this->truncate($value, 70);
+    public function __construct(
+        ?string $Patente = null,
+        ?string $RUTTrans = null,
+        ?Chofer $Chofer = null,
+        ?string $DirDest = null,
+        ?string $CmnaDest = null,
+        ?string $CiudadDest = null,
+        ?Aduana $Aduana = null
+    ) {
+        $this->Patente = $Patente;
+        $this->RUTTrans = $RUTTrans;
+        $this->Chofer = $Chofer;
+        $this->DirDest = $DirDest;
+        $this->CmnaDest = $CmnaDest;
+        $this->CiudadDest = $CiudadDest;
+        $this->Aduana = $Aduana;
     }
 }

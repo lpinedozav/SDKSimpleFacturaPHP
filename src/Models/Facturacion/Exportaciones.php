@@ -14,13 +14,13 @@ class Exportaciones
      * Identificación y totales del documento.
      * @var Encabezado
      */
-    public Encabezado $Encabezado;
+    public ?Encabezado $Encabezado;
 
     /**
      * Detalle de ítemes del DTE.
      * @var DetalleExportacion[]
      */
-    public array $Detalle;
+    public ?array $Detalle;
 
     /**
      * Subtotales informativos.
@@ -45,18 +45,21 @@ class Exportaciones
      * @var ComisionRecargo[]|null
      */
     public ?array $Comisiones;
-
-    /**
-     * Constructor para inicializar valores predeterminados.
-     */
-    public function __construct()
-    {
-        $this->Id = null;
-        $this->Encabezado = new Encabezado();
-        $this->Detalle = [];
-        $this->SubTotInfo = null;
-        $this->DscRcgGlobal = null;
-        $this->Referencia = null;
-        $this->Comisiones = null;
+    public function __construct(
+        ?string $Id = null,
+        ?Encabezado $Encabezado = null,
+        ?array $Detalle = null,
+        ?array $SubTotInfo = null,
+        ?array $DscRcgGlobal = null,
+        ?array $Referencia = null,
+        ?array $Comisiones = null
+    ) {
+        $this->Id = $Id;
+        $this->Encabezado = $Encabezado;
+        $this->Detalle = $Detalle;
+        $this->SubTotInfo = $SubTotInfo;
+        $this->DscRcgGlobal = $DscRcgGlobal;
+        $this->Referencia = $Referencia;
+        $this->Comisiones = $Comisiones;
     }
 }

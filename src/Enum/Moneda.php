@@ -22,7 +22,7 @@ enum Moneda: int
     case FRANCO_SZ = 82;
     case GUARANI = 23;
     case LIBRA_EST = 102;
-    case LIRA = 071;
+    case LIRA = 71;
     case MARCO_AL = 30;
     case MARCO_FIN = 57;
     case NUEVO_SOL = 24;

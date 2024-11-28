@@ -10,43 +10,43 @@ class OtraMoneda
      * Tipo de moneda (Tabla de monedas de aduana) Enum.
      * @var Moneda
      */
-    public Moneda $TpoMoneda;
+    public ?Moneda $TpoMoneda;
 
     /**
      * Tipo de cambio fijado por el Banco Central de Chile.
      * @var float
      */
-    private float $TpoCambio = 0;
+    public ?float $TpoCambio = 0;
 
     /**
      * Monto neto del DTE en otra moneda.
      * @var float
      */
-    private float $MntNetoOtrMnda = 0;
+    public ?float $MntNetoOtrMnda = 0;
 
     /**
      * Monto exento del DTE en otra moneda.
      * @var float
      */
-    private float $MntExeOtrMnda = 0;
+    public ?float $MntExeOtrMnda = 0;
 
     /**
      * Monto base faenamiento carne en otra moneda.
      * @var float
      */
-    private float $MntFaeCarneOtrMnda = 0;
+    public ?float $MntFaeCarneOtrMnda = 0;
 
     /**
      * Monto base de márgenes de comercialización.
      * @var float
      */
-    private float $MntMargComOtrMnda = 0;
+    public ?float $MntMargComOtrMnda = 0;
 
     /**
      * Monto del IVA del DTE en otra moneda.
      * @var float
      */
-    private float $IVAOtrMnda = 0;
+    public ?float $IVAOtrMnda = 0;
 
     /** @var ImpuestosRetencionesOtraMoneda[] */
     public ?array $ImpRetOtrMnda = [];
@@ -55,11 +55,34 @@ class OtraMoneda
      * Monto del IVA no retenido en otra moneda.
      * @var float
      */
-    private float $IVANoRetOtrMnda = 0;
+    public ?float $IVANoRetOtrMnda = 0;
 
     /**
      * Monto total del DTE en otra moneda.
      * @var float
      */
-    private float $MntTotOtrMnda = 0;
+    public ?float $MntTotOtrMnda = 0;
+    public function __construct(
+        ?Moneda $TpoMoneda = null,
+        ?float $TpoCambio = 0,
+        ?float $MntNetoOtrMnda = 0,
+        ?float $MntExeOtrMnda = 0,
+        ?float $MntFaeCarneOtrMnda = 0,
+        ?float $MntMargComOtrMnda = 0,
+        ?float $IVAOtrMnda = 0,
+        ?array $ImpRetOtrMnda = [],
+        ?float $IVANoRetOtrMnda = 0,
+        ?float $MntTotOtrMnda = 0
+    ) {
+        $this->TpoMoneda = $TpoMoneda;
+        $this->TpoCambio = $TpoCambio;
+        $this->MntNetoOtrMnda = $MntNetoOtrMnda;
+        $this->MntExeOtrMnda = $MntExeOtrMnda;
+        $this->MntFaeCarneOtrMnda = $MntFaeCarneOtrMnda;
+        $this->MntMargComOtrMnda = $MntMargComOtrMnda;
+        $this->IVAOtrMnda = $IVAOtrMnda;
+        $this->ImpRetOtrMnda = $ImpRetOtrMnda;
+        $this->IVANoRetOtrMnda = $IVANoRetOtrMnda;
+        $this->MntTotOtrMnda = $MntTotOtrMnda;
+    }
 }

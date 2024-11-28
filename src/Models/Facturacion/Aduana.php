@@ -15,219 +15,216 @@ class Aduana
      * Código según tabla "Modalidad de Venta" de Aduana Enum.
      * @var ModalidadVenta
      */
-    public ModalidadVenta $CodModVenta;
+    public ?ModalidadVenta $CodModVenta;
 
     /**
      * Código según tabla "Cláusula compra-venta" de Aduana Enum.
      * @var ClausulaCompraVenta
      */
-    public ClausulaCompraVenta $CodClauVenta;
+    public ?ClausulaCompraVenta $CodClauVenta;
 
     /**
      * Total cláusula de venta.
      * @var float
      */
-    private float $TotClauVenta;
+    public ?float $TotClauVenta;
 
     /**
      * Código de la vía de transporte utilizada Enum.
      * @var ViasDeTransporte
      */
-    public ViasDeTransporte $CodViaTransp;
+    public ?ViasDeTransporte $CodViaTransp;
 
     /**
      * Nombre o identificación del medio de transporte.
      * @var string
      */
-    private string $NombreTransp;
+    public ?string $NombreTransp;
 
     /**
      * RUT de la compañía transportadora.
      * @var string
      */
-    public string $RUTCiaTransp;
+    public ?string $RUTCiaTransp;
 
     /**
      * Nombre de la compañía transportadora.
      * @var string
      */
-    public string $NomCiaTransp;
+    public ?string $NomCiaTransp;
 
     /**
      * Identificador adicional de la compañía transportadora.
      * @var string
      */
-    public string $IdAdicTransp;
+    public ?string $IdAdicTransp;
 
     /**
      * Número de reserva del operador (Booking).
      * @var string
      */
-    public string $Booking;
+    public ?string $Booking;
 
     /**
      * Código del operador.
      * @var string
      */
-    public string $Operador;
+    public ?string $Operador;
 
     /**
      * Código del puerto de embarque Enum.
      * @var Puertos
      */
-    public Puertos $CodPtoEmbarque;
+    public ?Puertos $CodPtoEmbarque;
 
     /**
      * Identificador adicional del puerto de embarque.
      * @var string
      */
-    public string $IdAdicPtoEmb;
+    public ?string $IdAdicPtoEmb;
 
     /**
      * Código del puerto de desembarque Enum.
      * @var Puertos
      */
-    public Puertos $CodPtoDesemb;
+    public ?Puertos $CodPtoDesemb;
 
     /**
      * Identificador adicional del puerto de desembarque.
      * @var string
      */
-    public string $IdAdicPtoDesemb;
+    public ?string $IdAdicPtoDesemb;
 
     /**
      * Tara.
      * @var int
      */
-    public int $Tara;
+    public ?int $Tara;
 
     /**
      * Código de la unidad de medida según tabla de Aduana Enum.
      * @var UnidadMedida
      */
-    public UnidadMedida $CodUnidMedTara;
+    public ?UnidadMedida $CodUnidMedTara;
 
     /**
      * Peso bruto.
      * @var float
      */
-    public float $PesoBruto;
+    public ?float $PesoBruto;
 
     /**
      * Código de la unidad de medida del peso bruto Enum.
      * @var UnidadMedida
      */
-    public UnidadMedida $CodUnidPesoBruto;
+    public ?UnidadMedida $CodUnidPesoBruto;
 
     /**
      * Peso neto.
      * @var float
      */
-    public float $PesoNeto;
+    public ?float $PesoNeto;
 
     /**
      * Código de la unidad de medida del peso neto Enum.
      * @var UnidadMedida
      */
-    public UnidadMedida $CodUnidPesoNeto;
+    public ?UnidadMedida $CodUnidPesoNeto;
 
     /**
      * Total de ítems del documento.
      * @var int
      */
-    public int $TotItems;
+    public ?int $TotItems;
 
     /**
      * Cantidad de bultos que ampara el documento.
      * @var int
      */
-    public int $TotBultos;
+    public ?int $TotBultos;
 
     /** @var TipoBulto[] */
-    public array $TipoBultos = [];
+    public ?array $TipoBultos = [];
 
     /**
      * Monto del flete.
      * @var float
      */
-    public float $MntFlete;
+    public ?float $MntFlete;
 
     /**
      * Monto del seguro.
      * @var float
      */
-    public float $MntSeguro;
+    public ?float $MntSeguro;
 
     /**
      * Código del país del receptor extranjero Enum.
      * @var Paises
      */
-    public Paises $CodPaisRecep;
+    public ?Paises $CodPaisRecep;
 
     /**
      * Código del país de destino extranjero Enum.
      * @var Paises
      */
-    public Paises $CodPaisDestin;
+    public ?Paises $CodPaisDestin;
 
-    /**
-     * Constructor para inicializar valores predeterminados.
-     */
-    public function __construct()
-    {
-        $this->CodModVenta = 0;
-        $this->CodClauVenta = 0;
-        $this->TotClauVenta = 0.0;
-        $this->CodViaTransp = 0;
-        $this->NombreTransp = '';
-        $this->RUTCiaTransp = '';
-        $this->NomCiaTransp = '';
-        $this->IdAdicTransp = '';
-        $this->Booking = '';
-        $this->Operador = '';
-        $this->CodPtoEmbarque = 0;
-        $this->IdAdicPtoEmb = '';
-        $this->CodPtoDesemb = 0;
-        $this->IdAdicPtoDesemb = '';
-        $this->Tara = 0;
-        $this->CodUnidMedTara = 0;
-        $this->PesoBruto = 0.0;
-        $this->CodUnidPesoBruto = 0;
-        $this->PesoNeto = 0.0;
-        $this->CodUnidPesoNeto = 0;
-        $this->TotItems = 0;
-        $this->TotBultos = 0;
-        $this->TipoBultos = [];
-        $this->MntFlete = 0.0;
-        $this->MntSeguro = 0.0;
-        $this->CodPaisRecep = 0;
-        $this->CodPaisDestin = 0;
-    }
-
-    // Métodos Getters y Setters con redondeo y truncamiento
-
-    public function getTotClauVenta(): float
-    {
-        return round($this->TotClauVenta, 2);
-    }
-
-    public function setTotClauVenta(float $value): void
-    {
-        $this->TotClauVenta = $value;
-    }
-
-    public function getNombreTransp(): string
-    {
-        return $this->truncate($this->NombreTransp, 40);
-    }
-
-    public function setNombreTransp(string $value): void
-    {
-        $this->NombreTransp = $this->truncate($value, 40);
-    }
-
-    private function truncate(string $value, int $length): string
-    {
-        return mb_substr($value, 0, $length);
+    public function __construct(
+        ?ModalidadVenta $CodModVenta = null,
+        ?ClausulaCompraVenta $CodClauVenta = null,
+        ?float $TotClauVenta = null,
+        ?ViasDeTransporte $CodViaTransp = null,
+        ?string $NombreTransp = null,
+        ?string $RUTCiaTransp = null,
+        ?string $NomCiaTransp = null,
+        ?string $IdAdicTransp = null,
+        ?string $Booking = null,
+        ?string $Operador = null,
+        ?Puertos $CodPtoEmbarque = null,
+        ?string $IdAdicPtoEmb = null,
+        ?Puertos $CodPtoDesemb = null,
+        ?string $IdAdicPtoDesemb = null,
+        ?int $Tara = null,
+        ?UnidadMedida $CodUnidMedTara = null,
+        ?float $PesoBruto = null,
+        ?UnidadMedida $CodUnidPesoBruto = null,
+        ?float $PesoNeto = null,
+        ?UnidadMedida $CodUnidPesoNeto = null,
+        ?int $TotItems = null,
+        ?int $TotBultos = null,
+        ?array $TipoBultos = null,
+        ?float $MntFlete = null,
+        ?float $MntSeguro = null,
+        ?Paises $CodPaisRecep = null,
+        ?Paises $CodPaisDestin = null
+    ) {
+        $this->CodModVenta = $CodModVenta;
+        $this->CodClauVenta = $CodClauVenta;
+        $this->TotClauVenta = $TotClauVenta;
+        $this->CodViaTransp = $CodViaTransp;
+        $this->NombreTransp = $NombreTransp;
+        $this->RUTCiaTransp = $RUTCiaTransp;
+        $this->NomCiaTransp = $NomCiaTransp;
+        $this->IdAdicTransp = $IdAdicTransp;
+        $this->Booking = $Booking;
+        $this->Operador = $Operador;
+        $this->CodPtoEmbarque = $CodPtoEmbarque;
+        $this->IdAdicPtoEmb = $IdAdicPtoEmb;
+        $this->CodPtoDesemb = $CodPtoDesemb;
+        $this->IdAdicPtoDesemb = $IdAdicPtoDesemb;
+        $this->Tara = $Tara;
+        $this->CodUnidMedTara = $CodUnidMedTara;
+        $this->PesoBruto = $PesoBruto;
+        $this->CodUnidPesoBruto = $CodUnidPesoBruto;
+        $this->PesoNeto = $PesoNeto;
+        $this->CodUnidPesoNeto = $CodUnidPesoNeto;
+        $this->TotItems = $TotItems;
+        $this->TotBultos = $TotBultos;
+        $this->TipoBultos = $TipoBultos;
+        $this->MntFlete = $MntFlete;
+        $this->MntSeguro = $MntSeguro;
+        $this->CodPaisRecep = $CodPaisRecep;
+        $this->CodPaisDestin = $CodPaisDestin;
     }
 }
