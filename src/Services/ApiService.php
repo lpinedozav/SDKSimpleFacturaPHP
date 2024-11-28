@@ -35,14 +35,18 @@ class ApiService implements IApiService
     public function PostAsync(string $url, $request, ?string $responseClass = null): PromiseInterface
     {
         $serializedRequest = Serializador::serializeToJson($request);
+        print_r($serializedRequest);
         return $this->httpClient->postAsync($url, [
             'body' => $serializedRequest,
-            print_r($serializedRequest),
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
         ])->then(
             function ($response) use ($responseClass) {
                 $body = $response->getBody()->getContents();
                 //print_r($body);
                 $data = json_decode($body, true);
+                print_r($data);
                 $mappedData = $responseClass && isset($data['data'])
                     ? $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json')
                     : $data['data'];
