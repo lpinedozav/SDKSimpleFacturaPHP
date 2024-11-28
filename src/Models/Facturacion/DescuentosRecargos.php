@@ -68,8 +68,7 @@ class DescuentosRecargos
         $this->GlosaDR = $GlosaDR;
         $this->TpoValor = $TpoValor;
         $this->ValorDR = $ValorDR;
-        $this->valorDROtrMnda = $ValorDR;
+        $this->ValorDROtrMnda = $valorDROtrMnda;
         $this->IndExeDR = $IndExeDR;
     }
-
 }
