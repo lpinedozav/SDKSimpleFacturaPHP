@@ -23,6 +23,7 @@
         "guzzlehttp/guzzle": "^7.9",
         "php-di/php-di": "^7.0",
         "symfony/serializer": "^7.1",
-        "symfony/property-access": "*"
+        "symfony/property-access": "*",
+        "ramsey/uuid": "^4.7"
     }
 }
