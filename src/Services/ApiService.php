@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Models\Response\Response;
+use SDKSimpleFactura\Utils\Serializer as Serializador;
 
 class ApiService implements IApiService
 {
@@ -41,33 +42,33 @@ class ApiService implements IApiService
                 'Content-Type' => 'application/json',
             ],
         ])->then(
-                function ($response) use ($responseClass) {
-                    $body = $response->getBody()->getContents();
-                    //print_r($body);
-                    $data = json_decode($body, true);
-                    print_r($data);
-                    $mappedData = $responseClass && isset($data['data'])
-                        ? $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json')
-                        : $data['data'];
+            function ($response) use ($responseClass) {
+                $body = $response->getBody()->getContents();
+                //print_r($body);
+                $data = json_decode($body, true);
+                print_r($data);
+                $mappedData = $responseClass && isset($data['data'])
+                    ? $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json')
+                    : $data['data'];
 
-                    return new Response(
-                        $data['status'],
-                        $mappedData,
-                        $data['message'] ?? '',
-                        $data['errors'] ?? []
-                    );
-                },
-                function (RequestException $e) {
-                    $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
-                    $data = json_decode($errorMessage, true);
-                    return new Response(
-                        $data['status'] ?? 500,
-                        null,
-                        $data['message'] ?? 'Error interno',
-                        $data['errors'] ?? []
-                    );
-                }
-            );
+                return new Response(
+                    $data['status'],
+                    $mappedData,
+                    $data['message'] ?? '',
+                    $data['errors'] ?? []
+                );
+            },
+            function (RequestException $e) {
+                $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
+                $data = json_decode($errorMessage, true);
+                return new Response(
+                    $data['status'] ?? 500,
+                    null,
+                    $data['message'] ?? 'Error interno',
+                    $data['errors'] ?? []
+                );
+            }
+        );
     }
 
     public function PostForByteArrayAsync(string $url, $request): PromiseInterface
@@ -78,23 +79,23 @@ class ApiService implements IApiService
                 'Accept' => 'application/json',
             ],
         ])->then(
-                function ($response) {
-                    $body = $response->getBody()->getContents();
-                    return (object) [
-                        'IsSuccess' => true,
-                        'Data' => $body,
-                    ];
-                },
-                function (RequestException $e) {
-                    $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
-                    $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
+            function ($response) {
+                $body = $response->getBody()->getContents();
+                return (object) [
+                    'IsSuccess' => true,
+                    'Data' => $body,
+                ];
+            },
+            function (RequestException $e) {
+                $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
+                $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
 
-                    return (object) [
-                        'IsSuccess' => false,
-                        'StatusCode' => $statusCode,
-                        'Errores' => $errorMessage,
-                    ];
-                }
-            );
+                return (object) [
+                    'IsSuccess' => false,
+                    'StatusCode' => $statusCode,
+                    'Errores' => $errorMessage,
+                ];
+            }
+        );
     }
 }
