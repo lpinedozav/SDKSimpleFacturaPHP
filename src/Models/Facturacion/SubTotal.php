@@ -9,50 +9,50 @@ class SubTotal
      * Número secuencial de acuerdo al número de subtotales.
      * @var int
      */
-    public int $NroSTI;
+    public ?int $NroSTI;
 
     /**
      * Título del subtotal.
      * @var string
      */
-    public string $GlosaSTI;
+    public ?string $GlosaSTI;
 
     /**
      * Ubicación para impresión.
      * De uso para el contribuyente como ayuda para indicar cómo se imprimirá los subtotales.
      * @var int
      */
-    public int $OrdenSTI;
+    public ?int $OrdenSTI;
 
     /**
      * Valor neto del subtotal.
      * @var float
      */
-    public float $SubTotNetoSTI;
+    public ?float $SubTotNetoSTI;
 
     /**
      * Valor del IVA del subtotal.
      * @var float
      */
-    public float $SubTotIVASTI;
+    public ?float $SubTotIVASTI;
 
     /**
      * Valor de los impuestos adicionales o específicos del subtotal.
      * @var float
      */
-    public float $SubTotAdicSTI;
+    public ?float $SubTotAdicSTI;
 
     /**
      * Valor no afecto o exento del subtotal.
      * @var float
      */
-    public float $SubTotExeSTI;
+    public ?float $SubTotExeSTI;
 
     /**
      * Valor de la línea de subtotal.
      * @var float
      */
-    public float $ValSubtotSTI;
+    public ?float $ValSubtotSTI;
 
     /**
      * Tabla de líneas de detalle que se agrupan en el subtotal.
@@ -63,16 +63,25 @@ class SubTotal
     /**
      * Constructor para inicializar valores predeterminados.
      */
-    public function __construct()
-    {
-        $this->NroSTI = 0;
-        $this->GlosaSTI = '';
-        $this->OrdenSTI = 0;
-        $this->SubTotNetoSTI = 0.0;
-        $this->SubTotIVASTI = 0.0;
-        $this->SubTotAdicSTI = 0.0;
-        $this->SubTotExeSTI = 0.0;
-        $this->ValSubtotSTI = 0.0;
-        $this->LineasDeta = [];
+    public function __construct(
+        ?int $NroSTI = null,
+        ?string $GlosaSTI = null,
+        ?int $OrdenSTI = null,
+        ?float $SubTotNetoSTI = null,
+        ?float $SubTotIVASTI = null,
+        ?float $SubTotAdicSTI = null,
+        ?float $SubTotExeSTI = null,
+        ?float $ValSubtotSTI = null,
+        ?array $LineasDeta = []
+    ) {
+        $this->NroSTI = $NroSTI;
+        $this->GlosaSTI = $GlosaSTI;
+        $this->OrdenSTI = $OrdenSTI;
+        $this->SubTotNetoSTI = $SubTotNetoSTI;
+        $this->SubTotIVASTI = $SubTotIVASTI;
+        $this->SubTotAdicSTI = $SubTotAdicSTI;
+        $this->SubTotExeSTI = $SubTotExeSTI;
+        $this->ValSubtotSTI = $ValSubtotSTI;
+        $this->LineasDeta = $LineasDeta;
     }
 }

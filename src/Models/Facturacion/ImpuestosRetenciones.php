@@ -11,7 +11,7 @@ class ImpuestosRetenciones
      * Código del impuesto o retención de acuerdo a la codificación detallada en la tabla de códigos.
      * @var TipoImpuesto
      */
-    public TipoImpuesto $TipoImp;
+    public ?TipoImpuesto $TipoImp;
 
     /**
      * Tasa de impuesto o retención.
@@ -20,31 +20,26 @@ class ImpuestosRetenciones
      * Según las tasas válidas al momento de la transacción.
      * @var float
      */
-    public float $TasaImp;
+    public ?float $TasaImp;
 
     /**
      * Monto del impuesto o retención.
      * Valor del impuesto o retención asociado al código indicado anteriormente.
      * @var int
      */
-    public int $MontoImp;
+    public ?int $MontoImp;
 
     /**
      * Constructor para inicializar valores predeterminados.
      */
-    public function __construct()
-    {
-        $this->TipoImp = TipoImpuesto::NotSet; // Puedes usar 'NotSet' como en C# si defines una constante.
-        $this->TasaImp = 0.0;
-        $this->MontoImp = 0;
+    public function __construct(
+        ?TipoImpuesto $TipoImpuesto = null,
+        ?float $TasaImp = null,
+        ?int $MontoImp = null
+    ) {
+        $this->TipoImpuesto = $TipoImpuesto;
+        $this->TasaImp = $TasaImp;
+        $this->MontoImp = $MontoImp;
     }
 
-    /**
-     * Redondea la tasa de impuesto a dos decimales.
-     * @param float $value
-     */
-    public function setTasaImp(float $value): void
-    {
-        $this->TasaImp = round($value, 2);
-    }
 }

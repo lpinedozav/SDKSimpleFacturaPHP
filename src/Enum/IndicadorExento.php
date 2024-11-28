@@ -1,6 +1,6 @@
 <?php
 
-namespace SDKSimpleFactura\Enums;
+namespace SDKSimpleFactura\Enum;
 
 /**
  * Enum IndicadorExentoEnum

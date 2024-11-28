@@ -2,24 +2,27 @@
 
 namespace SDKSimpleFactura\Models\Facturacion;
 
+
 class DteClass
 {
     /**
      * @var int
      */
-    public int $folio;
+    public ?int $folio;
 
     /**
      * @var int
      */
-    public int $tipoDte;
+    public ?int $tipoDte;
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->folio = 0;
-        $this->tipoDte = 0;
+    public function __construct(
+        ?int $folio = null,
+        ?int $tipoDte = null
+    ) {
+        $this->folio = $folio;
+        $this->tipoDte = $tipoDte;
     }
 }

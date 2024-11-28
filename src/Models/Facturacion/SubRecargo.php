@@ -10,20 +10,22 @@ class SubRecargo
      * Tipo de subrecargo Enum.
      * @var ExpresionDinero
      */
-    public ExpresionDinero $TipoRecargo;
+    public ?ExpresionDinero $TipoRecargo;
 
     /**
      * Valor de subrecargo.
      * @var float
      */
-    public float $ValorRecargo;
+    public ?float $ValorRecargo;
 
     /**
      * Constructor para inicializar valores predeterminados.
      */
-    public function __construct()
-    {
-        $this->TipoRecargo = ExpresionDinero::NotSet; // Representación inicial de Enum.ExpresionDinero.ExpresionDineroEnum
-        $this->ValorRecargo = 0.0;
+    public function __construct(
+        ?ExpresionDinero $TipoRecargo = null,
+        ?float $ValorRecargo = null
+    ) {
+        $this->TipoRecargo = $TipoRecargo;
+        $this->ValorRecargo = $ValorRecargo;
     }
 }

@@ -4,7 +4,7 @@ namespace SDKSimpleFactura\Models\Facturacion;
 
 use SDKSimpleFactura\Enum\ExpresionDinero;
 use SDKSimpleFactura\Enum\TipoMovimiento;
-use SDKSimpleFactura\Enum\;
+use SDKSimpleFactura\Enum\IndicadorExento;
 
 class DescuentosRecargos
 {
@@ -47,9 +47,9 @@ class DescuentosRecargos
 
     /**
      * Indica si el descuento o recargo es No afecto o no facturable  Enum.
-     * @var string
+     * @var IndicadorExento
      */
-    public ?string $IndExeDR;
+    public ?IndicadorExento $IndExeDR;
 
     /**
      * Constructor para inicializar valores predeterminados.
@@ -61,6 +61,15 @@ class DescuentosRecargos
         ?ExpresionDinero $TpoValor = null,
         ?float $ValorDR = null,
         ?float $valorDROtrMnda = null,
-        )
-    
+        ?IndicadorExento $IndExeDR = null
+    ) {
+        $this->NroLinDR = $NroLinDR;
+        $this->TpoMov = $TpoMov;
+        $this->GlosaDR = $GlosaDR;
+        $this->TpoValor = $TpoValor;
+        $this->ValorDR = $ValorDR;
+        $this->valorDROtrMnda = $ValorDR;
+        $this->IndExeDR = $IndExeDR;
+    }
+
 }
