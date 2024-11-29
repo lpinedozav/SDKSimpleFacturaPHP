@@ -4,6 +4,7 @@ namespace SDKSimpleFactura\Models\Request;
 
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Models\Request\Credenciales;
+use SDKSimpleFactura\Enum\Ambiente;
 
 class FolioRequest
 {
@@ -15,26 +16,27 @@ class FolioRequest
     /**
      * @var int
      */
-    public int $cantidad;
+    public ?int $cantidad;
 
     /**
      * @var ?DTEType
      */
     public ?DTEType $codigoTipoDte;
 
+
     /**
-     * @var ?int
+     * @var Ambiente
      */
-    public ?int $ambiente;
+    public ?Ambiente $ambiente;
 
     /**
      * Constructor
      */
     public function __construct(
         Credenciales $credenciales,
-        int $cantidad,
+        ?int $cantidad = null,
         ?DTEType $codigoTipoDte = null,
-        ?int $ambiente = null
+        ?Ambiente $ambiente = null,
         )
         {
             $this->credenciales = $credenciales;
