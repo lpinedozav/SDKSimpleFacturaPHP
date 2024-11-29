@@ -753,6 +753,7 @@ class FacturacionServiceTest extends TestCase
         print_r($response->Errors);
     }
 
+    //corregir
     public function testEmisionNC_NDV2Async_ReturnsOkResult_WhenApiCallIsSuccessful()
     {
         $maxIntentos = 3;
@@ -850,7 +851,6 @@ class FacturacionServiceTest extends TestCase
                     $this->assertNotNull($result->Message, 'El mensaje no debe ser nulo.');
                     $this->assertNull($result->Errors, 'Los errores deben ser nulos.');
 
-                    // Si todo salió bien, marcamos exito como verdadero para salir del bucle
                     $exito = true;
                 } else {
                     throw new \Exception('Error: Sin folios');
@@ -858,19 +858,99 @@ class FacturacionServiceTest extends TestCase
             } catch (\Exception $ex) {
                 $ultimaExcepcion = $ex;
 
-                // Si no hemos alcanzado el máximo de intentos, esperamos antes de reintentar
                 if ($intentoActual < $maxIntentos) {
-                    sleep(1); // Espera 1 segundo antes de reintentar (opcional)
+                    sleep(1);
                 }
             }
         }
 
-        // Si después de los intentos no se tuvo éxito, fallamos la prueba
         if (!$exito) {
             $this->fail("La prueba falló después de $maxIntentos intentos. Último error: {$ultimaExcepcion->getMessage()}");
         }
     }
 
+    public function testEmisionNC_NDV2Async_ReturnsBadRequest_WhenTipoDTEIsNotFound()
+    {
+        $request = new RequestDTE(
+            Documento: new Documento(
+                Encabezado: new Encabezado(
+                    IdDoc: new IdentificacionDTE(
+                        //TipoDTE: DTEType::NotaCreditoElectronica,
+                        FchEmis: new DateTime(),
+                        FmaPago: FormaPago::Credito,
+                        FchVenc: (new DateTime())->modify('+6 months')
+                    ),
+                    Emisor: new Emisor(
+                        RUTEmisor: '76269769-6',
+                        RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                        GiroEmis: 'Desarrollo de software',
+                        Telefono: ['912345678'],
+                        CorreoEmisor: 'felipe.anzola@erke.cl',
+                        Acteco: [620900],
+                        DirOrigen: 'Chile',
+                        CmnaOrigen: 'Chile',
+                        CiudadOrigen: 'Chile'
+                    ),
+                    Receptor: new Receptor(
+                        RUTRecep: '77225200-5',
+                        RznSocRecep: 'ARRENDADORA DE VEHÍCULOS S.A.',
+                        GiroRecep: '451001 - VENTA AL POR MAYOR DE VEHÍCULOS AUTOMOTORES',
+                        CorreoRecep: 'terceros-77225200@dte.iconstruye.com',
+                        DirRecep: 'Rondizzoni 2130',
+                        CmnaRecep: 'SANTIAGO',
+                        CiudadRecep: 'SANTIAGO'
+                    ),
+                    Totales: new Totales(
+                        MntNeto: 6930000.0,
+                        TasaIVA: 19,
+                        IVA: 1316700,
+                        MntTotal: 8246700.0
+                    )
+                ),
+                Detalle: [
+                    new Detalle(
+                        NroLinDet: 1,
+                        NmbItem: 'CERRADURA DE SEGURIDAD (2PIEZA).SATURN EVO',
+                        CdgItem: [
+                            new CodigoItem(
+                                TpoCodigo: '4',
+                                VlrCodigo: 'EVO_2'
+                            )
+                        ],
+                        QtyItem: 42.0,
+                        UnmdItem: 'unid',
+                        PrcItem: 319166.0,
+                        MontoItem: 6930000
+                    )
+                ],
+                Referencia: [
+                    new Referencia(
+                        NroLinRef: 1,
+                        TpoDocRef: '61',
+                        FolioRef: '1268',
+                        FchRef: new DateTime('2024-10-17'),
+                        CodRef: TipoReferencia::AnulaDocumentoReferencia,
+                        RazonRef: 'Anular'
+                    )
+                ]
+            )
+        );
+
+        $sucursal = 'Casa Matriz';
+        $motivo = ReasonType::Otros;
+
+        // Act
+        $result = $this->facturacionService->EmisionNC_NDV2Async($sucursal, $motivo, $request)->wait();
+
+        // Assert
+        $this->assertNotNull($result, 'El resultado no debe ser nulo.');
+        $this->assertEquals(400, $result->Status, 'El estado de la respuesta debe ser 400.');
+        $this->assertFalse($result->Data);
+        $this->assertNotNull($result->Errors, 'Los errores no deben ser nulos.');
+        $this->assertCount(1, $result->Errors, 'Debe haber exactamente un error.');
+        $this->assertEquals("Error interno", $result->Message);
+        $this->assertContains("Tipo dte vacio", $result->Errors, 'Los errores deben contener "Tipo dte vacio".');
+    }
 
     private function solicitarFolio($tipo, $cantidad)
     {
