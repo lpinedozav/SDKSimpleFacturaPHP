@@ -8,7 +8,17 @@ use SDKSimpleFactura\Models\Request\DteReferenciadoExterno;
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Enum\Ambiente;
 use SDKSimpleFactura\Enum\TipoSobreEnvio;
+use SDKSimpleFactura\Enum\FormaPago;
 use SDKSimpleFactura\Interfaces\IFacturacionService;
+use SDKSimpleFactura\Models\Facturacion\Documento;
+use SDKSimpleFactura\Models\Facturacion\Encabezado;
+use SDKSimpleFactura\Models\Facturacion\IdentificacionDTE;
+use SDKSimpleFactura\Models\Request\RequestDTE;
+use DateTime;
+use SDKSimpleFactura\Models\Facturacion\Detalle;
+use SDKSimpleFactura\Models\Facturacion\Emisor;
+use SDKSimpleFactura\Models\Facturacion\Receptor;
+use SDKSimpleFactura\Models\Facturacion\Totales;
 
 class FacturacionServiceTest extends TestCase
 {
@@ -200,4 +210,156 @@ class FacturacionServiceTest extends TestCase
         $this->assertNotNull($response->Data, 'Los datos del sobre XML no deben ser nulos.');
         $this->assertIsString($response->Data, 'Los datos deben ser una cadena (contenido en formato base64).');
     }
+
+    public function testObtenerSobreXmlDteAsync_ReturnsError_WhenApiReturnsFailure()
+    {
+        $solicitudXmlSobre = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: ''
+            ),
+            new DteReferenciadoExterno(
+                codigoTipoDte: DTEType::FacturaElectronica, 
+                ambiente: Ambiente::Certificacion 
+           
+            )
+        );
+
+
+        $response = $this->facturacionService->ObtenerSobreXmlDteAsync($solicitudXmlSobre, TipoSobreEnvio::AlReceptor)->wait();
+
+
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500 (Internal Server Error).');
+        $this->assertNull($response->Data, 'Los datos deben ser nulos en caso de error del servidor.');
+        $this->assertNotNull($response->Message, 'El mensaje de error no debe ser nulo.');
+        $this->assertNotNull($response->Errors, 'Los errores deben ser nulos en caso de error interno.');
+    }
+
+    public function testObtenerDteAsync_ReturnsOkResult_WhenDteIsRetrievedSuccessfully()
+    {
+        $solicitudDte = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: '76269769-6',
+                nombreSucursal: 'Casa Matriz'
+            ),
+            new DteReferenciadoExterno(
+                folio: 12553,
+                codigoTipoDte: DTEType::BoletaElectronica,
+                ambiente: Ambiente::Certificacion 
+            )
+        );
+
+
+        $response = $this->facturacionService->ObtenerDteAsync($solicitudDte)->wait();
+
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertEquals('DTE encontrado', $response->Message, 'El mensaje debe indicar que el DTE fue encontrado.');
+        $this->assertNotNull($response->Data, 'Los datos del DTE no deben ser nulos.');
+
+        $this->assertEquals(12553, $response->Data->folio, 'El folio debe ser 12553.');
+        $this->assertEquals('Certificación', $response->Data->ambiente, 'El ambiente debe ser "Certificación".');
+        $this->assertEquals('Cliente en Marketplace', $response->Data->razonSocialReceptor, 'La razón social debe ser "Cliente en Marketplace".');
+        $this->assertEquals('66666666-6', $response->Data->rutReceptor, 'El RUT del receptor debe ser "66666666-6".');
+        $this->assertEquals(990, $response->Data->total, 'El total debe ser 990.');
+
+        $this->assertCount(1, $response->Data->detalles, 'Debe haber un solo detalle en el documento.');
+    }
+
+    public function testObtenerDteAsync_ReturnsBadRequest_WhenApiReturnsFailure()
+    {
+        $request = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: '76269769-2',
+                nombreSucursal: 'Casa Matriz'
+            ),
+            new DteReferenciadoExterno(
+                folio: 12553,
+                codigoTipoDte: DTEType::BoletaElectronica,
+                ambiente: Ambiente::Certificacion
+            )
+        );
+
+        $response = $this->facturacionService->ObtenerDteAsync($request)->wait();
+
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(400, $response->Status, 'El estado de la respuesta debe ser 400.');
+        $this->assertEquals("Error interno", $response->Message, 'El mensaje debe indicar que el DTE no fue encontrado.');
+        $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
+        $this->assertContains('Rut de emisor 76269769-2 no valido', $response->Errors, 'Los errores deben contener el mensaje "Rut de emisor 76269769-2 no valido".');
+    }
+
+    public function testFacturacionIndividualV2DTEAsync_ReturnsOkResult_WhenInvoiceIsGeneratedSuccessfully()
+    {
+        $sucursal = "Casa_Matriz";
+    
+        $request = new RequestDTE(
+            Documento: new Documento(
+                Encabezado: new Encabezado(
+                    IdDoc: new IdentificacionDTE(
+                        TipoDTE: DTEType::FacturaElectronica,
+                        FchEmis: new DateTime(),
+                        FmaPago: FormaPago::Credito, // Código equivalente a "1"
+                        FchVenc: (new DateTime())->modify('+6 months')
+                    ),
+                    Emisor: new Emisor(
+                        RUTEmisor: '76269769-6',
+                        RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                        giroEmis: 'Desarrollo de software',
+                        telefono: ['912345678'],
+                        correoEmisor: 'mvega@chilesystems.com',
+                        acteco: [620200],
+                        dirOrigen: 'Calle 7 numero 3',
+                        cmnaOrigen: 'Santiago',
+                        ciudadOrigen: 'Santiago'
+                    ),
+                    Receptor: new Receptor(
+                        rutRecep: '17096073-4',
+                        rznSocRecep: 'Hotel Iquique',
+                        giroRecep: 'test',
+                        correoRecep: 'mvega@chilesystems.com',
+                        dirRecep: 'calle 12',
+                        cmnaRecep: 'Paine',
+                        ciudadRecep: 'Santiago'
+                    ),
+                    Totales: new Totales(
+                        mntNeto: 832,
+                        tasaIVA: 19,
+                        iva: 158,
+                        mntTotal: 990
+                    )
+                ),
+                Detalle: [
+                    new Detalle(
+                        nroLinDet: 1,
+                        nmbItem: 'Alfajor',
+                        cdgItem: [
+                            new CodigoItem(
+                                tpoCodigo: 'ALFA',
+                                vlrCodigo: '123'
+                            )
+                        ],
+                        qtyItem: 1,
+                        unmdItem: 'un',
+                        prcItem: 831.932773,
+                        montoItem: 832
+                    )
+                ]
+            ),
+            observaciones: 'NOTA AL PIE DE PAGINA',
+            tipoPago: '30 dias'
+        );
+    
+        $response = $this->facturacionService->FacturacionIndividualV2DTEAsync($sucursal, $request)->wait();
+    
+        $this->assertNotNull($response);
+        $this->assertEquals(200, $response->Status);
+        $this->assertInstanceOf(InvoiceData::class, $response->Data);
+        $this->assertEquals('76269769-6', $response->Data->RUTEmisor);
+        $this->assertEquals('17096073-4', $response->Data->RUTReceptor);
+        $this->assertNotNull($response->Message);
+        $this->assertNull($response->Errors);
+    }
+    
+
 }
