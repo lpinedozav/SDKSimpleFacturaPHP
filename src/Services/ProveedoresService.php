@@ -8,6 +8,7 @@ use SDKSimpleFactura\Interfaces\IProovedoresService;
 use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Response\Response;
+use SDKSimpleFactura\Models\Request\Credenciales;
 
 
 
@@ -45,23 +46,25 @@ class ProveedoresService implements IProovedoresService
             }
         );
     }
-/*
-public function obtenerPDFAsync(ListadoDteRequest $request): PromiseInterface
-{
-    $url = '/proveedores/obtenerPDF';
-    return $this->apiService->PostAsync($url, $request, null);
-}
+    public function obtenerPDFAsync(ListadoDteRequest $request): PromiseInterface
+    {
+        $url = '/documentReceived/getPdf';
+        return $this->apiService->PostForByteArrayAsync($url, $request)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return new Response($result->StatusCode, null, $result->Errores);
+                }
+            }
+        );
+    }
 
-public function conciliarRecibidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface
-{
-    $url = '/proveedores/conciliarRecibidos';
-    $data = [
-        'credenciales' => $credenciales,
-        'mes' => $mes,
-        'anio' => $anio
-    ];
-    return $this->apiService->PostAsync($url, $data, null);
-}
-*/
+    public function conciliarRecibidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface
+    {
+        $url = "/documentsReceived/consolidate/{$mes}/{$anio}";
+        return $this->apiService->PostAsync($url, $credenciales, responseClass: 'string');
+    }
+
 
 }

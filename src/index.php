@@ -734,4 +734,49 @@ if ($response->Status === 200) {
 } else {
     echo "Error ({$response->Status}): {$response->Message}";
 }
+
+
+//Obtener PDF proveedor
+$request = new ListadoDteRequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6',
+        rutContribuyente: "76269769-6"
+    ),
+    ambiente: Ambiente::Certificacion,
+    folio: 2232,
+    codigoTipoDte: DTEType::FacturaElectronica
+);
+$response = $client->Proovedores->obtenerPDFAsync($request)->wait();
+
+if ($response->Status === 200) {
+    $xmlData = $response->Data;
+    $ruta = 'Pdf.pdf';
+    file_put_contents($ruta, $xmlData);
+
+    echo "PDF guardado exitosamente en: $ruta \n";
+} else {
+    echo "Error ({$response->Status}): {$response->Message}";
+}
+
+//ConciliarRecibidos
+///lISTAR
+$request = new Credenciales(
+    rutEmisor: "76269769-6",
+);
+
+$mes = 5;
+$anio = 2024;
+
+$response = $client->Proovedores->conciliarRecibidosAsync($credenciales, $mes, $anio)->wait();
+
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
 //ClientesService
