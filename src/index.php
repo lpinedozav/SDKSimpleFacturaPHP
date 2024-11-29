@@ -47,6 +47,7 @@ use SDKSimpleFactura\Models\Request\EnvioMailRequest;
 use SDKSimpleFactura\Models\Facturacion\MailClass;
 use SDKSimpleFactura\Models\Facturacion\DteClass;
 use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
+use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\NuevoReceptorExternoRequest;
 use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
 use SDKSimpleFactura\Models\Request\FolioRequest;
@@ -793,15 +794,15 @@ $credenciales = new Credenciales(
 
 // Crear la solicitud de productos
 $clientes = new NuevoReceptorExternoRequest(
-    rut :"57681892-0",
-    razonSocial :"Cliente Test 1",
-    giro :"Giro 1",
-    dirPart :"direccion 1",
-    dirFact :"direccion 1",
-    correoPar :"correo 1",
-    correoFact :"correo 1",
-    ciudad :"Ciudad 1",
-    comuna :"Comuna 1"
+    rut: "57681892-0",
+    razonSocial: "Cliente Test 1",
+    giro: "Giro 1",
+    dirPart: "direccion 1",
+    dirFact: "direccion 1",
+    correoPar: "correo 1",
+    correoFact: "correo 1",
+    ciudad: "Ciudad 1",
+    comuna: "Comuna 1"
 );
 
 // Crear la solicitud principal
@@ -887,7 +888,7 @@ $request = new FolioRequest(
         rutEmisor: '76269769-6',
         nombreSucursal: "Casa Matriz"
     ),
-    cantidad : 1,
+    cantidad: 1,
     codigoTipoDte: DTEType::FacturaElectronica
 );
 
@@ -946,4 +947,37 @@ if ($response->Status === 200) {
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
     print_r($response->Errors);
+}
+
+$request = new Credenciales(
+    rutEmisor: '76269769-6'
+);
+
+$response = $client->Configuracion->DatosEmpresaAsync($request)->wait();
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la empresa:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+$request = new BHERequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6',
+        nombreSucursal: "Casa Matriz"
+    ),
+    folio: 15
+);
+
+
+$response = $client->BoletasHonorario->ObtenerPDFBHEEmitidaAsync($request)->wait();
+if ($response->Status === 200) {
+    $pdfData = $response->Data;
+    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\dte.pdf', $pdfData);
+    echo "PDF guardado exitosamente.\n";
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
 }

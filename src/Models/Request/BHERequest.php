@@ -8,7 +8,7 @@ class BHERequest
     public ?int $folio;
 
     public function __construct(
-        ?string $credenciales = null,
+        ?Credenciales $credenciales = null,
         ?string $folio = null,
     ) {
         $this->credenciales = $credenciales;

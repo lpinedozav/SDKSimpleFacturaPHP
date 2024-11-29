@@ -6,6 +6,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Interfaces\IConfiguracionService;
 use SDKSimpleFactura\Models\Request\Credenciales;
+use SDKSimpleFactura\Models\Response\EmisorApiEnt;
 
 class ConfiguracionService implements IConfiguracionService
 {
@@ -18,6 +19,6 @@ class ConfiguracionService implements IConfiguracionService
     public function DatosEmpresaAsync(Credenciales $credenciales): PromiseInterface
     {
         $url = '/datosEmpresa';
-        return $this->apiService->PostAsync($url, $credenciales, 'SDKSimpleFactura\Models\Response\EmisorApiEnt');
+        return $this->apiService->PostAsync($url, $credenciales, EmisorApiEnt::class);
     }
 }
