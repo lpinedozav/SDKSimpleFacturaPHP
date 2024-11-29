@@ -78,5 +78,54 @@ class FacturacionServiceTest extends TestCase
         $this->assertIsArray($result->Errors, 'Los errores deben ser un arreglo.');
     }
 
+    public function testObtenerTimbreDteAsync_ReturnsOkResult_WhenTimbreIsGeneratedSuccessfully()
+    {
+        // Arrange: Crear la solicitud para obtener el timbre
+        $solicitudTimbre = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: '76269769-6'
+            ),
+            new DteReferenciadoExterno(
+                folio: 4117,
+                codigoTipoDte: DTEType::FacturaElectronica,
+                ambiente: Ambiente::Certificacion
+            )
+        );
+
+        // Act: Llamar al servicio para obtener el timbre
+        $response = $this->facturacionService->ObtenerTimbreDteAsync($solicitudTimbre)->wait();
+
+        // Assert: Validar los resultados
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos del timbre no deben ser nulos.');
+    }
+
+    public function testObtenerTimbreDteAsync_ReturnsInternalServerError_WhenServerFails()
+    {
+        // Arrange: Crear la solicitud para obtener el timbre con datos válidos
+        $solicitudTimbre = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: ''
+            ),
+            new DteReferenciadoExterno(
+                folio: 4117,
+                codigoTipoDte: DTEType::FacturaElectronica,
+                ambiente: Ambiente::Certificacion
+            )
+        );
+
+        // Act: Llamar al servicio para obtener el timbre
+        $response = $this->facturacionService->ObtenerTimbreDteAsync($solicitudTimbre)->wait();
+
+        // Assert: Validar los resultados
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500 (Internal Server Error).');
+        $this->assertNull($response->Data, 'Los datos del timbre deben ser nulos en caso de error.');
+        $this->assertNotNull($response->Message, 'El mensaje de error no debe ser nulo.');
+       
+    }
+
+
 
 }
