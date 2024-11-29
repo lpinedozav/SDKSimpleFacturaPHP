@@ -52,6 +52,8 @@ class ApiService implements IApiService
                 print_r($data);
                 if ($responseClass === 'string' || $responseClass === 'int') {
                     $mappedData = $data['data'] ?? '';
+                } elseif ($responseClass === 'int') {
+                    $mappedData = isset($data['data']) ? (int) $data['data'] : 0;
                 } elseif ($responseClass === 'boolean') {
                     $mappedData = isset($data['data']) ? (bool) $data['data'] : false;
                 } else {

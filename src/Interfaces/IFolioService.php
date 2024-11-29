@@ -2,7 +2,7 @@
 
 namespace SDKSimpleFactura\Interfaces;
 
-use SDKSimpleFactura\Request\SolicitudFoliosRequest;
+use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
 use SDKSimpleFactura\Models\Request\FolioRequest;
 use GuzzleHttp\Promise\PromiseInterface;
 

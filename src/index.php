@@ -48,6 +48,7 @@ use SDKSimpleFactura\Models\Facturacion\MailClass;
 use SDKSimpleFactura\Models\Facturacion\DteClass;
 use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
 use SDKSimpleFactura\Models\Request\NuevoReceptorExternoRequest;
+use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
 
 
 
@@ -845,6 +846,27 @@ $credenciales = new Credenciales(
 );
 
 $response = $client->Sucursal->ListadoSucursalesAsync($credenciales)->wait();
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+//Consultar folios disponibles
+
+$request = new SolicitudFoliosRequest(
+    rutEmpresa: '76269769-6',
+    tipoDTE: 33,
+    ambiente: 0
+);
+
+
+$response = $client->Folio->ConsultaFoliosDisponiblesAsync($request)->wait();
 
 if ($response->Status === 200) {
     echo 'Status: ' . $response->Status . "\n";

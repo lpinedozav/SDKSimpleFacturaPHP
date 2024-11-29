@@ -8,7 +8,7 @@ use SDKSimpleFactura\Interfaces\IFolioService;
 use SDKSimpleFactura\Models\Request\FolioRequest;
 use SDKSimpleFactura\Models\Response\FoliosAnulablesEnt;
 use SDKSimpleFactura\Models\Response\TimbrajeApiEnt;
-use SDKSimpleFactura\Request\SolicitudFoliosRequest;
+use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
 
 class FolioService implements IFolioService
 {
@@ -21,7 +21,7 @@ class FolioService implements IFolioService
     public function ConsultaFoliosDisponiblesAsync(SolicitudFoliosRequest $request): PromiseInterface
     {
         $url = "/folios/consultar/disponibles";
-        return $this->apiService->PostAsync($url, $request, int::class);
+        return $this->apiService->PostAsync($url, $request, 'int');
     }
     public function SolicitarFoliosAsync(FolioRequest $request): PromiseInterface
     {
