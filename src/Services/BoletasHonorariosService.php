@@ -8,7 +8,7 @@ use SDKSimpleFactura\Interfaces\IBoletasHonorarioService;
 use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\ListaBHERequest;
 use SDKSimpleFactura\Models\Response\BHEEnt;
-use SdkSimpleFactura\Models\Response\Response;
+use SDKSimpleFactura\Models\Response\Response;
 
 class BoletasHonorariosService implements IBoletasHonorarioService
 {
@@ -26,7 +26,7 @@ class BoletasHonorariosService implements IBoletasHonorarioService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );
@@ -44,7 +44,7 @@ class BoletasHonorariosService implements IBoletasHonorarioService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );

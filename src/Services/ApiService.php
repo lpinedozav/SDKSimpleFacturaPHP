@@ -79,7 +79,7 @@ class ApiService implements IApiService
                 $data = json_decode($errorMessage, true);
                 return new Response(
                     $data['status'] ?? 500,
-                    null,
+                    $data['data'] ?? null,
                     $data['message'] ?? 'Error interno',
                     $data['errors'] ?? []
                 );
@@ -99,20 +99,22 @@ class ApiService implements IApiService
         ])->then(
             function ($response) {
                 $body = $response->getBody()->getContents();
-                return (object) [
-                    'IsSuccess' => true,
-                    'Data' => $body,
-                ];
+                return new Response(
+                    200,
+                    $body,
+                    'Success',
+                    []
+                );
             },
             function (RequestException $e) {
-                $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
                 $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
-
-                return (object) [
-                    'IsSuccess' => false,
-                    'StatusCode' => $statusCode,
-                    'Errores' => $errorMessage,
-                ];
+                $data = json_decode($errorMessage, true);
+                return new Response(
+                    $data['status'] ?? 500,
+                    $data['data'] ?? null,
+                    $data['message'] ?? 'Error interno',
+                    $data['errors'] ?? []
+                );
             }
         );
     }
