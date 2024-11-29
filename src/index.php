@@ -51,8 +51,7 @@ use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\NuevoReceptorExternoRequest;
 use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
 use SDKSimpleFactura\Models\Request\FolioRequest;
-
-
+use SDKSimpleFactura\Models\Request\ListaBHERequest;
 
 $client = new SimpleFacturaClient();
 
@@ -977,6 +976,51 @@ $response = $client->BoletasHonorario->ObtenerPDFBHEEmitidaAsync($request)->wait
 if ($response->Status === 200) {
     $pdfData = $response->Data;
     file_put_contents('C:\Proyectos\SDKSimpleFactura\data\dte.pdf', $pdfData);
+    echo "PDF guardado exitosamente.\n";
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+}
+
+
+
+$response = $client->BoletasHonorario->ObtenerPDFBHEEmitidaAsync($request)->wait();
+if ($response->Status === 200) {
+    $pdfData = $response->Data;
+    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\bhe.pdf', $pdfData);
+    echo "PDF guardado exitosamente.\n";
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+}
+
+$request = new ListaBHERequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6',
+        nombreSucursal: "Casa Matriz"
+    ),
+    folio: null,
+    desde: new DateTime("2024-09-03"), // Fecha desde
+    hasta: new DateTime("2024-11-11")  // Fecha hasta
+);
+$response = $client->BoletasHonorario->ListadoBHEEmitidasAsync($request)->wait();
+if ($response->Status === 200) {
+    echo "Listado de BHEs emitidas exitoso.\n";
+    print_r($response->Data); // Aquí se imprimirá el data mapeado o crudo
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+$request = new BHERequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6',
+        rutContribuyente: "26429782-6",
+    ),
+    folio: 2
+);
+$response = $client->BoletasHonorario->obtener($request)->wait();
+if ($response->Status === 200) {
+    $pdfData = $response->Data;
+    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\bhe2.pdf', $pdfData);
     echo "PDF guardado exitosamente.\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";

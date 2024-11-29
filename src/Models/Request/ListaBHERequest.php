@@ -6,34 +6,23 @@ use SDKSimpleFactura\Models\Request\Credenciales;
 
 class ListaBHERequest
 {
-    /**
-     * @var Credenciales
-     */
-    public Credenciales $credenciales;
-
-    /**
-     * @var ?int
-     */
+    public ?Credenciales $credenciales;
     public ?int $folio;
-
-    /**
-     * @var ?\DateTime
-     */
     public ?\DateTime $desde;
-
-    /**
-     * @var ?\DateTime
-     */
     public ?\DateTime $hasta;
 
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->credenciales = new Credenciales();
-        $this->folio = null;
-        $this->desde = null;
-        $this->hasta = null;
+    public function __construct(
+        ?Credenciales $credenciales = null,
+        ?int $folio = null,
+        ?\DateTime $desde = null,
+        ?\DateTime $hasta = null
+    ) {
+        $this->credenciales = $credenciales;
+        $this->folio = $folio;
+        $this->desde = $desde;
+        $this->hasta = $hasta;
     }
 }

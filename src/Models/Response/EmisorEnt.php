@@ -14,21 +14,21 @@ class EmisorEnt
      * Dirección del emisor.
      * @var string|null
      */
-    public ?string $Direccion = null;
+    public ?string $direccion = null;
 
     /**
      * Razón social del emisor.
      * @var string|null
      */
-    public ?string $RazonSocial = null;
+    public ?string $razonSocial = null;
 
     public function __construct(
         ?string $rutEmisor = null,
         ?string $direccion = null,
-        ?string $RazonSocial = null
+        ?string $razonSocial = null
     ) {
         $this->rutEmisor = $rutEmisor;
-        $this->Direccion = $direccion;
-        $this->RazonSocial = $RazonSocial;
+        $this->direccion = $direccion;
+        $this->razonSocial = $razonSocial;
     }
 }

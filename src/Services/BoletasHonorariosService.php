@@ -7,6 +7,7 @@ use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Interfaces\IBoletasHonorarioService;
 use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\ListaBHERequest;
+use SDKSimpleFactura\Models\Response\BHEEnt;
 use SdkSimpleFactura\Models\Response\Response;
 
 class BoletasHonorariosService implements IBoletasHonorarioService
@@ -33,15 +34,7 @@ class BoletasHonorariosService implements IBoletasHonorarioService
     public function ListadoBHEEmitidasAsync(ListaBHERequest $request): PromiseInterface
     {
         $url = '/bhesIssued';
-        return $this->apiService->PostForByteArrayAsync($url, $request)->then(
-            function ($result) {
-                if ($result->IsSuccess) {
-                    return new Response(200, $result->Data);
-                } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
-                }
-            }
-        );
+        return $this->apiService->PostAsync($url, $request, BHEEnt::class);
     }
     public function ObtenerPDFBHERecibidosAsync(BHERequest $request): PromiseInterface
     {
@@ -59,14 +52,6 @@ class BoletasHonorariosService implements IBoletasHonorarioService
     public function ListadoBHERecibidosAsync(ListaBHERequest $request): PromiseInterface
     {
         $url = '/bhesReceived';
-        return $this->apiService->PostForByteArrayAsync($url, $request)->then(
-            function ($result) {
-                if ($result->IsSuccess) {
-                    return new Response(200, $result->Data);
-                } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
-                }
-            }
-        );
+        return $this->apiService->PostAsync($url, $request, BHEEnt::class);
     }
 }

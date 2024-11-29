@@ -4,33 +4,23 @@ namespace SDKSimpleFactura\Models\Response;
 
 class TotalesEnt
 {
-    /**
-     * Total de honorarios.
-     * @var float|null
-     */
-    public ?float $TotalHonorarios = null;
+    public ?float $totalHonorarios;
+    public ?float $bruto;
+    public ?float $liquido;
+    public ?float $pagado;
+    public ?float $retenido;
 
-    /**
-     * Total bruto.
-     * @var float|null
-     */
-    public ?float $Bruto = null;
-
-    /**
-     * Total líquido.
-     * @var float|null
-     */
-    public ?float $Liquido = null;
-
-    /**
-     * Total pagado.
-     * @var float|null
-     */
-    public ?float $Pagado = null;
-
-    /**
-     * Total retenido.
-     * @var float|null
-     */
-    public ?float $Retenido = null;
+    public function __construct(
+        ?float $totalHonorarios = null,
+        ?float $bruto = null,
+        ?float $liquido = null,
+        ?float $pagado = null,
+        ?float $retenido = null
+    ) {
+        $this->totalHonorarios = $totalHonorarios;
+        $this->bruto = $bruto;
+        $this->liquido = $liquido;
+        $this->pagado = $pagado;
+        $this->retenido = $retenido;
+    }
 }

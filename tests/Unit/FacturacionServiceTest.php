@@ -52,7 +52,7 @@ class FacturacionServiceTest extends TestCase
 
     }
 
-    public function testObtenerPdfDteAsync_ReturnsBadRequest_WhenInvalidDataIsProvided()
+    public function testObtenerPdfDteAsync_ReturnsServerError_WhenInvalidDataIsProvided()
     {
         // Arrange: Crear la solicitud PDF con datos inválidos
         $solicitudPDF = new SolicitudDte(
@@ -77,4 +77,6 @@ class FacturacionServiceTest extends TestCase
         $this->assertNotNull($result->Errors, 'Los errores deben contener información sobre el problema.');
         $this->assertIsArray($result->Errors, 'Los errores deben ser un arreglo.');
     }
+
+
 }
