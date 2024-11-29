@@ -13,9 +13,8 @@ interface IProovedoresService
 
 
     public function listadoDtesRecibidosAsync(ListadoDteRequest $request): PromiseInterface;
-//
-//
-    //public function obtenerXmlAsync(ListadoDteRequest $request): PromiseInterface;
+
+    public function obtenerXmlAsync(ListadoDteRequest $request): PromiseInterface;
 //
     //public function obtenerPDFAsync(ListadoDteRequest $request): PromiseInterface;
     //public function conciliarRecibidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface;

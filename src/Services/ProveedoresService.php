@@ -7,6 +7,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use SDKSimpleFactura\Interfaces\IProovedoresService;
 use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
+use SDKSimpleFactura\Models\Response\Response;
 
 
 
@@ -30,13 +31,21 @@ class ProveedoresService implements IProovedoresService
         $url = '/documentsReceived';
         return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\DteEnt');
     }
-/*
-public function obtenerXmlAsync(ListadoDteRequest $request): PromiseInterface
-{
-    $url = '/proveedores/obtenerXml';
-    return $this->apiService->PostAsync($url, $request, null);
-}
 
+    public function obtenerXmlAsync(ListadoDteRequest $request): PromiseInterface
+    {
+        $url = '/documentReceived/xml';
+        return $this->apiService->PostForByteArrayAsync($url, $request)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return new Response($result->StatusCode, null, $result->Errores);
+                }
+            }
+        );
+    }
+/*
 public function obtenerPDFAsync(ListadoDteRequest $request): PromiseInterface
 {
     $url = '/proveedores/obtenerPDF';
