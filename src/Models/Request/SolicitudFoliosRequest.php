@@ -7,14 +7,14 @@ use SDKSimpleFactura\Enum\DTEType;
 
 class SolicitudFoliosRequest
 {
-    public string $rutEmpresa;
-    public int $tipoDTE;
-    public int $ambiente;
+    public ?string $rutEmpresa;
+    public ?int $tipoDTE;
+    public ?int $ambiente;
 
     public function __construct(
-        string $rutEmpresa,
-        int $tipoDTE,
-        int $ambiente
+        ?string $rutEmpresa = null,
+        ?int $tipoDTE = null,
+        ?int $ambiente = null
     ) {
         $this->rutEmpresa = $rutEmpresa;
         $this->tipoDTE = $tipoDTE;
