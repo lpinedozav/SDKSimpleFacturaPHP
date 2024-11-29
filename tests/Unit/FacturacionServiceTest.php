@@ -1107,6 +1107,45 @@ class FacturacionServiceTest extends TestCase
         $this->assertEquals("Error al obtener consolidado de emitidos desde api", $response->Data);
     }
 
+    public function testConsolidadoEmitidosAsync_ReturnsOkResult_WhenRequestIsValid()
+    {
+        // Arrange
+        $credenciales = new Credenciales(
+            rutEmisor: '76269769-6'
+        );
+
+        $mes = 5;
+        $anio = 2024;
+
+        // Act
+        $response = $this->facturacionService->ConsolidadoEmitidosAsync($credenciales, $mes, $anio)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertEquals("Datos Obtenidos correctamente",$response->Data);
+        $this->assertEquals("Datos Obtenidos correctamente",$response->Message);
+    }
+
+    public function testConsolidadoEmitidosAsync_ReturnsError_WhenRequestIsInvalid()
+    {
+        // Arrange
+        $credenciales = new Credenciales(
+            rutEmisor: '76269769-9'
+        );
+
+        $mes = 5;
+        $anio = 2024;
+
+        // Act
+        $response = $this->facturacionService->ConsolidadoEmitidosAsync($credenciales, $mes, $anio)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertNotEquals(200, $response->Status, 'El estado de la respuesta no debe ser 200.');
+        $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
+    }
+
     private function solicitarFolio($tipo, $cantidad)
     {
         $request = new FolioRequest(
