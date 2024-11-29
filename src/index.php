@@ -77,7 +77,7 @@ $response = $client->Facturacion->ObtenerPdfDteAsync($solicitud)->wait();
 
 if ($response->Status === 200) {
     $pdfData = $response->Data;
-    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\dte.pdf', $pdfData);
+    file_put_contents('data\dte.pdf', $pdfData);
     echo "PDF guardado exitosamente.\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
@@ -108,7 +108,7 @@ if ($response->Status === 200) {
     $timbreData = json_decode($response->Data, true);
     $timbreBase64 = $timbreData['data'];
     $decodedData = base64_decode($timbreBase64);
-    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\timbre.png', $decodedData);
+    file_put_contents('data\timbre.png', $decodedData);
 
     echo "Timbre guardado exitosamente en timbre.png.\n";
 } else {
@@ -121,7 +121,7 @@ $response = $client->Facturacion->ObtenerXmlDteAsync($solicitud)->wait();
 
 if ($response->Status === 200) {
     $xmlData = $response->Data;
-    $ruta = 'C:\Proyectos\SDKSimpleFactura\data\xml.xml';
+    $ruta = 'data\xml.xml';
     file_put_contents($ruta, $xmlData);
 
     echo "XML guardado exitosamente en: $ruta \n";
@@ -162,7 +162,7 @@ $response = $client->Facturacion->ObtenerSobreXmlDteAsync($solicitud, $tipoSobre
 
 if ($response->Status === 200) {
     // Guardar el archivo XML como un sobre
-    $ruta = 'C:\Proyectos\SDKSimpleFactura\data\sobre.xml';
+    $ruta = 'data\sobre.xml';
     file_put_contents($ruta, $response->Data);
 
     echo "Sobre XML guardado exitosamente en: $ruta\n";
@@ -730,7 +730,7 @@ $response = $client->Proovedores->obtenerXmlAsync($request)->wait();
 
 if ($response->Status === 200) {
     $xmlData = $response->Data;
-    $ruta = 'C:\Proyectos\SDKSimpleFactura\data\xmlproovedor.xml';
+    $ruta = 'data\xmlproovedor.xml';
     file_put_contents($ruta, $xmlData);
 
     echo "XML guardado exitosamente en: $ruta \n";
@@ -975,18 +975,7 @@ $request = new BHERequest(
 $response = $client->BoletasHonorario->ObtenerPDFBHEEmitidaAsync($request)->wait();
 if ($response->Status === 200) {
     $pdfData = $response->Data;
-    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\dte.pdf', $pdfData);
-    echo "PDF guardado exitosamente.\n";
-} else {
-    echo "Error ({$response->Status}): {$response->Message}\n";
-}
-
-
-
-$response = $client->BoletasHonorario->ObtenerPDFBHEEmitidaAsync($request)->wait();
-if ($response->Status === 200) {
-    $pdfData = $response->Data;
-    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\bhe.pdf', $pdfData);
+    file_put_contents('data\bhe.pdf', $pdfData);
     echo "PDF guardado exitosamente.\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
@@ -1017,10 +1006,10 @@ $request = new BHERequest(
     ),
     folio: 2
 );
-$response = $client->BoletasHonorario->obtener($request)->wait();
+$response = $client->BoletasHonorario->ObtenerPDFBHERecibidosAsync($request)->wait();
 if ($response->Status === 200) {
     $pdfData = $response->Data;
-    file_put_contents('C:\Proyectos\SDKSimpleFactura\data\bhe2.pdf', $pdfData);
+    file_put_contents('data\bhe2.pdf', $pdfData);
     echo "PDF guardado exitosamente.\n";
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
