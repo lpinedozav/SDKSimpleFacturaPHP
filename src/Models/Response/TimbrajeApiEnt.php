@@ -10,86 +10,78 @@ class TimbrajeApiEnt
      * Código del SII.
      * @var int
      */
-    public int $CodigoSii;
+    public ?int $codigoSii;
 
     /**
      * Fecha de ingreso.
      * @var DateTime
      */
-    public DateTime $FechaIngreso;
+    public ?DateTime $fechaIngreso;
 
     /**
      * Fecha del CAF.
      * @var DateTime|null
      */
-    public ?DateTime $FechaCaf = null;
+    public ?DateTime $fechaCaf = null;
 
     /**
      * Folio inicial.
      * @var int
      */
-    public int $Desde;
+    public ?int $desde;
 
     /**
      * Folio final.
      * @var int
      */
-    public int $Hasta;
+    public ?int $hasta;
 
     /**
      * Fecha de vencimiento.
      * @var DateTime
      */
-    public DateTime $FechaVencimiento;
+    public ?DateTime $fechaVencimiento;
 
     /**
      * Tipo de DTE.
      * @var string
      */
-    public string $TipoDte;
+    public ?string $tipoDte;
 
     /**
      * Folios disponibles.
      * @var int
      */
-    public int $FoliosDisponibles;
+    public ?int $foliosDisponibles;
 
     /**
      * Ambiente.
      * @var int
      */
-    public int $Ambiente;
+    public ?int $ambiente;
 
     /**
      * Constructor por defecto.
      */
-    public function __construct()
-    {
-        $this->CodigoSii = 0;
-        $this->TipoDte = '';
-    }
-
-    /**
-     * Constructor que inicializa desde un objeto `TimbrajeEnt`.
-     *
-     * @param TimbrajeEnt|null $ent
-     */
-    public static function fromTimbrajeEnt(?TimbrajeEnt $ent): self
-    {
-        $instance = new self();
-
-        if ($ent !== null) {
-            $instance->CodigoSii = $ent->CodigoSii;
-            $instance->FechaIngreso = $ent->FechaIngreso;
-            $instance->FechaCaf = $ent->FechaCaf;
-            $instance->Desde = $ent->Desde;
-            $instance->Hasta = $ent->Hasta;
-            $instance->FechaVencimiento = $ent->FechaVencimiento;
-            $instance->TipoDte = $ent->TipoDte;
-            $instance->FoliosDisponibles = $ent->FoliosDisponibles;
-            $instance->Ambiente = $ent->Ambiente;
+    public function __construct(
+        ?int $codigoSii = null,
+        ?DateTime $fechaIngreso = null,
+        ?DateTime $fechaCaf = null,
+        ?int $desde = null,
+        ?int $hasta = null,
+        ?DateTime $fechaVencimiento = null,
+        ?string $tipoDte = null,
+        ?int $foliosDisponibles = null
+        )
+        {
+            $this->codigoSii = $codigoSii;
+            $this->fechaIngreso = $fechaIngreso;
+            $this->fechaCaf = $fechaCaf;
+            $this->desde = $desde;
+            $this->hasta = $hasta;
+            $this->fechaVencimiento = $fechaVencimiento;
+            $this->tipoDte = $tipoDte;
+            $this->foliosDisponibles = $foliosDisponibles;
         }
-
-        return $instance;
-    }
+    
 }

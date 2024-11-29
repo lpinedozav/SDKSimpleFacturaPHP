@@ -30,11 +30,16 @@ class FolioRequest
     /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->credenciales = new Credenciales();
-        $this->cantidad = 0;
-        $this->codigoTipoDte = null;
-        $this->ambiente = null;
-    }
+    public function __construct(
+        Credenciales $credenciales,
+        int $cantidad,
+        ?DTEType $codigoTipoDte = null,
+        ?int $ambiente = null
+        )
+        {
+            $this->credenciales = $credenciales;
+            $this->cantidad = $cantidad;
+            $this->ambiente = $ambiente;
+            $this->codigoTipoDte = $codigoTipoDte;
+        }
 }

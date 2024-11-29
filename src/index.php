@@ -49,6 +49,7 @@ use SDKSimpleFactura\Models\Facturacion\DteClass;
 use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
 use SDKSimpleFactura\Models\Request\NuevoReceptorExternoRequest;
 use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
+use SDKSimpleFactura\Models\Request\FolioRequest;
 
 
 
@@ -867,6 +868,31 @@ $request = new SolicitudFoliosRequest(
 
 
 $response = $client->Folio->ConsultaFoliosDisponiblesAsync($request)->wait();
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+
+//solicitar folios
+
+$request = new FolioRequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6',
+        nombreSucursal: "Casa Matriz"
+    ),
+    cantidad : 1,
+    codigoTipoDte: DTEType::FacturaElectronica
+);
+
+
+$response = $client->Folio->SolicitarFoliosAsync($request)->wait();
 
 if ($response->Status === 200) {
     echo 'Status: ' . $response->Status . "\n";
