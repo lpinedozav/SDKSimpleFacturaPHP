@@ -9,17 +9,21 @@ class AcuseReciboExternoRequest
 {
     public ?Credenciales $credenciales;
     public ?DteReferenciadoExterno $dteReferenciadoExterno;
-    public ?ResponseType $Respuesta;
+    public ?ResponseType $respuesta;
     public ?RejectionType $tipoRechazo;
+
+    public ?string $comentario;
     public function __construct(
-        ?string $credenciales = null,
-        ?string $dteReferenciadoExterno = null,
-        ?ResponseType $Respuesta = null,
-        ?RejectionType $tipoRechazo = null
+        ?Credenciales $credenciales = null,
+        ?DteReferenciadoExterno $dteReferenciadoExterno = null,
+        ?ResponseType $respuesta = null,
+        ?RejectionType $tipoRechazo = null,
+        ?string $comentario = null
     ) {
         $this->credenciales = $credenciales;
         $this->dteReferenciadoExterno = $dteReferenciadoExterno;
-        $this->Respuesta = $Respuesta;
+        $this->respuesta = $respuesta;
         $this->tipoRechazo = $tipoRechazo;
+        $this->comentario = $comentario;
     }
 }

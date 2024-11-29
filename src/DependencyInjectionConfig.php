@@ -9,6 +9,10 @@ use SDKSimpleFactura\Services\FacturacionService;
 use SDKSimpleFactura\Interfaces\IFacturacionService;
 use SDKSimpleFactura\Interfaces\IProductosService;
 use SDKSimpleFactura\Services\ProductosService;
+use SDKSimpleFactura\Interfaces\IProovedoresService;
+use SDKSimpleFactura\Services\ProveedoresService;
+
+
 
 
 class DependencyInjectionConfig
@@ -30,6 +34,9 @@ class DependencyInjectionConfig
                 ->constructor(\DI\get(IApiService::class)),
             IProductosService::class => \DI\autowire(ProductosService::class)
                 ->constructor(\DI\get(IApiService::class)),
+            IProovedoresService::class => \DI\autowire(ProveedoresService::class)
+                ->constructor(\DI\get(IApiService::class)),
+
         ]);
 
         return $builder->build();

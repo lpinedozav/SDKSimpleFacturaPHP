@@ -8,6 +8,8 @@ use SDKSimpleFactura\Models\Request\SolicitudDte;
 use SDKSimpleFactura\Models\Request\DteReferenciadoExterno;
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Enum\Ambiente;
+use SDKSimpleFactura\Enum\ResponseType;
+use SDKSimpleFactura\Enum\RejectionType;
 use SDKSimpleFactura\Enum\ClausulaCompraVenta;
 use SDKSimpleFactura\Enum\FormaPago;
 use SDKSimpleFactura\Enum\IndicadorFacturacionExencion;
@@ -44,6 +46,8 @@ use SDKSimpleFactura\Models\Request\NuevoProductoExternoRequest;
 use SDKSimpleFactura\Models\Request\EnvioMailRequest;
 use SDKSimpleFactura\Models\Facturacion\MailClass;
 use SDKSimpleFactura\Models\Facturacion\DteClass;
+use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
+
 
 
 $client = new SimpleFacturaClient();
@@ -640,4 +644,72 @@ if ($response) {
     } else {
         echo "Error: No se pudo obtener una respuesta.\n";
     }
+}
+
+
+//Acuse Recibo
+$request = new AcuseReciboExternoRequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6',
+        rutContribuyente: "76372100-0",
+        nombreSucursal: 'Casa Matriz'
+    ),
+    dteReferenciadoExterno: new DteReferenciadoExterno(
+        folio: 220,
+        codigoTipoDte: DTEType::FacturaElectronica,
+        ambiente: Ambiente::Certificacion
+    ),
+    respuesta: ResponseType::Rejected,
+    tipoRechazo: RejectionType::RCD,
+    comentario: "test"
+);
+
+$response = $client->Proovedores->acuseReciboAsync($request)->wait();
+if ($response) {
+    //print_r($response);
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+
+    if ($response->Status === 200) {
+        echo "Acuse.\n";
+    } else {
+        echo "Error ({$response->Status}): {$response->Message}\n";
+    }
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+}
+
+//Listado DTE Recibidos
+$request = new ListadoDteRequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6'
+    ),
+    ambiente: Ambiente::Produccion,
+    folio:null,
+    codigoTipoDte: null,
+    desde: new DateTime("2024-04-01"), // Fecha desde
+    hasta: new DateTime("2024-04-30")  // Fecha hasta
+);
+
+$response = $client->Proovedores->listadoDtesRecibidosAsync($request)->wait();
+
+// Manejar la respuesta
+if ($response->Status === 200) {
+    echo "Listado Recibidos exitoso.\n";
+    print_r($response->Data); // Aquí se imprimirá el `data` mapeado o crudo
+    print_r($response->Status); // Aquí se imprimirá el `data` mapeado o crudo
+
+    foreach ($response->Data as $dte) {
+        echo "-------------Listado Recibido----------------------\n";
+        
+        // Convertir la cadena a un objeto DateTime
+        $fechaEmision = new DateTime($dte->fechaEmision);
+        
+        echo "fechaEmision: " . $fechaEmision->format('Y-m-d H:i:s') . "\n";
+        echo "codigoSii: {$dte->codigoSii}\n";
+        echo "ambiente: {$dte->ambiente}\n";
+    }
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
 }
