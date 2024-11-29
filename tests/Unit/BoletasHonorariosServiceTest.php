@@ -6,7 +6,7 @@ use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\SimpleFacturaClient;
 
-class BoletasHonorariosService extends TestCase
+class BoletasHonorariosServiceTest extends TestCase
 {
     private ?SimpleFacturaClient $simpleFacturaClient;
     private ?IBoletasHonorarioService $boletasHonorarioService;
