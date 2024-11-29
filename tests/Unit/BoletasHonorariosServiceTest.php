@@ -136,4 +136,38 @@ class BoletasHonorariosServiceTest extends TestCase
 
 
     }
+    public function testListadoBHERecibidosAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void
+    {
+        $request = new ListaBHERequest(
+            credenciales: new Credenciales(
+                rutEmisor: '76269769-6',
+                nombreSucursal: 'Casa Matriz'
+            ),
+            folio: null,
+            desde: new DateTime('2024-09-03'),
+            hasta: new DateTime('2024-11-11')
+        );
+        $result = $this->boletasHonorarioService->ListadoBHERecibidosAsync($request)->wait();
+        $this->assertNotNull($result, 'El resultado no debe ser nulo.');
+        $this->assertEquals(expected:200, actual: $result->Status);
+        $this->assertNotNull($result->Data, 'Los datos no deben ser nulos.');
+        $this->assertGreaterThanOrEqual(0, count($result->Data));
+        $this->assertEquals("Lista de Bhes (" . count($result->Data) . ")", $result->Message);
+    }
+    public function testListadoBHERecibidosAsync_ReturnsError_WhenApiCallIsFail():void
+    {
+        $request = new ListaBHERequest(
+            credenciales: new Credenciales(
+                rutEmisor: '76269769-6',
+                nombreSucursal: 'Casa Matriz'
+            ),
+            folio: null
+        );
+        $result = $this->boletasHonorarioService->ListadoBHERecibidosAsync($request)->wait();
+        $this->assertNotNull($result, 'El resultado no debe ser nulo.');
+        $this->assertEquals(400, $result->Status, 'El estado de la respuesta debe ser 400.');
+        $this->assertEquals("Error interno", $result->Message, 'El mensaje de error debe ser el esperado.');
+        $this->assertFalse($result->Data, 'Los datos deben ser falsos.');
+        $this->assertContains('Si no se envían filtros de fecha, debe tener al menos un folio', $result->Errors, 'Los errores deben contener el mensaje esperado.');
+    }
 }
