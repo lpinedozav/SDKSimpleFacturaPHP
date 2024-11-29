@@ -31,7 +31,9 @@ class Serializer
 
         // Si el objeto es un enum
         if (is_object($obj) && enum_exists(get_class($obj))) {
-            return $obj->value; // Retorna directamente el valor del enum
+            if ($obj !== null) { // Verifica que el objeto no sea nulo
+                return $obj->value; // Retorna directamente el valor del enum
+            }
         }
 
         // Si el objeto es una lista

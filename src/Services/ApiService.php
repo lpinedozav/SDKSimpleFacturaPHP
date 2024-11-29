@@ -87,10 +87,12 @@ class ApiService implements IApiService
 
     public function PostForByteArrayAsync(string $url, $request): PromiseInterface
     {
+        $serializedRequest = Serializador::serializeToJson($request);
+
         return $this->httpClient->postAsync($url, [
-            'json' => $request,
+            'body' => $serializedRequest,
             'headers' => [
-                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
             ],
         ])->then(
             function ($response) {

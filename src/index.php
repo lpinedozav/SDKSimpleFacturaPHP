@@ -484,7 +484,7 @@ $request = new EnvioMailRequest(
     rutEmpresa: "76269769-6",
     dte: new DteClass(
         folio: 2149,
-        tipoDte:33
+        tipoDte: 33
     ),
     mail: new MailClass(
         to: ["contacto@chilesystems.com"],
@@ -532,7 +532,6 @@ if ($response->Status === 200) {
         echo "-------------Consolidado----------------------\n";
         echo "Fecha: " . $dte->fecha->format('Y-m-d H:i:s') . "\n";
         echo "Tipo DTE: {$dte->tiposDTE}\n";
-
     }
 } else {
     echo "Error ({$response->Status}): {$response->Message}\n";
@@ -549,7 +548,7 @@ $credenciales = new Credenciales(
 $mes = 5;
 $anio = 2024;
 
-$response = $client->Facturacion->ConsolidadoEmitidosAsync($credenciales,$mes,$anio)->wait();
+$response = $client->Facturacion->ConsolidadoEmitidosAsync($credenciales, $mes, $anio)->wait();
 
 if ($response->Status === 200) {
     echo 'Status: ' . $response->Status . "\n";
@@ -685,7 +684,7 @@ $request = new ListadoDteRequest(
         rutEmisor: '76269769-6'
     ),
     ambiente: Ambiente::Produccion,
-    folio:null,
+    folio: null,
     codigoTipoDte: null,
     desde: new DateTime("2024-04-01"), // Fecha desde
     hasta: new DateTime("2024-04-30")  // Fecha hasta
@@ -701,10 +700,10 @@ if ($response->Status === 200) {
 
     foreach ($response->Data as $dte) {
         echo "-------------Listado Recibido----------------------\n";
-        
+
         // Convertir la cadena a un objeto DateTime
         $fechaEmision = new DateTime($dte->fechaEmision);
-        
+
         echo "fechaEmision: " . $fechaEmision->format('Y-m-d H:i:s') . "\n";
         echo "codigoSii: {$dte->codigoSii}\n";
         echo "ambiente: {$dte->ambiente}\n";
@@ -718,13 +717,12 @@ if ($response->Status === 200) {
 $request = new ListadoDteRequest(
     credenciales: new Credenciales(
         rutEmisor: '76269769-6',
-        rutContribuyente:"96689310-9"
+        rutContribuyente: "96689310-9"
     ),
     ambiente: Ambiente::Produccion,
-    folio:7366834,
+    folio: 7366834,
     codigoTipoDte: DTEType::NotaCreditoElectronica
 );
-
 $response = $client->Proovedores->obtenerXmlAsync($request)->wait();
 
 if ($response->Status === 200) {
@@ -736,3 +734,4 @@ if ($response->Status === 200) {
 } else {
     echo "Error ({$response->Status}): {$response->Message}";
 }
+//ClientesService
