@@ -4,24 +4,18 @@ namespace SDKSimpleFactura\Models\Response;
 
 class ActividadeconomicaApiEnt
 {
-    /**
-     * Código de la actividad económica.
-     * @var int
-     */
-    public int $Codigo;
+    public ?int $codigo;
 
-    /**
-     * Descripción de la actividad económica.
-     * @var string
-     */
-    public string $Descripcion;
+    public ?string $descripcion;
 
     /**
      * Constructor para inicializar valores predeterminados.
      */
-    public function __construct()
-    {
-        $this->Codigo = 0;
-        $this->Descripcion = '';
+    public function __construct(
+        ?int $codigo = null,
+        ?string $descripcion = null
+    ) {
+        $this->codigo = $codigo;
+        $this->descripcion = $descripcion;
     }
 }
