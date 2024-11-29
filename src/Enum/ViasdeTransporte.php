@@ -5,7 +5,7 @@ namespace SDKSimpleFactura\Enum;
 /**
  * Enum ViasDeTransporte
  */
-enum ViasDeTransporte: int
+enum ViasdeTransporte: int
 {
     case NotSet = 0;
     case MARITINA_FLUVIAL_Y_LACUSTRE = 1;
