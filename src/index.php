@@ -504,7 +504,59 @@ if ($response->Status === 200) {
     print_r($response->Errors);
 }
 
-/*
+
+
+//Consolidado
+$request = new ListadoDteRequest(
+    credenciales: new Credenciales(
+        rutEmisor: '76269769-6'
+    ),
+    ambiente: Ambiente::Certificacion,
+    desde: new DateTime("2023-10-25"), // Fecha desde
+    hasta: new DateTime("2023-10-30")  // Fecha hasta
+);
+
+$response = $client->Facturacion->ConsolidadoVentasAsync($request)->wait();
+
+// Manejar la respuesta
+if ($response->Status === 200) {
+    echo "Consolidado exitoso.\n";
+    print_r($response->Data); // Aquí se imprimirá el `data` mapeado o crudo
+    print_r($response->Status); // Aquí se imprimirá el `data` mapeado o crudo
+
+    foreach ($response->Data as $dte) {
+        echo "-------------Consolidado----------------------\n";
+        echo "Fecha: " . $dte->fecha->format('Y-m-d H:i:s') . "\n";
+        echo "Tipo DTE: {$dte->tiposDTE}\n";
+
+    }
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+//Consolidar
+
+// Crear las credenciales
+$credenciales = new Credenciales(
+    rutEmisor: '76269769-6'
+);
+
+$mes = 5;
+$anio = 2024;
+
+$response = $client->Facturacion->ConsolidadoEmitidosAsync($credenciales,$mes,$anio)->wait();
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
 
 //Productos
 $name = bin2hex(random_bytes(3)); // Genera un string aleatorio de 6 caracteres
@@ -572,7 +624,7 @@ if ($response) {
             echo "Productos listados exitosamente:\n";
             $contador = 0;
             foreach ($response->Data as $producto) {
-                echo "-----------------------------------\n";
+                echo "------------------Productos-----------------\n";
                 echo "ProductoId: {$producto->productoId}\n";
                 echo "Nombre: {$producto->nombre}\n";
                 echo "Precio: {$producto->precio}\n";
@@ -588,4 +640,4 @@ if ($response) {
     } else {
         echo "Error: No se pudo obtener una respuesta.\n";
     }
-}*/
+}

@@ -10,78 +10,78 @@ class ReporteDTE
      * Fecha del reporte.
      * @var DateTime
      */
-    public ?DateTime $Fecha;
+    public ?DateTime $fecha;
 
     /**
      * Tipos de DTE.
      * @var string
      */
-    public ?string $TiposDTE;
+    public ?string $tiposDTE;
 
     /**
      * Número de documentos emitidos.
      * @var int
      */
-    public ?int $Emitidos;
+    public ?int $emitidos;
 
     /**
      * Número de documentos anulados.
      * @var int
      */
-    public ?int $Anulados;
+    public ?int $anulados;
 
     /**
      * Total neto de los DTE.
      * @var float
      */
-    public ?float $TotalNeto;
+    public ?float $totalNeto;
 
     /**
      * Total exento de los DTE.
      * @var float
      */
-    public ?float $TotalExento;
+    public ?float $totalExento;
 
     /**
      * Total IVA de los DTE.
      * @var float
      */
-    public ?float $TotalIva;
+    public ?float $totalIva;
 
     /**
      * Total general de los DTE.
      * @var float
      */
-    public ?float $Total;
+    public ?float $total;
 
     /**
      * Detalles del DTE.
      * @var DetalleDte[]
      */
-    public ?array $Detalle;
+    public ?array $detalle;
 
     /**
      * Constructor para inicializar valores predeterminados.
      */
     public function __construct(
-        ?DateTime $Fecha = null,
-        ?string $TiposDTE = null,
-        ?int $Emitidos = null,
-        ?int $Anulados = null,
-        ?float $TotalNeto = null,
-        ?float $TotalExento = null,
-        ?float $TotalIva = null,
-        ?float $Total = null,
-        ?array $Detalle = []
+        ?DateTime $fecha = null,
+        ?string $tiposDTE = null,
+        ?int $emitidos = null,
+        ?int $anulados = null,
+        ?float $totalNeto = null,
+        ?float $totalExento = null,
+        ?float $totalIva = null,
+        ?float $total = null,
+        ?array $detalle = []
     ) {
-        $this->Fecha = $Fecha;
-        $this->TiposDTE = $TiposDTE;
-        $this->Emitidos = $Emitidos;
-        $this->Anulados = $Anulados;
-        $this->TotalNeto = $TotalNeto;
-        $this->TotalExento = $TotalExento;
-        $this->TotalIva = $TotalIva;
-        $this->Total = $Total;
-        $this->Detalle = $Detalle;
+        $this->fecha = $fecha;
+        $this->tiposDTE = $tiposDTE;
+        $this->emitidos = $emitidos;
+        $this->anulados = $anulados;
+        $this->totalNeto = $totalNeto;
+        $this->totalExento = $totalExento;
+        $this->totalIva = $totalIva;
+        $this->total = $total;
+        $this->detalle = $detalle;
     }
 }

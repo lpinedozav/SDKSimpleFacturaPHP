@@ -50,11 +50,17 @@ class ApiService implements IApiService
                     $data = json_decode($body, true);
                     echo 'antesdelmapeado';
                     print_r($data);
-                    $mappedData = $responseClass && isset($data['data']) && $data['data'] !== null
-                        ? (is_array($data['data']) && isset($data['data'][0]) && array_keys($data['data']) === range(0, count($data['data']) - 1)
-                            ? $this->serializer->deserialize(json_encode($data['data']), $responseClass . '[]', 'json')
-                            : $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json'))
-                        : $data['data'];
+                    if ($responseClass === 'string') {
+                        $mappedData = $data['data'] ?? '';
+                    } elseif ($responseClass === 'boolean') {
+                        $mappedData = isset($data['data']) ? (bool) $data['data'] : false;
+                    } else {
+                        $mappedData = $responseClass && isset($data['data']) && $data['data'] !== null
+                            ? (is_array($data['data']) && isset($data['data'][0]) && array_keys($data['data']) === range(0, count($data['data']) - 1)
+                                ? $this->serializer->deserialize(json_encode($data['data']), $responseClass . '[]', 'json')
+                                : $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json'))
+                            : $data['data'];
+                    }
 
 
                     echo 'despues';

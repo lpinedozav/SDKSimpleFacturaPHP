@@ -128,7 +128,18 @@ class FacturacionService implements IFacturacionService
     public function EnvioMailAsync(EnvioMailRequest $request): PromiseInterface
     {
         $url = "/dte/enviar/mail";
-        return $this->apiService->PostAsync($url, $request, '');
+        return $this->apiService->PostAsync($url, $request, 'boolean');
+    }
+
+    public function ConsolidadoVentasAsync(ListadoDteRequest $request): PromiseInterface
+    {
+        $url = "/dte/consolidated/issued";
+        return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Facturacion\ReporteDTE');
+    }
+    public function ConsolidadoEmitidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface
+    {
+        $url = "/documentsIssued/consolidate/{$mes}/{$anio}";
+        return $this->apiService->PostAsync($url, $credenciales, 'string');
     }
 
 }

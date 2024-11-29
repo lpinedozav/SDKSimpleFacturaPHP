@@ -28,4 +28,8 @@ interface IFacturacionService
 
     public function EnvioMailAsync(EnvioMailRequest $request): PromiseInterface;
 
+    public function ConsolidadoVentasAsync(ListadoDteRequest $request): PromiseInterface;
+
+    public function ConsolidadoEmitidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface;
+
 }
