@@ -35,12 +35,16 @@ use SDKSimpleFactura\Models\Facturacion\Receptor;
 use SDKSimpleFactura\Enum\TipoBulto as TipoBultoEnum;
 use SDKSimpleFactura\Enum\TipoReferencia;
 use SDKSimpleFactura\Models\Facturacion\DetalleExportacion;
+use SDKSimpleFactura\Models\Facturacion\DteClass;
+use SDKSimpleFactura\Models\Facturacion\MailClass;
 use SDKSimpleFactura\Models\Facturacion\OtraMoneda;
 use SDKSimpleFactura\Models\Facturacion\Referencia;
 use SDKSimpleFactura\Models\Facturacion\TipoBulto;
 use SDKSimpleFactura\Models\Facturacion\Totales;
 use SDKSimpleFactura\Models\Facturacion\Transporte;
+use SDKSimpleFactura\Models\Request\EnvioMailRequest;
 use SDKSimpleFactura\Models\Request\FolioRequest;
+use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Response\InvoiceData;
 
 
@@ -950,6 +954,157 @@ class FacturacionServiceTest extends TestCase
         $this->assertCount(1, $result->Errors, 'Debe haber exactamente un error.');
         $this->assertEquals("Error interno", $result->Message);
         $this->assertContains("Tipo dte vacio", $result->Errors, 'Los errores deben contener "Tipo dte vacio".');
+    }
+
+    public function testListadoDtesEmitidosAsync_ReturnsOkResult_WhenRequestIsValid()
+    {
+        // Arrange
+        $request = new ListadoDteRequest(
+            credenciales: new Credenciales(
+                rutEmisor: '76269769-6',
+                rutContribuyente: '10422710-4',
+                nombreSucursal: 'Casa Matriz'
+            ),
+            ambiente: Ambiente::Certificacion,
+            folio: 0,
+            codigoTipoDte: DTEType::NotSet,
+            desde: new DateTime('2024-08-01'), // Fecha desde
+            hasta: new DateTime('2024-08-17')  // Fecha hasta
+        );
+
+        // Act
+        $response = $this->facturacionService->ListadoDtesEmitidosAsync($request)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos no deben ser nulos.');
+    }
+
+    public function testListadoDtesEmitidosAsync_ReturnsError_WhenRequestIsInvalid()
+    {
+        // Arrange
+        $request = new ListadoDteRequest(
+            credenciales: new Credenciales(
+                rutEmisor: '76269769-2',
+                rutContribuyente: '10422710-4',
+                nombreSucursal: 'Casa Matriz'
+            ),
+            ambiente: Ambiente::Certificacion,
+            folio: 0,
+            codigoTipoDte: DTEType::NotSet,
+            desde: new DateTime('2024-08-01'), // Fecha desde
+            hasta: new DateTime('2024-08-17')  // Fecha hasta
+        );
+
+        // Act
+        $response = $this->facturacionService->ListadoDtesEmitidosAsync($request)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertNotEquals(200, $response->Status, 'El estado de la respuesta no debe ser 200.');
+        $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
+    }
+
+    public function testEnvioMailAsync_ReturnsOkResult_WhenEmailIsSentSuccessfully()
+    {
+        // Arrange
+        $request = new EnvioMailRequest(
+            rutEmpresa: "76269769-6",
+            dte: new DteClass(
+                folio: 2149,
+                tipoDte: 33
+            ),
+            mail: new MailClass(
+                to: ["contacto@chilesystems.com"],
+                ccos: ["correo@gmail.com"],
+                ccs: ["correo2@gmail.com"]
+            ),
+            xml: true,
+            pdf: true,
+            comments: "ESTO ES UN COMENTARIO"
+        );
+
+        // Act
+        $response = $this->facturacionService->EnvioMailAsync($request)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos no deben ser nulos.');
+    }
+
+    public function testEnvioMailAsync_ReturnsError_WhenEmailSendingFails()
+    {
+        // Arrange
+        $request = new EnvioMailRequest(
+            rutEmpresa: "76269769-5",
+            dte: new DteClass(
+                folio: 2149,
+                tipoDte: 33
+            ),
+            mail: new MailClass(
+                to: ["contacto@chilesystems.com"],
+                ccos: ["correo@gmail.com"],
+                ccs: ["correo2@gmail.com"]
+            ),
+            xml: true,
+            pdf: true,
+            comments: "ESTO ES UN COMENTARIO"
+        );
+
+        // Act
+        $response = $this->facturacionService->EnvioMailAsync($request)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertNotEquals(200, $response->Status, 'El estado de la respuesta no debe ser 200.');
+        $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
+    }
+
+    public function testConsolidadoVentasAsync_ReturnsOkResult_WhenRequestIsValid()
+    {
+        // Arrange
+        $request = new ListadoDteRequest(
+            credenciales: new Credenciales(
+                rutEmisor: '76269769-6'
+            ),
+            ambiente: Ambiente::Certificacion,
+            desde: new DateTime("2023-10-25"), // Fecha desde
+            hasta: new DateTime("2023-10-30")  // Fecha hasta
+        );
+
+        // Act
+        $response = $this->facturacionService->ConsolidadoVentasAsync($request)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos no deben ser nulos.');
+        $this->assertEquals("Exito", $response->Message);
+    }
+
+    public function testConsolidadoVentasAsync_ReturnsError_WhenRequestIsInvalid()
+    {
+        // Arrange
+        $request = new ListadoDteRequest(
+            credenciales: new Credenciales(
+                rutEmisor: '76269769-9'
+            ),
+            ambiente: Ambiente::Certificacion,
+            desde: new DateTime("2023-10-25"), // Fecha desde
+            hasta: new DateTime("2023-10-30")  // Fecha hasta
+        );
+
+        // Act
+        $response = $this->facturacionService->ConsolidadoVentasAsync($request)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertNotEquals(200, $response->Status, 'El estado de la respuesta no debe ser 200.');
+        $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
+        $this->assertNotNull("Error interno",$response->Message);
+        $this->assertEquals("Error al obtener consolidado de emitidos desde api", $response->Data);
     }
 
     private function solicitarFolio($tipo, $cantidad)
