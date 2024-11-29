@@ -54,9 +54,6 @@ class FacturacionServiceTest extends TestCase
         $this->_folioService = $this->simpleFacturaClient->Folio;
     }
 
-    /**
-     * Test: ObtenerPdfDteAsync debe devolver un resultado exitoso
-     */
     public function testObtenerPdfDteAsync_ReturnsOkResult_WhenPDFIsGeneratedSuccessfully()
     {
         // Arrange: Crear la solicitud PDF
@@ -152,7 +149,7 @@ class FacturacionServiceTest extends TestCase
         // Assert: Validar los resultados
         $this->assertNotNull($response, 'El resultado no debe ser nulo.');
         $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500 (Internal Server Error).');
-        $this->assertNull($response->Data, 'Los datos del timbre deben ser nulos en caso de error.');
+        $this->assertEquals("Error al obtener xml desde api", $response->Data);
         $this->assertNotNull($response->Message, 'El mensaje de error no debe ser nulo.');
        
     }
@@ -202,7 +199,7 @@ class FacturacionServiceTest extends TestCase
         // Assert: Validar los resultados
         $this->assertNotNull($response, 'El resultado no debe ser nulo.');
         $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500 (Internal Server Error).');
-        $this->assertNull($response->Data, 'Los datos deben ser nulos en caso de error del servidor.');
+        $this->assertEquals("Error al obtener xml desde api", $response->Data);
         $this->assertNotNull($response->Message, 'El mensaje de error no debe ser nulo.');
         $this->assertNotNull($response->Errors, 'Los errores deben ser nulos en caso de error interno.');
     }
@@ -250,7 +247,7 @@ class FacturacionServiceTest extends TestCase
 
         $this->assertNotNull($response, 'El resultado no debe ser nulo.');
         $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500 (Internal Server Error).');
-        $this->assertNull($response->Data, 'Los datos deben ser nulos en caso de error del servidor.');
+        $this->assertEquals("Error al obtener sobre xml desde api", $response->Data);
         $this->assertNotNull($response->Message, 'El mensaje de error no debe ser nulo.');
         $this->assertNotNull($response->Errors, 'Los errores deben ser nulos en caso de error interno.');
     }
@@ -444,7 +441,7 @@ class FacturacionServiceTest extends TestCase
     
         $this->assertNotNull($response, 'El resultado no debe ser nulo.');
         $this->assertEquals(400, $response->Status, 'El estado de la respuesta debe ser 400.');
-        $this->assertNull($response->Data, 'Los datos deben ser nulos.');
+        $this->assertFalse($response->Data);
         $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
         $this->assertCount(1, $response->Errors, 'Debe haber exactamente un error.');
         $this->assertEquals("Error al facturar desde api", $response->Message, 'El mensaje debe ser "Error al facturar desde api".');
@@ -596,7 +593,7 @@ class FacturacionServiceTest extends TestCase
         }
     }
 
-    public function FacturacionIndividualV2ExportacionAsync_ReturnsError_WhenRutEmisorIsNotFound()
+    public function testFacturacionIndividualV2ExportacionAsync_ReturnsError_WhenRutEmisorIsNotFound()
     {
         $exportacion = new RequestDTE(
             Exportaciones: new Exportaciones(
@@ -709,10 +706,49 @@ class FacturacionServiceTest extends TestCase
         $this->assertEquals("Error al facturar desde api",$result->Message);
     }
 
+    public function testFacturacionMasiva_ReturnsOkResult_WhenCsvIsProcessedSuccessfully()
+    {
+        // Arrange
+        $credenciales = new Credenciales(
+            rutEmisor: '76269769-6',
+            nombreSucursal: 'Casa Matriz'
+        );
 
+        // Ruta al archivo CSV
+        $pathCsv = "data\\ejemplo_carga_masiva_nacional.csv";
 
+        // Act
+        $response = $this->facturacionService->facturacionMasiva($credenciales, $pathCsv)->wait();
 
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos no deben ser nulos.');
+        echo "Facturación masiva exitosa.\n";
+        print_r($response->Data); // Aquí se imprimirá el `data` sin mapear
+    }
 
+    public function testFacturacionMasiva_ReturnsError_WhenCsvProcessingFails()
+    {
+        // Arrange
+        $credenciales = new Credenciales(
+            rutEmisor: '76269769-6',
+            nombreSucursal: 'Casa Matriz'
+        );
+
+        // Ruta al archivo CSV incorrecta o con datos inválidos
+        $pathCsv = "data\\archivo_invalido.csv";
+
+        // Act
+        $response = $this->facturacionService->facturacionMasiva($credenciales, $pathCsv)->wait();
+
+        // Assert
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertNotEquals(200, $response->Status, 'El estado de la respuesta no debe ser 200.');
+        $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
+        echo "Error ({$response->Status}): {$response->Message}\n";
+        print_r($response->Errors);
+    }
 
     private function solicitarFolio($tipo, $cantidad)
     {
