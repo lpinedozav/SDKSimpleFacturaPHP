@@ -7,6 +7,7 @@ use SDKSimpleFactura\Models\Request\SolicitudDte;
 use SDKSimpleFactura\Models\Request\DteReferenciadoExterno;
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Enum\Ambiente;
+use SDKSimpleFactura\Enum\TipoSobreEnvio;
 use SDKSimpleFactura\Interfaces\IFacturacionService;
 
 class FacturacionServiceTest extends TestCase
@@ -126,6 +127,77 @@ class FacturacionServiceTest extends TestCase
        
     }
 
+    public function testObtenerXmlDteAsync_ReturnsOkResult_WhenXmlDteIsSentSuccessfully()
+    {
+        // Arrange: Crear la solicitud para obtener el XML del DTE
+        $solicitudXml = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: '76269769-6'
+            ),
+            new DteReferenciadoExterno(
+                folio: 12553,
+                codigoTipoDte: DTEType::BoletaElectronica, // Código tipo 39
+                ambiente: Ambiente::Certificacion // Ambiente de certificación
+            )
+        );
+
+        // Act: Llamar al servicio para obtener el XML del DTE
+        $response = $this->facturacionService->ObtenerXmlDteAsync($solicitudXml)->wait();
+
+        // Assert: Validar los resultados
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos del XML no deben ser nulos.');
+        $this->assertIsString($response->Data, 'El XML debe ser una cadena (contenido en formato base64).');
+    }
 
 
+    public function testObtenerXmlDteAsync_ReturnsInternalServerError_WhenServerFails()
+    {
+        // Arrange: Crear la solicitud con datos válidos
+        $solicitudXml = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: ''
+            ),
+            new DteReferenciadoExterno(
+                folio: 12553,
+                codigoTipoDte: DTEType::BoletaElectronica, // Código tipo 39
+                ambiente: Ambiente::Certificacion // Ambiente de certificación
+            )
+        );
+
+        // Act: Llamar al servicio para obtener el XML del DTE
+        $response = $this->facturacionService->ObtenerXmlDteAsync($solicitudXml)->wait();
+
+        // Assert: Validar los resultados
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500 (Internal Server Error).');
+        $this->assertNull($response->Data, 'Los datos deben ser nulos en caso de error del servidor.');
+        $this->assertNotNull($response->Message, 'El mensaje de error no debe ser nulo.');
+        $this->assertNotNull($response->Errors, 'Los errores deben ser nulos en caso de error interno.');
+    }
+
+    public function testObtenerSobreXmlDteAsync_ReturnsOkResult_WhenXmlSobreIsGeneratedSuccessfully()
+    {
+        // Arrange: Crear la solicitud para obtener el sobre XML
+        $solicitudXmlSobre = new SolicitudDte(
+            new Credenciales(
+                rutEmisor: '76269769-6'
+            ),
+            new DteReferenciadoExterno(
+                folio: 2393,
+                codigoTipoDte: DTEType::FacturaElectronica, // Código tipo 33
+                ambiente: Ambiente::Certificacion // Ambiente de certificación
+            )
+        );
+
+        // Act: Llamar al servicio para obtener el sobre XML
+        $response = $this->facturacionService->ObtenerSobreXmlDteAsync($solicitudXmlSobre, TipoSobreEnvio::AlSII)->wait();
+
+        // Assert: Validar los resultados
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
+        $this->assertNotNull($response->Data, 'Los datos del sobre XML no deben ser nulos.');
+        $this->assertIsString($response->Data, 'Los datos deben ser una cadena (contenido en formato base64).');
+    }
 }
