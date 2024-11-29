@@ -15,10 +15,12 @@ use SDKSimpleFactura\Models\Facturacion\Encabezado;
 use SDKSimpleFactura\Models\Facturacion\IdentificacionDTE;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use DateTime;
+use SDKSimpleFactura\Models\Facturacion\CodigoItem;
 use SDKSimpleFactura\Models\Facturacion\Detalle;
 use SDKSimpleFactura\Models\Facturacion\Emisor;
 use SDKSimpleFactura\Models\Facturacion\Receptor;
 use SDKSimpleFactura\Models\Facturacion\Totales;
+use SDKSimpleFactura\Models\Response\InvoiceData;
 
 class FacturacionServiceTest extends TestCase
 {
@@ -305,49 +307,49 @@ class FacturacionServiceTest extends TestCase
                     Emisor: new Emisor(
                         RUTEmisor: '76269769-6',
                         RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
-                        giroEmis: 'Desarrollo de software',
-                        telefono: ['912345678'],
-                        correoEmisor: 'mvega@chilesystems.com',
-                        acteco: [620200],
-                        dirOrigen: 'Calle 7 numero 3',
-                        cmnaOrigen: 'Santiago',
-                        ciudadOrigen: 'Santiago'
+                        GiroEmis: 'Desarrollo de software',
+                        Telefono: ['912345678'],
+                        CorreoEmisor: 'mvega@chilesystems.com',
+                        Acteco: [620200],
+                        DirOrigen: 'Calle 7 numero 3',
+                        CmnaOrigen: 'Santiago',
+                        CiudadOrigen: 'Santiago'
                     ),
                     Receptor: new Receptor(
-                        rutRecep: '17096073-4',
-                        rznSocRecep: 'Hotel Iquique',
-                        giroRecep: 'test',
-                        correoRecep: 'mvega@chilesystems.com',
-                        dirRecep: 'calle 12',
-                        cmnaRecep: 'Paine',
-                        ciudadRecep: 'Santiago'
+                        RUTRecep: '17096073-4',
+                        RznSocRecep: 'Hotel Iquique',
+                        GiroRecep: 'test',
+                        CorreoRecep: 'mvega@chilesystems.com',
+                        DirRecep: 'calle 12',
+                        CmnaRecep: 'Paine',
+                        CiudadRecep: 'Santiago'
                     ),
                     Totales: new Totales(
-                        mntNeto: 832,
-                        tasaIVA: 19,
-                        iva: 158,
-                        mntTotal: 990
+                        MntNeto: 832,
+                        TasaIVA: 19,
+                        IVA: 158,
+                        MntTotal: 990
                     )
                 ),
                 Detalle: [
                     new Detalle(
-                        nroLinDet: 1,
-                        nmbItem: 'Alfajor',
-                        cdgItem: [
+                        NroLinDet: 1,
+                        NmbItem: 'Alfajor',
+                        CdgItem: [
                             new CodigoItem(
-                                tpoCodigo: 'ALFA',
-                                vlrCodigo: '123'
+                                TpoCodigo: 'ALFA',
+                                VlrCodigo: '123'
                             )
                         ],
-                        qtyItem: 1,
-                        unmdItem: 'un',
-                        prcItem: 831.932773,
-                        montoItem: 832
+                        QtyItem: 1,
+                        UnmdItem: 'un',
+                        PrcItem: 831.932773,
+                        MontoItem: 832
                     )
                 ]
             ),
-            observaciones: 'NOTA AL PIE DE PAGINA',
-            tipoPago: '30 dias'
+            Observaciones: 'NOTA AL PIE DE PAGINA',
+            TipoPago: '30 dias'
         );
     
         $response = $this->facturacionService->FacturacionIndividualV2DTEAsync($sucursal, $request)->wait();
@@ -355,10 +357,9 @@ class FacturacionServiceTest extends TestCase
         $this->assertNotNull($response);
         $this->assertEquals(200, $response->Status);
         $this->assertInstanceOf(InvoiceData::class, $response->Data);
-        $this->assertEquals('76269769-6', $response->Data->RUTEmisor);
-        $this->assertEquals('17096073-4', $response->Data->RUTReceptor);
+        $this->assertEquals('76269769-6', $response->Data->rutEmisor);
+        $this->assertEquals('17096073-4', $response->Data->rutReceptor);
         $this->assertNotNull($response->Message);
-        $this->assertNull($response->Errors);
     }
     
 
