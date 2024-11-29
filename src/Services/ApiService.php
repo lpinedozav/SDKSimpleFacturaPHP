@@ -45,44 +45,44 @@ class ApiService implements IApiService
                 'Content-Type' => 'application/json',
             ],
         ])->then(
-                function ($response) use ($responseClass) {
-                    $body = $response->getBody()->getContents();
-                    $data = json_decode($body, true);
-                    echo 'antesdelmapeado';
-                    print_r($data);
-                    if ($responseClass === 'string') {
-                        $mappedData = $data['data'] ?? '';
-                    } elseif ($responseClass === 'boolean') {
-                        $mappedData = isset($data['data']) ? (bool) $data['data'] : false;
-                    } else {
-                        $mappedData = $responseClass && isset($data['data']) && $data['data'] !== null
-                            ? (is_array($data['data']) && isset($data['data'][0]) && array_keys($data['data']) === range(0, count($data['data']) - 1)
-                                ? $this->serializer->deserialize(json_encode($data['data']), $responseClass . '[]', 'json')
-                                : $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json'))
-                            : $data['data'];
-                    }
-
-
-                    echo 'despues';
-                    print_r($mappedData);
-                    return new Response(
-                        $data['status'],
-                        $mappedData,
-                        $data['message'] ?? '',
-                        $data['errors'] ?? []
-                    );
-                },
-                function (RequestException $e) {
-                    $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
-                    $data = json_decode($errorMessage, true);
-                    return new Response(
-                        $data['status'] ?? 500,
-                        null,
-                        $data['message'] ?? 'Error interno',
-                        $data['errors'] ?? []
-                    );
+            function ($response) use ($responseClass) {
+                $body = $response->getBody()->getContents();
+                $data = json_decode($body, true);
+                echo 'antesdelmapeado';
+                print_r($data);
+                if ($responseClass === 'string' || $responseClass === 'int') {
+                    $mappedData = $data['data'] ?? '';
+                } elseif ($responseClass === 'boolean') {
+                    $mappedData = isset($data['data']) ? (bool) $data['data'] : false;
+                } else {
+                    $mappedData = $responseClass && isset($data['data']) && $data['data'] !== null
+                        ? (is_array($data['data']) && isset($data['data'][0]) && array_keys($data['data']) === range(0, count($data['data']) - 1)
+                            ? $this->serializer->deserialize(json_encode($data['data']), $responseClass . '[]', 'json')
+                            : $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json'))
+                        : $data['data'];
                 }
-            );
+
+
+                echo 'despues';
+                print_r($mappedData);
+                return new Response(
+                    $data['status'],
+                    $mappedData,
+                    $data['message'] ?? '',
+                    $data['errors'] ?? []
+                );
+            },
+            function (RequestException $e) {
+                $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
+                $data = json_decode($errorMessage, true);
+                return new Response(
+                    $data['status'] ?? 500,
+                    null,
+                    $data['message'] ?? 'Error interno',
+                    $data['errors'] ?? []
+                );
+            }
+        );
     }
 
     public function PostForByteArrayAsync(string $url, $request): PromiseInterface
@@ -93,24 +93,24 @@ class ApiService implements IApiService
                 'Accept' => 'application/json',
             ],
         ])->then(
-                function ($response) {
-                    $body = $response->getBody()->getContents();
-                    return (object) [
-                        'IsSuccess' => true,
-                        'Data' => $body,
-                    ];
-                },
-                function (RequestException $e) {
-                    $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
-                    $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
+            function ($response) {
+                $body = $response->getBody()->getContents();
+                return (object) [
+                    'IsSuccess' => true,
+                    'Data' => $body,
+                ];
+            },
+            function (RequestException $e) {
+                $statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : 0;
+                $errorMessage = $e->hasResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();
 
-                    return (object) [
-                        'IsSuccess' => false,
-                        'StatusCode' => $statusCode,
-                        'Errores' => $errorMessage,
-                    ];
-                }
-            );
+                return (object) [
+                    'IsSuccess' => false,
+                    'StatusCode' => $statusCode,
+                    'Errores' => $errorMessage,
+                ];
+            }
+        );
     }
 
 
@@ -120,7 +120,7 @@ class ApiService implements IApiService
             'multipart' => $multipart,
 
         ])->then(
-         
+
             function ($response) {
                 $body = $response->getBody()->getContents();
                 $data = json_decode($body, true);
@@ -150,6 +150,4 @@ class ApiService implements IApiService
             }
         );
     }
-
-
 }
