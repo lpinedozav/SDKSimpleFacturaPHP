@@ -41,7 +41,7 @@ class ProveedoresService implements IProovedoresService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );
@@ -54,7 +54,7 @@ class ProveedoresService implements IProovedoresService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );

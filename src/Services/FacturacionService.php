@@ -32,7 +32,7 @@ class FacturacionService implements IFacturacionService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );
@@ -46,7 +46,7 @@ class FacturacionService implements IFacturacionService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );
@@ -60,7 +60,7 @@ class FacturacionService implements IFacturacionService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );
@@ -80,7 +80,7 @@ class FacturacionService implements IFacturacionService
                 if ($result->IsSuccess) {
                     return new Response(200, $result->Data);
                 } else {
-                    return new Response($result->StatusCode, null, $result->Errores);
+                    return $result;
                 }
             }
         );
