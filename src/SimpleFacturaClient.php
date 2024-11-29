@@ -15,7 +15,7 @@ class SimpleFacturaClient
 {
     public $Facturacion;
     public $Productos;
-    public $Proovedores;
+    public $Proveedores;
     public $Clientes;
     public $Sucursal;
     public $Folio;
@@ -26,7 +26,7 @@ class SimpleFacturaClient
         $container = DependencyInjectionConfig::configureServices();
         $this->Facturacion = $container->get(IFacturacionService::class);
         $this->Productos = $container->get(IProductosService::class);
-        $this->Proovedores = $container->get(IProovedoresService::class);
+        $this->Proveedores = $container->get(IProovedoresService::class);
         $this->Clientes = $container->get(IClientesService::class);
         $this->Sucursal = $container->get(ISucursalService::class);
         $this->Folio = $container->get(IFolioService::class);

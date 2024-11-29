@@ -666,7 +666,7 @@ $request = new AcuseReciboExternoRequest(
     comentario: "test"
 );
 
-$response = $client->Proovedores->acuseReciboAsync($request)->wait();
+$response = $client->Proveedores->acuseReciboAsync($request)->wait();
 if ($response) {
     //print_r($response);
     echo 'Status: ' . $response->Status . "\n";
@@ -693,7 +693,7 @@ $request = new ListadoDteRequest(
     hasta: new DateTime("2024-04-30")  // Fecha hasta
 );
 
-$response = $client->Proovedores->listadoDtesRecibidosAsync($request)->wait();
+$response = $client->Proveedores->listadoDtesRecibidosAsync($request)->wait();
 
 // Manejar la respuesta
 if ($response->Status === 200) {
@@ -726,7 +726,7 @@ $request = new ListadoDteRequest(
     folio: 7366834,
     codigoTipoDte: DTEType::NotaCreditoElectronica
 );
-$response = $client->Proovedores->obtenerXmlAsync($request)->wait();
+$response = $client->Proveedores->obtenerXmlAsync($request)->wait();
 
 if ($response->Status === 200) {
     $xmlData = $response->Data;
@@ -749,7 +749,7 @@ $request = new ListadoDteRequest(
     folio: 2232,
     codigoTipoDte: DTEType::FacturaElectronica
 );
-$response = $client->Proovedores->obtenerPDFAsync($request)->wait();
+$response = $client->Proveedores->obtenerPDFAsync($request)->wait();
 
 if ($response->Status === 200) {
     $xmlData = $response->Data;
@@ -770,7 +770,7 @@ $request = new Credenciales(
 $mes = 5;
 $anio = 2024;
 
-$response = $client->Proovedores->conciliarRecibidosAsync($credenciales, $mes, $anio)->wait();
+$response = $client->Proveedores->conciliarRecibidosAsync($credenciales, $mes, $anio)->wait();
 
 
 if ($response->Status === 200) {
