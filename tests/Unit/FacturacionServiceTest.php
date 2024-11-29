@@ -21,6 +21,7 @@ use SDKSimpleFactura\Enum\ModalidadVenta;
 use SDKSimpleFactura\Enum\Moneda;
 use SDKSimpleFactura\Enum\Paises;
 use SDKSimpleFactura\Enum\Puertos;
+use SDKSimpleFactura\Enum\ReasonType;
 use SDKSimpleFactura\Enum\UnidadMedida;
 use SDKSimpleFactura\Enum\ViasDeTransporte;
 use SDKSimpleFactura\Interfaces\IFolioService;
@@ -32,8 +33,10 @@ use SDKSimpleFactura\Models\Facturacion\Exportaciones;
 use SDKSimpleFactura\Models\Facturacion\Extranjero;
 use SDKSimpleFactura\Models\Facturacion\Receptor;
 use SDKSimpleFactura\Enum\TipoBulto as TipoBultoEnum;
+use SDKSimpleFactura\Enum\TipoReferencia;
 use SDKSimpleFactura\Models\Facturacion\DetalleExportacion;
 use SDKSimpleFactura\Models\Facturacion\OtraMoneda;
+use SDKSimpleFactura\Models\Facturacion\Referencia;
 use SDKSimpleFactura\Models\Facturacion\TipoBulto;
 use SDKSimpleFactura\Models\Facturacion\Totales;
 use SDKSimpleFactura\Models\Facturacion\Transporte;
@@ -749,6 +752,125 @@ class FacturacionServiceTest extends TestCase
         echo "Error ({$response->Status}): {$response->Message}\n";
         print_r($response->Errors);
     }
+
+    public function testEmisionNC_NDV2Async_ReturnsOkResult_WhenApiCallIsSuccessful()
+    {
+        $maxIntentos = 3;
+        $intentoActual = 0;
+        $exito = false;
+
+        $ultimaExcepcion = null;
+
+        while ($intentoActual < $maxIntentos && !$exito) {
+            $intentoActual++;
+
+            try {
+                // Arrange: Solicitar folio
+                [$success, $folio] = $this->solicitarFolio(DTEType::NotaCreditoElectronica, 1);
+
+                if ($success) {
+                    $request = new RequestDTE(
+                        Documento: new Documento(
+                            Encabezado: new Encabezado(
+                                IdDoc: new IdentificacionDTE(
+                                    TipoDTE: DTEType::NotaCreditoElectronica,
+                                    FchEmis: new DateTime(),
+                                    FmaPago: FormaPago::Credito,
+                                    FchVenc: (new DateTime())->modify('+6 months'),
+                                    Folio: $folio
+                                ),
+                                Emisor: new Emisor(
+                                    RUTEmisor: '76269769-6',
+                                    RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                                    GiroEmis: 'Desarrollo de software',
+                                    Telefono: ['912345678'],
+                                    CorreoEmisor: 'felipe.anzola@erke.cl',
+                                    Acteco: [620900],
+                                    DirOrigen: 'Chile',
+                                    CmnaOrigen: 'Chile',
+                                    CiudadOrigen: 'Chile'
+                                ),
+                                Receptor: new Receptor(
+                                    RUTRecep: '77225200-5',
+                                    RznSocRecep: 'ARRENDADORA DE VEHÍCULOS S.A.',
+                                    GiroRecep: '451001 - VENTA AL POR MAYOR DE VEHÍCULOS AUTOMOTORES',
+                                    CorreoRecep: 'terceros-77225200@dte.iconstruye.com',
+                                    DirRecep: 'Rondizzoni 2130',
+                                    CmnaRecep: 'SANTIAGO',
+                                    CiudadRecep: 'SANTIAGO'
+                                ),
+                                Totales: new Totales(
+                                    MntNeto: 6930000.0,
+                                    TasaIVA: 19,
+                                    IVA: 1316700,
+                                    MntTotal: 8246700.0
+                                )
+                            ),
+                            Detalle: [
+                                new Detalle(
+                                    NroLinDet: 1,
+                                    NmbItem: 'CERRADURA DE SEGURIDAD (2PIEZA).SATURN EVO',
+                                    CdgItem: [
+                                        new CodigoItem(
+                                            TpoCodigo: '4',
+                                            VlrCodigo: 'EVO_2'
+                                        )
+                                    ],
+                                    QtyItem: 42.0,
+                                    UnmdItem: 'unid',
+                                    PrcItem: 319166.0,
+                                    MontoItem: 6930000
+                                )
+                            ],
+                            Referencia: [
+                                new Referencia(
+                                    NroLinRef: 1,
+                                    TpoDocRef: '61',
+                                    FolioRef: '1268',
+                                    FchRef: new DateTime('2024-10-17'),
+                                    CodRef: TipoReferencia::AnulaDocumentoReferencia,
+                                    RazonRef: 'Anular'
+                                )
+                            ]
+                        )
+                    );
+
+                    $sucursal = 'Casa Matriz';
+                    $motivo = ReasonType::Otros;
+
+                    // Act
+                    $result = $this->facturacionService->EmisionNC_NDV2Async($sucursal, $motivo, $request)->wait();
+
+                    // Assert
+                    $this->assertNotNull($result, 'El resultado no debe ser nulo.');
+                    $this->assertEquals(200, $result->Status, 'El estado de la respuesta debe ser 200.');
+                    $this->assertInstanceOf(InvoiceData::class, $result->Data, 'Los datos deben ser una instancia de InvoiceData.');
+                    $this->assertEquals('76269769-6', $result->Data->rutEmisor, 'El RUT del emisor debe ser "76269769-6".');
+                    $this->assertEquals('77225200-5', $result->Data->rutReceptor, 'El RUT del receptor debe ser "77225200-5".');
+                    $this->assertNotNull($result->Message, 'El mensaje no debe ser nulo.');
+                    $this->assertNull($result->Errors, 'Los errores deben ser nulos.');
+
+                    // Si todo salió bien, marcamos exito como verdadero para salir del bucle
+                    $exito = true;
+                } else {
+                    throw new \Exception('Error: Sin folios');
+                }
+            } catch (\Exception $ex) {
+                $ultimaExcepcion = $ex;
+
+                // Si no hemos alcanzado el máximo de intentos, esperamos antes de reintentar
+                if ($intentoActual < $maxIntentos) {
+                    sleep(1); // Espera 1 segundo antes de reintentar (opcional)
+                }
+            }
+        }
+
+        // Si después de los intentos no se tuvo éxito, fallamos la prueba
+        if (!$exito) {
+            $this->fail("La prueba falló después de $maxIntentos intentos. Último error: {$ultimaExcepcion->getMessage()}");
+        }
+    }
+
 
     private function solicitarFolio($tipo, $cantidad)
     {
