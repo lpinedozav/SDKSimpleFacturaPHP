@@ -7,71 +7,59 @@ class NuevoReceptorExternoRequest
     /**
      * @var string
      */
-    public string $rut;
+    public ?string $rut;
 
     /**
      * @var string
      */
-    public string $razonSocial;
+    public ?string $razonSocial;
 
     /**
      * @var string
      */
-    public string $giro;
+    public ?string $giro;
 
     /**
      * @var string
      */
-    public string $dirPart;
+    public ?string $dirPart;
 
     /**
      * @var string
      */
-    public string $dirFact;
+    public ?string $dirFact;
 
     /**
      * @var string
      */
-    public string $correoPar;
+    public ?string $correoPar;
 
     /**
      * @var string
      */
-    public string $correoFact;
+    public ?string $correoFact;
 
     /**
      * @var string
      */
-    public string $ciudad;
+    public ?string $ciudad;
 
     /**
      * @var string
      */
-    public string $comuna;
+    public ?string $comuna;
 
-    /**
-     * Constructor
-     *
-     * @param string $rut
-     * @param string $razonSocial
-     * @param string $giro
-     * @param string $dirPart
-     * @param string $dirFact
-     * @param string $correoPar
-     * @param string $correoFact
-     * @param string $ciudad
-     * @param string $comuna
-     */
+   
     public function __construct(
-        string $rut,
-        string $razonSocial,
-        string $giro,
-        string $dirPart,
-        string $dirFact,
-        string $correoPar,
-        string $correoFact,
-        string $ciudad,
-        string $comuna
+        ?string $rut = null,
+        ?string $razonSocial = null,
+        ?string $giro = null,
+        ?string $dirPart = null,
+        ?string $dirFact = null,
+        ?string $correoPar = null,
+        ?string $correoFact = null,
+        ?string $ciudad = null,
+        ?string $comuna = null
     ) {
         $this->rut = $rut;
         $this->razonSocial = $razonSocial;

@@ -7,111 +7,126 @@ class ReceptorExternoEnt
      * ID del receptor.
      * @var string
      */
-    public string $ReceptorId;
+    public ?string $receptorId;
 
     /**
      * ID del emisor.
      * @var string
      */
-    public string $EmisorId;
+    public ?string $emisorId;
 
     /**
      * RUT del receptor (sin dígito verificador).
      * @var int
      */
-    public int $Rut;
+    public ?int $rut;
 
     /**
      * Dígito verificador del RUT.
      * @var string
      */
-    public string $Dv;
+    public ?string $dv;
 
     /**
      * RUT formateado.
      * @var string
      */
-    public string $RutFormateado;
+    public ?string $rutFormateado;
 
     /**
      * Razón social del receptor.
-     * @var string
+     * @var ?string
      */
-    public string $RazonSocial;
+    public ?string $razonSocial;
 
     /**
      * Nombre de fantasía del receptor.
      * @var string
      */
-    public string $NombreFantasia;
+    public ?string $nombreFantasia;
 
     /**
      * Giro del receptor.
      * @var string
      */
-    public string $Giro;
+    public ?string $giro;
 
     /**
      * Dirección particular del receptor.
      * @var string
      */
-    public string $DirPart;
+    public ?string $dirPart;
 
     /**
      * Dirección de facturación del receptor.
      * @var string
      */
-    public string $DirFact;
+    public ?string $dirFact;
 
     /**
      * Correo electrónico particular del receptor.
      * @var string
      */
-    public string $CorreoPar;
+    public ?string $correoPar;
 
     /**
      * Correo electrónico para facturación del receptor.
      * @var string
      */
-    public string $CorreoFact;
+    public ?string $correoFact;
 
     /**
      * Ciudad del receptor.
      * @var string
      */
-    public string $Ciudad;
+    public ?string $ciudad;
 
     /**
      * Comuna del receptor.
      * @var string
      */
-    public string $Comuna;
+    public ?string $comuna;
 
     /**
      * Indica si el receptor está activo.
      * @var bool
      */
-    public bool $Activo;
+    public ?bool $activo;
 
     /**
      * Constructor para inicializar valores predeterminados.
      */
-    public function __construct()
+    public function __construct(
+        ?string $receptorId = null,
+        ?string $emisorId = null,
+        ?int $rut = null,
+        ?string $dv = null,
+        ?string $rutFormateado = null,
+        ?string $razonSocial = null,
+        ?string $nombreFantasia = null,
+        ?string $giro = null,
+        ?string $dirFact = null,
+        ?string $correoPar = null,
+        ?string $correoFact = null,
+        ?string $ciudad = null,
+        ?string $comuna = null,
+        ?bool $activo = null
+    )
     {
-        $this->ReceptorId = \Ramsey\Uuid\Uuid::uuid4()->toString(); // Requiere "ramsey/uuid"
-        $this->EmisorId = \Ramsey\Uuid\Uuid::uuid4()->toString(); // Requiere "ramsey/uuid"
-        $this->Rut = 0;
-        $this->Dv = '';
-        $this->RutFormateado = '';
-        $this->RazonSocial = '';
-        $this->NombreFantasia = '';
-        $this->Giro = '';
-        $this->DirPart = '';
-        $this->DirFact = '';
-        $this->CorreoPar = '';
-        $this->CorreoFact = '';
-        $this->Ciudad = '';
-        $this->Comuna = '';
-        $this->Activo = true;
+        $this->receptorId = $receptorId;
+        $this->emisorId = $emisorId;
+        $this->rut = $rut;
+        $this->dv = $dv;
+        $this->rutFormateado = $rutFormateado;
+        $this->razonSocial = $razonSocial;
+        $this->nombreFantasia = $nombreFantasia;
+        $this->giro = $giro;
+        $this->dirFact = $dirFact;
+        $this->correoPar = $correoPar;
+        $this->correoFact = $correoFact;
+        $this->ciudad = $ciudad;
+        $this->comuna = $comuna;
+        $this->activo = $activo;
+
     }
 }

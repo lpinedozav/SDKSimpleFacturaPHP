@@ -47,6 +47,7 @@ use SDKSimpleFactura\Models\Request\EnvioMailRequest;
 use SDKSimpleFactura\Models\Facturacion\MailClass;
 use SDKSimpleFactura\Models\Facturacion\DteClass;
 use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
+use SDKSimpleFactura\Models\Request\NuevoReceptorExternoRequest;
 
 
 
@@ -779,4 +780,78 @@ if ($response->Status === 200) {
     echo "Error ({$response->Status}): {$response->Message}\n";
     print_r($response->Errors);
 }
-//ClientesService
+
+//ClientesService agregar
+
+// Crear las credenciales
+$credenciales = new Credenciales(
+    rutEmisor: '76269769-6',
+    nombreSucursal: 'Casa Matriz'
+);
+
+// Crear la solicitud de productos
+$clientes = new NuevoReceptorExternoRequest(
+    rut :"57681892-0",
+    razonSocial :"Cliente Test 1",
+    giro :"Giro 1",
+    dirPart :"direccion 1",
+    dirFact :"direccion 1",
+    correoPar :"correo 1",
+    correoFact :"correo 1",
+    ciudad :"Ciudad 1",
+    comuna :"Comuna 1"
+);
+
+// Crear la solicitud principal
+$request = new DatoExternoRequest(
+    credenciales: $credenciales,
+    clientes: [$clientes]
+);
+
+$response = $client->Clientes->AgregarClientesAsync($request)->wait();
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+
+//Listar clientes
+$credenciales = new Credenciales(
+    rutEmisor: '76269769-6'
+);
+
+$response = $client->Clientes->ListarClientesAsync($credenciales)->wait();
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
+
+//Listar sucural
+
+$credenciales = new Credenciales(
+    rutEmisor: '76269769-6'
+);
+
+$response = $client->Sucursal->ListadoSucursalesAsync($credenciales)->wait();
+
+if ($response->Status === 200) {
+    echo 'Status: ' . $response->Status . "\n";
+    echo "Message: {$response->Message}\n";
+    echo "Datos de la Respuesta:\n";
+    print_r($response->Data);
+} else {
+    echo "Error ({$response->Status}): {$response->Message}\n";
+    print_r($response->Errors);
+}
