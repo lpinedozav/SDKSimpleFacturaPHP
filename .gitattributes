@@ -1,0 +1,8 @@
+* text=auto
+
+# Exclude certain files from export
+/composer.json export-ignore
+/phpunit.xml export-ignore
+/.gitignore export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
