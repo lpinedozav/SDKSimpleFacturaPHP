@@ -43,6 +43,7 @@
         "documento",
         "iva",
         "SII",
-        "documento tributario electrónico"
+        "documento tributario electrónico",
+        "simple factura"
     ]
 }
