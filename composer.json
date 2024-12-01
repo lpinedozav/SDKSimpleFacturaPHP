@@ -45,5 +45,10 @@
         "SII",
         "documento tributario electrónico",
         "simple factura"
-    ]
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0.x-dev"
+        }
+    }
 }
