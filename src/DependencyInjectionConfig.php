@@ -1,5 +1,4 @@
 <?php
-
 namespace SDKSimpleFactura;
 
 use DI\ContainerBuilder;
@@ -28,8 +27,20 @@ class DependencyInjectionConfig
     {
         $builder = new ContainerBuilder();
 
-        // Leer la configuración desde appsettings.json
-        $configData = json_decode(file_get_contents(__DIR__ . '/appsettings.json'), true);
+        // Buscar el archivo appsettings.json en el entorno del cliente
+        $configFilePath = self::findConfigFile();
+
+        if (!$configFilePath) {
+            throw new \Exception("No se encontró el archivo de configuración appsettings.json.");
+        }
+
+        // Leer la configuración desde el archivo encontrado
+        $configData = json_decode(file_get_contents($configFilePath), true);
+
+        if (!isset($configData['SDKSettings'])) {
+            throw new \Exception("El archivo de configuración no contiene la sección 'SDKSettings'.");
+        }
+
         $sdkSettings = $configData['SDKSettings'];
 
         // Agregar definiciones de servicios
@@ -52,10 +63,32 @@ class DependencyInjectionConfig
             IConfiguracionService::class => \DI\create(ConfiguracionService::class)
                 ->constructor(\DI\get(IApiService::class)),
             IBoletasHonorarioService::class => \DI\create(BoletasHonorariosService::class)
-                ->constructor(\DI\get(IApiService::class))
-
+                ->constructor(\DI\get(IApiService::class)),
         ]);
 
         return $builder->build();
+    }
+
+    private static function findConfigFile()
+    {
+        // Obtener el archivo desde donde se instanció el cliente
+        $backtrace = debug_backtrace();
+        $callerFile = $backtrace[0]['file']; // Archivo del primer caller
+        $callerDir = dirname($callerFile); // Directorio del caller
+    
+        // Rutas posibles
+        $possiblePaths = [
+            $callerDir . '/appsettings.json',        // En el directorio del script que instancia el cliente
+            getcwd() . '/appsettings.json',          // Directorio actual de ejecución
+            __DIR__ . '/../../data/appsettings.json' // Ubicación en el SDK
+        ];
+    
+        foreach ($possiblePaths as $path) {
+            if (file_exists($path)) {
+                return $path;
+            }
+        }
+    
+        return null; // Si no se encuentra el archivo
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Interfaces\IBoletasHonorarioService;
 use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\Credenciales;
@@ -17,7 +18,10 @@ class BoletasHonorariosServiceTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->boletasHonorarioService = $this->simpleFacturaClient->BoletasHonorario;
     }
     public function testObtenerPDFBHEEmitidaAsync_RetunsOkResult_WhenApiCallIsSuccessfully(): void

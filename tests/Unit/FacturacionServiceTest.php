@@ -15,6 +15,7 @@ use SDKSimpleFactura\Models\Facturacion\Encabezado;
 use SDKSimpleFactura\Models\Facturacion\IdentificacionDTE;
 use SDKSimpleFactura\Models\Request\RequestDTE;
 use DateTime;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Enum\ClausulaCompraVenta;
 use SDKSimpleFactura\Enum\IndicadorFacturacionExencion;
 use SDKSimpleFactura\Enum\ModalidadVenta;
@@ -56,7 +57,11 @@ class FacturacionServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->facturacionService = $this->simpleFacturaClient->Facturacion;
         $this->_folioService = $this->simpleFacturaClient->Folio;
     }

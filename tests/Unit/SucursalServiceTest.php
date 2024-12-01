@@ -2,6 +2,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Interfaces\ISucursalService;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\SimpleFacturaClient;
@@ -13,7 +14,10 @@ class SucursalServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->_sucursalService = $this->simpleFacturaClient->Sucursal;
     }
     public function testListadoSucursalesAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void

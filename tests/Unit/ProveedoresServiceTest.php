@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Enum\Ambiente;
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Enum\RejectionType;
@@ -20,7 +21,10 @@ class ProveedoresServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->proveedoresService = $this->simpleFacturaClient->Proveedores;
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Interfaces\IProductosService;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\DatoExternoRequest;
@@ -14,7 +15,10 @@ class ProductosServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->productosService = $this->simpleFacturaClient->Productos;
     }
 

@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use SDKSimpleFactura\Interfaces\IConfiguracionService;
 use SDKSimpleFactura\Models\Request\Credenciales;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\SimpleFacturaClient;
 
 class ConfiguracionServiceTest extends TestCase
@@ -15,29 +16,35 @@ class ConfiguracionServiceTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        // Configurar el contenedor de dependencias
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->configuracionService = $this->simpleFacturaClient->Configuracion;
     }
+
     public function testDatosEmpresaAsync_ReturnsOkResult_WhenApiCallIsSuccessfully(): void
     {
         $request = new Credenciales(
             rutEmisor: '76269769-6'
         );
         $response = $this->configuracionService->DatosEmpresaAsync($request)->wait();
-        $this->assertNotNull($response,'El resultado no debe ser nulo.');
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
         $this->assertEquals(200, $response->Status, 'El estado de la respuesta debe ser 200.');
-        $this->assertNotNull($response->Data,'Los datos de la empresa no deben ser nulos.');
+        $this->assertNotNull($response->Data, 'Los datos de la empresa no deben ser nulos.');
         $this->assertTrue(count($response->Errors) === 0, 'No debe haber errores.');
     }
+
     public function testDatosEmpresaAsync_ReturnsError_WhenApiCallIsFail(): void
     {
         $request = new Credenciales(
             rutEmisor: ''
         );
         $response = $this->configuracionService->DatosEmpresaAsync($request)->wait();
-        $this->assertNotNull($response,'El resultado no debe ser nulo.');
-        $this->assertEquals(500, $response->Status,'El estado de la respuesta debe ser 500.');
-        $this->assertEquals($response->Data,'Error al obtener emisor desde api');
+        $this->assertNotNull($response, 'El resultado no debe ser nulo.');
+        $this->assertEquals(500, $response->Status, 'El estado de la respuesta debe ser 500.');
+        $this->assertEquals('Error al obtener emisor desde api', $response->Data);
         $this->assertContains('Rut de emisor vacio', $response->Errors, 'Los errores deben contener el mensaje esperado.');
     }
 }

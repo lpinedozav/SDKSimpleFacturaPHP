@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Interfaces\IClientesService;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\DatoExternoRequest;
@@ -14,7 +15,10 @@ class ClientesServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->_clientesService = $this->simpleFacturaClient->Clientes;
     }
     public function testAgregarClientesAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void

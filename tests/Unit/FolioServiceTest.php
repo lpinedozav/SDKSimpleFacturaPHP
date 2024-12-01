@@ -2,6 +2,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use SDKSimpleFactura\DependencyInjectionConfig;
 use SDKSimpleFactura\Enum\Ambiente;
 use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Interfaces\IFolioService;
@@ -17,7 +18,10 @@ class FolioServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->simpleFacturaClient = new SimpleFacturaClient();
+        $container = DependencyInjectionConfig::configureServices();
+
+        // Crear una instancia de SimpleFacturaClient usando el contenedor
+        $this->simpleFacturaClient = new SimpleFacturaClient($container);
         $this->_folioService = $this->simpleFacturaClient->Folio;
     }
     public function testConsultaFoliosDisponiblesAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void

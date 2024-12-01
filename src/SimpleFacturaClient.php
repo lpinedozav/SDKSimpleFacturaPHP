@@ -21,6 +21,7 @@ class SimpleFacturaClient
     public $Folio;
     public $Configuracion;
     public $BoletasHonorario;
+
     public function __construct()
     {
         $container = DependencyInjectionConfig::configureServices();
