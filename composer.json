@@ -1,11 +1,14 @@
 {
     "name": "simplefactura/sdk",
     "description": "SDK para integrar Simple Factura",
+    "version": "1.0.0",
+    "readme": "README.md",
     "type": "library",
     "license": "MIT",
+    "homepage": "https://github.com/lpinedozav/SDKSimpleFacturaPHP.git",
     "autoload": {
         "psr-4": {
-            "SdkSimpleFactura\\": "src/"
+            "SDKSimpleFactura\\": "src/"
         }
     },
     "authors": [
@@ -19,5 +22,26 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "php-di/php-di": "^7.0",
+        "symfony/serializer": "^7.1",
+        "symfony/property-access": "*",
+        "ramsey/uuid": "^4.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.4"
+    },
+    "keywords": [
+        "dte",
+        "factura",
+        "boleta",
+        "impuestos internos",
+        "factura electrónica",
+        "boleta electrónica",
+        "documento",
+        "iva",
+        "SII",
+        "documento tributario electrónico"
+    ]
 }

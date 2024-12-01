@@ -1,13 +1,20 @@
 <?php
 
-namespace SdkSimpleFactura\Models\Request;
+namespace SDKSimpleFactura\Models\Request;
 
-class DteReferenciadoExterno {
-    public int $folio;
-    public int $codigoTipoDte;
-    public int $ambiente;
+use SDKSimpleFactura\Enum\Ambiente;
+use SDKSimpleFactura\Enum\DTEType;
 
-    public function __construct(int $folio, int $codigoTipoDte, int $ambiente) {
+class DteReferenciadoExterno
+{
+    public ?int $folio;
+    public ?DTEType $codigoTipoDte;
+    public ?Ambiente $ambiente;
+    public function __construct(
+        ?int $folio = null,
+        ?DTEType $codigoTipoDte = null,
+        ?Ambiente $ambiente = null
+    ) {
         $this->folio = $folio;
         $this->codigoTipoDte = $codigoTipoDte;
         $this->ambiente = $ambiente;
