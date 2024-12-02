@@ -71,24 +71,39 @@ class DependencyInjectionConfig
 
     private static function findConfigFile()
     {
-        // Obtener el archivo desde donde se instanció el cliente
+        // Iterar sobre el backtrace para encontrar el primer archivo fuera del SDK
         $backtrace = debug_backtrace();
-        $callerFile = $backtrace[0]['file']; // Archivo del primer caller
-        $callerDir = dirname($callerFile); // Directorio del caller
-    
+        $callerFile = null;
+        foreach ($backtrace as $trace) {
+            if (isset($trace['file']) && strpos($trace['file'], 'vendor') === false) {
+                $callerFile = $trace['file'];
+                break;
+            }
+        }
+        $callerDir = $callerFile ? dirname($callerFile) : null;
+
         // Rutas posibles
-        $possiblePaths = [
-            $callerDir . '/appsettings.json',        // En el directorio del script que instancia el cliente
-            getcwd() . '/appsettings.json',          // Directorio actual de ejecución
-            __DIR__ . '/../../data/appsettings.json' // Ubicación en el SDK
-        ];
-    
+        $possiblePaths = [];
+
+        // Verificar si $callerDir está definido
+        if ($callerDir) {
+            $possiblePaths[] = $callerDir . '/appsettings.json'; // Directorio del script que instancia el cliente
+        }
+
+        // Agregar el directorio actual de ejecución (getcwd)
+        $possiblePaths[] = getcwd() . '/appsettings.json';
+
+        // Ruta alternativa si no se encuentra
+        $possiblePaths[] = __DIR__ . '/../../../../appsettings.json';
+
+        // Intentar encontrar el archivo en las rutas posibles
         foreach ($possiblePaths as $path) {
             if (file_exists($path)) {
                 return $path;
             }
         }
-    
-        return null; // Si no se encuentra el archivo
+
+        // Si no se encuentra el archivo, lanzar una excepción con detalles de las rutas buscadas
+        throw new \Exception("No se encontró el archivo de configuración appsettings.json en las rutas buscadas: " . implode(', ', $possiblePaths));
     }
 }
