@@ -51,7 +51,7 @@ composer require simplefactura/sdk
 
 ## Configuración del SDK del archivo **appsettings.json**:
 Para usar el SDK, es necesario configurar tus credenciales y la URL base de la API en un archivo appsettings.json, Este archivo debe contener tus credenciales de acceso a la API de SimpleFactura. Aquí tienes un ejemplo de cómo configurarlo:
-```bash
+```ruby
 {
   "SDKSettings": {
     "Username": "demo@chilesystems.com",
@@ -89,7 +89,7 @@ $client = new SimpleFacturaClient();
 # Uso de los servicios
 
 El cliente proporciona propiedades que corresponden a los diferentes servicios disponibles:
-```bash
+```ruby
     Facturación: $client->Facturacion
     Productos: $client->Productos
     Proveedores: $client->Proveedores
