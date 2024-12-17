@@ -9,8 +9,7 @@ use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Response\Response;
 use SDKSimpleFactura\Models\Request\Credenciales;
-
-
+use SDKSimpleFactura\Models\Request\SolicitudDte;
 
 class ProveedoresService implements IProovedoresService
 {
@@ -64,6 +63,11 @@ class ProveedoresService implements IProovedoresService
     {
         $url = "/documentsReceived/consolidate/{$mes}/{$anio}";
         return $this->apiService->PostAsync($url, $credenciales, responseClass: 'string');
+    }
+    public function GetTrazasRecibidosAsync(SolicitudDte $request): PromiseInterface
+    {
+        $url = "/dte/trazasReceived";
+        return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\TrazasEnt');
     }
 
 

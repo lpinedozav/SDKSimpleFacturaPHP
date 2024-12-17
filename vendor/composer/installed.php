@@ -64,15 +64,6 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-        'nikic/php-parser' => array(
-            'pretty_version' => 'v5.3.1',
-            'version' => '5.3.1.0',
-            'reference' => '8eea230464783aa9671db8eea6f8c6ac5285794b',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../nikic/php-parser',
-            'aliases' => array(),
-            'dev_requirement' => true,
-        ),
         'phar-io/manifest' => array(
             'pretty_version' => '2.0.4',
             'version' => '2.0.4.0',
@@ -108,15 +99,6 @@
             'install_path' => __DIR__ . '/../php-di/php-di',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'phpunit/php-code-coverage' => array(
-            'pretty_version' => '11.0.7',
-            'version' => '11.0.7.0',
-            'reference' => 'f7f08030e8811582cc459871d28d6f5a1a4d35ca',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../phpunit/php-code-coverage',
-            'aliases' => array(),
-            'dev_requirement' => true,
         ),
         'phpunit/php-file-iterator' => array(
             'pretty_version' => '5.1.0',

@@ -31,5 +31,6 @@ interface IFacturacionService
     public function ConsolidadoVentasAsync(ListadoDteRequest $request): PromiseInterface;
 
     public function ConsolidadoEmitidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface;
+    public function GetTrazasEmitidosAsync(SolicitudDte $request) : PromiseInterface;
 
 }

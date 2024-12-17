@@ -6,6 +6,7 @@ use SDKSimpleFactura\Models\Request\AcuseReciboExternoRequest;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use GuzzleHttp\Promise\PromiseInterface;
+use SDKSimpleFactura\Models\Request\SolicitudDte;
 
 interface IProovedoresService
 {
@@ -18,4 +19,5 @@ interface IProovedoresService
 
     public function obtenerPDFAsync(ListadoDteRequest $request): PromiseInterface;
     public function conciliarRecibidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface;
+    public function GetTrazasRecibidosAsync(SolicitudDte $request) : PromiseInterface;
 }

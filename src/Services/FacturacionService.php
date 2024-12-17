@@ -141,5 +141,10 @@ class FacturacionService implements IFacturacionService
         $url = "/documentsIssued/consolidate/{$mes}/{$anio}";
         return $this->apiService->PostAsync($url, $credenciales, 'string');
     }
+    public function GetTrazasEmitidosAsync(SolicitudDte $request): PromiseInterface
+    {
+        $url = "/dte/trazasIssued";
+        return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\TrazasEnt');
+    }
 
 }

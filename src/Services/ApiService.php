@@ -48,8 +48,6 @@ class ApiService implements IApiService
             function ($response) use ($responseClass) {
                 $body = $response->getBody()->getContents();
                 $data = json_decode($body, true);
-                echo 'antesdelmapeado';
-                print_r($data);
                 if ($responseClass === 'string' || $responseClass === 'int') {
                     $mappedData = $data['data'] ?? '';
                 } elseif ($responseClass === 'int') {
@@ -63,10 +61,6 @@ class ApiService implements IApiService
                             : $this->serializer->deserialize(json_encode($data['data']), $responseClass, 'json'))
                         : $data['data'];
                 }
-
-
-                echo 'despues';
-                print_r($mappedData);
                 return new Response(
                     $data['status'],
                     $mappedData,
