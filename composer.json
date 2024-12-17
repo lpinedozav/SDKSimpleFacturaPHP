@@ -1,7 +1,7 @@
 {
     "name": "simplefactura/sdk",
     "description": "SDK para integrar Simple Factura",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "readme": "README.md",
     "type": "library",
     "license": "MIT",
