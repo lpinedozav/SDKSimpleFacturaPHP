@@ -4,6 +4,7 @@ namespace SDKSimpleFactura\Interfaces;
 
 use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
 use SDKSimpleFactura\Models\Request\FolioRequest;
+use SDKSimpleFactura\Models\Request\AnularFoliosRequest;
 use GuzzleHttp\Promise\PromiseInterface;
 
 interface IFolioService
@@ -12,4 +13,5 @@ interface IFolioService
     public function SolicitarFoliosAsync(FolioRequest $request): PromiseInterface;
     public function ConsultarFoliosAsync(FolioRequest $request): PromiseInterface;
     public function FoliosSinUsoAsync(SolicitudFoliosRequest $request): PromiseInterface;
+    public function AnularFoliosAsync(AnularFoliosRequest $request): PromiseInterface;
 }

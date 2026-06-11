@@ -9,6 +9,7 @@ use SDKSimpleFactura\Models\Request\FolioRequest;
 use SDKSimpleFactura\Models\Response\FoliosAnulablesEnt;
 use SDKSimpleFactura\Models\Response\TimbrajeApiEnt;
 use SDKSimpleFactura\Models\Request\SolicitudFoliosRequest;
+use SDKSimpleFactura\Models\Request\AnularFoliosRequest;
 
 class FolioService implements IFolioService
 {
@@ -37,5 +38,10 @@ class FolioService implements IFolioService
     {
         $url = "/folios/consultar/sin-uso";
         return $this->apiService->PostAsync($url, $request, FoliosAnulablesEnt::class);
+    }
+    public function AnularFoliosAsync(AnularFoliosRequest $request): PromiseInterface
+    {
+        $url = "/folios/anular";
+        return $this->apiService->PostAsync($url, $request, 'boolean');
     }
 }

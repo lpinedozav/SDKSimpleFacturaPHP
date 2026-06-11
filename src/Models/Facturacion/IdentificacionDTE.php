@@ -7,10 +7,13 @@ use SDKSimpleFactura\Enum\DTEType;
 use SDKSimpleFactura\Enum\FormaPago;
 use SDKSimpleFactura\Enum\FormaPagoExportacion;
 use SDKSimpleFactura\Enum\IndicadorServicio;
+use SDKSimpleFactura\Enum\IndicadorServicioBoleta;
 use SDKSimpleFactura\Enum\MedioPago;
+use SDKSimpleFactura\Enum\MedioPagoBoleta;
 use SDKSimpleFactura\Enum\TipoCuentaPago;
 use SDKSimpleFactura\Enum\TipoDespacho;
 use SDKSimpleFactura\Enum\TipoImpresion;
+use SDKSimpleFactura\Enum\TipoTransVenta;
 use SDKSimpleFactura\Enum\TipoTraslado;
 
 class IdentificacionDTE
@@ -58,16 +61,28 @@ class IdentificacionDTE
     public ?TipoImpresion $TpoImpresion;
 
     /**
-     * Indicador de servicio Enum.
+     * Indicador de servicio Enum (facturas).
      * @var IndicadorServicio
      */
     public ?IndicadorServicio $IndServicio;
+
+    /**
+     * Indicador de servicio para boletas electrónicas.
+     * @var IndicadorServicioBoleta
+     */
+    public ?IndicadorServicioBoleta $IndServicioBoleta;
 
     /**
      * Montos brutos.
      * @var int
      */
     public ?int $MntBruto;
+
+    /**
+     * Tipo de transacción de venta.
+     * @var TipoTransVenta
+     */
+    public ?TipoTransVenta $TpoTranVenta;
 
     /**
      * Forma de pago Enum.
@@ -119,10 +134,22 @@ class IdentificacionDTE
     public ?DateTime $PeriodoHasta;
 
     /**
-     * Medio de pago Enum.
+     * Medio de pago para facturas y otros DTE (Enum).
      * @var MedioPago
      */
-    public ?MedioPago $MedioPago;
+    public ?MedioPago $MedioPagoDTE;
+
+    /**
+     * Medio de pago para boletas electrónicas (Enum).
+     * @var MedioPagoBoleta
+     */
+    public ?MedioPagoBoleta $MedioPagoBoleta;
+
+    /**
+     * Medio de pago unificado (int). El backend lo convierte según el tipo de DTE.
+     * @var int
+     */
+    public ?int $MedioPago;
 
     /**
      * Tipo de cuenta de pago Enum.
@@ -180,7 +207,9 @@ class IdentificacionDTE
         ?TipoTraslado $IndTraslado = null,
         ?TipoImpresion $TpoImpresion = null,
         ?IndicadorServicio $IndServicio = null,
+        ?IndicadorServicioBoleta $IndServicioBoleta = null,
         ?int $MntBruto = null,
+        ?TipoTransVenta $TpoTranVenta = null,
         ?FormaPago $FmaPago = null,
         ?FormaPagoExportacion $FmaPagExp = null,
         ?DateTime $FchCancel = null,
@@ -189,7 +218,9 @@ class IdentificacionDTE
         ?array $MntPagos = null,
         ?DateTime $PeriodoDesde = null,
         ?DateTime $PeriodoHasta = null,
-        ?MedioPago $MedioPago = null,
+        ?MedioPago $MedioPagoDTE = null,
+        ?MedioPagoBoleta $MedioPagoBoleta = null,
+        ?int $MedioPago = null,
         ?TipoCuentaPago $TpoCtaPago = null,
         ?string $NumCtaPago = null,
         ?string $BcoPago = null,
@@ -207,7 +238,9 @@ class IdentificacionDTE
         $this->IndTraslado = $IndTraslado;
         $this->TpoImpresion = $TpoImpresion;
         $this->IndServicio = $IndServicio;
+        $this->IndServicioBoleta = $IndServicioBoleta;
         $this->MntBruto = $MntBruto;
+        $this->TpoTranVenta = $TpoTranVenta;
         $this->FmaPago = $FmaPago;
         $this->FmaPagExp = $FmaPagExp;
         $this->FchCancel = $FchCancel;
@@ -216,6 +249,8 @@ class IdentificacionDTE
         $this->MntPagos = $MntPagos;
         $this->PeriodoDesde = $PeriodoDesde;
         $this->PeriodoHasta = $PeriodoHasta;
+        $this->MedioPagoDTE = $MedioPagoDTE;
+        $this->MedioPagoBoleta = $MedioPagoBoleta;
         $this->MedioPago = $MedioPago;
         $this->TpoCtaPago = $TpoCtaPago;
         $this->NumCtaPago = $NumCtaPago;

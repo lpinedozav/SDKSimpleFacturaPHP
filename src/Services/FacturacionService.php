@@ -14,6 +14,9 @@ use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Request\EnvioMailRequest;
+use SDKSimpleFactura\Models\Request\ReenvioSiiRequest;
+use SDKSimpleFactura\Models\Request\AnularGuiaRequest;
+use SDKSimpleFactura\Models\Request\MarcarPagadoOPendienteRequest;
 
 class FacturacionService implements IFacturacionService
 {
@@ -147,4 +150,47 @@ class FacturacionService implements IFacturacionService
         return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\TrazasEnt');
     }
 
+    public function FacturacionIndividualV2DTEValidaMontosAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface
+    {
+        $url = "/invoiceV2/{$sucursal}?validaMontos=true";
+        return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
+    }
+
+    public function EmitirLiquidacionAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface
+    {
+        $url = "/liquidacion/{$sucursal}";
+        return $this->apiService->PostAsync($url, $solicitud, 'SDKSimpleFactura\Models\Response\InvoiceData');
+    }
+
+    public function ReenviarSiiAsync(ReenvioSiiRequest $request): PromiseInterface
+    {
+        $url = "/dte/reenviar-sii";
+        return $this->apiService->PostAsync($url, $request, 'boolean');
+    }
+
+    public function AnularGuiaAsync(AnularGuiaRequest $request): PromiseInterface
+    {
+        $url = "/dte/anularGuia";
+        return $this->apiService->PostAsync($url, $request, 'boolean');
+    }
+
+    public function MarcarPagadoOPendienteAsync(MarcarPagadoOPendienteRequest $request): PromiseInterface
+    {
+        $url = "/dte/marcar-pagado-pendiente";
+        return $this->apiService->PostAsync($url, $request, 'boolean');
+    }
+
+    public function PreviewDteAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface
+    {
+        $url = "/dte/preview/{$sucursal}";
+        return $this->apiService->PostForByteArrayAsync($url, $solicitud)->then(
+            function ($result) {
+                if ($result->IsSuccess) {
+                    return new Response(200, $result->Data);
+                } else {
+                    return $result;
+                }
+            }
+        );
+    }
 }

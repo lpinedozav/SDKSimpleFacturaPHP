@@ -3,6 +3,8 @@ namespace SDKSimpleFactura;
 
 use DI\ContainerBuilder;
 use SDKSimpleFactura\Interfaces\IApiService;
+use SDKSimpleFactura\Interfaces\IAuthenticationService;
+use SDKSimpleFactura\Services\AuthenticationService;
 use SDKSimpleFactura\Interfaces\IBoletasHonorarioService;
 use SDKSimpleFactura\Interfaces\IClientesService;
 use SDKSimpleFactura\Interfaces\IConfiguracionService;
@@ -20,6 +22,14 @@ use SDKSimpleFactura\Services\ConfiguracionService;
 use SDKSimpleFactura\Services\FolioService;
 use SDKSimpleFactura\Services\ProveedoresService;
 use SDKSimpleFactura\Services\SucursalService;
+use SDKSimpleFactura\Interfaces\IUsuariosService;
+use SDKSimpleFactura\Services\UsuariosService;
+use SDKSimpleFactura\Interfaces\ICesionesService;
+use SDKSimpleFactura\Services\CesionesService;
+use SDKSimpleFactura\Interfaces\IPaykuService;
+use SDKSimpleFactura\Services\PaykuService;
+use SDKSimpleFactura\Interfaces\IPartnersService;
+use SDKSimpleFactura\Services\PartnersService;
 
 class DependencyInjectionConfig
 {
@@ -46,8 +56,10 @@ class DependencyInjectionConfig
         // Agregar definiciones de servicios
         $builder->addDefinitions([
             'config' => $sdkSettings,
-            IApiService::class => \DI\create(ApiService::class)
+            IAuthenticationService::class => \DI\create(AuthenticationService::class)
                 ->constructor(\DI\get('config')),
+            IApiService::class => \DI\create(ApiService::class)
+                ->constructor(\DI\get('config'), \DI\get(IAuthenticationService::class)),
             IFacturacionService::class => \DI\autowire(FacturacionService::class)
                 ->constructor(\DI\get(IApiService::class)),
             IProductosService::class => \DI\autowire(ProductosService::class)
@@ -63,6 +75,14 @@ class DependencyInjectionConfig
             IConfiguracionService::class => \DI\create(ConfiguracionService::class)
                 ->constructor(\DI\get(IApiService::class)),
             IBoletasHonorarioService::class => \DI\create(BoletasHonorariosService::class)
+                ->constructor(\DI\get(IApiService::class)),
+            IUsuariosService::class => \DI\autowire(UsuariosService::class)
+                ->constructor(\DI\get(IApiService::class)),
+            ICesionesService::class => \DI\autowire(CesionesService::class)
+                ->constructor(\DI\get(IApiService::class)),
+            IPaykuService::class => \DI\autowire(PaykuService::class)
+                ->constructor(\DI\get(IApiService::class)),
+            IPartnersService::class => \DI\autowire(PartnersService::class)
                 ->constructor(\DI\get(IApiService::class)),
         ]);
 

@@ -10,6 +10,7 @@ use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Response\Response;
 use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
+use SDKSimpleFactura\Models\Request\ListaProveedorRequest;
 
 class ProveedoresService implements IProovedoresService
 {
@@ -70,5 +71,9 @@ class ProveedoresService implements IProovedoresService
         return $this->apiService->PostAsync($url, $request, 'SDKSimpleFactura\Models\Response\TrazasEnt');
     }
 
-
+    public function ActualizarListaProveedorAsync(ListaProveedorRequest $request): PromiseInterface
+    {
+        $url = "/proveedor/update-lista";
+        return $this->apiService->PostAsync($url, $request, 'boolean');
+    }
 }

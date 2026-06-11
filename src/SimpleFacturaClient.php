@@ -10,6 +10,10 @@ use SDKSimpleFactura\Interfaces\IFolioService;
 use SDKSimpleFactura\Interfaces\IProductosService;
 use SDKSimpleFactura\Interfaces\IProovedoresService;
 use SDKSimpleFactura\Interfaces\ISucursalService;
+use SDKSimpleFactura\Interfaces\IUsuariosService;
+use SDKSimpleFactura\Interfaces\ICesionesService;
+use SDKSimpleFactura\Interfaces\IPaykuService;
+use SDKSimpleFactura\Interfaces\IPartnersService;
 
 class SimpleFacturaClient
 {
@@ -21,6 +25,10 @@ class SimpleFacturaClient
     public $Folio;
     public $Configuracion;
     public $BoletasHonorario;
+    public $Usuarios;
+    public $Cesiones;
+    public $Payku;
+    public $Partners;
 
     public function __construct()
     {
@@ -33,5 +41,9 @@ class SimpleFacturaClient
         $this->Folio = $container->get(IFolioService::class);
         $this->Configuracion = $container->get(IConfiguracionService::class);
         $this->BoletasHonorario = $container->get(IBoletasHonorarioService::class);
+        $this->Usuarios = $container->get(IUsuariosService::class);
+        $this->Cesiones = $container->get(ICesionesService::class);
+        $this->Payku = $container->get(IPaykuService::class);
+        $this->Partners = $container->get(IPartnersService::class);
     }
 }

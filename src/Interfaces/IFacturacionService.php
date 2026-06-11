@@ -10,6 +10,9 @@ use SDKSimpleFactura\Models\Request\RequestDTE;
 use SDKSimpleFactura\Models\Request\SolicitudDte;
 use SDKSimpleFactura\Models\Request\ListadoDteRequest;
 use SDKSimpleFactura\Models\Request\EnvioMailRequest;
+use SDKSimpleFactura\Models\Request\ReenvioSiiRequest;
+use SDKSimpleFactura\Models\Request\AnularGuiaRequest;
+use SDKSimpleFactura\Models\Request\MarcarPagadoOPendienteRequest;
 
 interface IFacturacionService
 {
@@ -33,4 +36,10 @@ interface IFacturacionService
     public function ConsolidadoEmitidosAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface;
     public function GetTrazasEmitidosAsync(SolicitudDte $request) : PromiseInterface;
 
+    public function FacturacionIndividualV2DTEValidaMontosAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface;
+    public function EmitirLiquidacionAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface;
+    public function ReenviarSiiAsync(ReenvioSiiRequest $request): PromiseInterface;
+    public function AnularGuiaAsync(AnularGuiaRequest $request): PromiseInterface;
+    public function MarcarPagadoOPendienteAsync(MarcarPagadoOPendienteRequest $request): PromiseInterface;
+    public function PreviewDteAsync(string $sucursal, RequestDTE $solicitud): PromiseInterface;
 }

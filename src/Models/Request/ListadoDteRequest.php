@@ -51,6 +51,17 @@ class ListadoDteRequest
     public ?string $rutEmisor;
 
     /**
+     * @var ?string
+     */
+    public ?string $rutReceptor;
+
+    /**
+     * Filtra documentos según si han sido cedidos o no (opcional).
+     * @var ?bool
+     */
+    public ?bool $cedida;
+
+    /**
      * Constructor
      */
     public function __construct(
@@ -61,7 +72,9 @@ class ListadoDteRequest
         ?DateTime $desde = null,
         ?DateTime $hasta = null,
         ?TipoSalida $salida = null,
-        ?string $rutEmisor = null
+        ?string $rutEmisor = null,
+        ?string $rutReceptor = null,
+        ?bool $cedida = null
     )
     {
         $this->credenciales = $credenciales;
@@ -72,6 +85,8 @@ class ListadoDteRequest
         $this->hasta = $hasta;
         $this->salida = $salida;
         $this->rutEmisor = $rutEmisor;
+        $this->rutReceptor = $rutReceptor;
+        $this->cedida = $cedida;
     }
 
 }

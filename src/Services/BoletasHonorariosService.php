@@ -7,7 +7,12 @@ use SDKSimpleFactura\Interfaces\IApiService;
 use SDKSimpleFactura\Interfaces\IBoletasHonorarioService;
 use SDKSimpleFactura\Models\Request\BHERequest;
 use SDKSimpleFactura\Models\Request\ListaBHERequest;
+use SDKSimpleFactura\Models\Request\BHEmitirRequest;
+use SDKSimpleFactura\Models\Request\AnularBheRequest;
+use SDKSimpleFactura\Models\Request\BheObservacionRequest;
+use SDKSimpleFactura\Models\Request\Credenciales;
 use SDKSimpleFactura\Models\Response\BHEEnt;
+use SDKSimpleFactura\Models\Response\BheEmitidaEnt;
 use SDKSimpleFactura\Models\Response\Response;
 
 class BoletasHonorariosService implements IBoletasHonorarioService
@@ -53,5 +58,35 @@ class BoletasHonorariosService implements IBoletasHonorarioService
     {
         $url = '/bhesReceived';
         return $this->apiService->PostAsync($url, $request, BHEEnt::class);
+    }
+    public function EmitirBheAsync(BHEmitirRequest $request): PromiseInterface
+    {
+        $url = '/bhe/emitir';
+        return $this->apiService->PostAsync($url, $request, BheEmitidaEnt::class);
+    }
+    public function EmitirBheTercerosAsync(BHEmitirRequest $request): PromiseInterface
+    {
+        $url = '/bhe/terceros/emitir';
+        return $this->apiService->PostAsync($url, $request, BheEmitidaEnt::class);
+    }
+    public function AnularBheAsync(AnularBheRequest $request): PromiseInterface
+    {
+        $url = '/bhe/anular';
+        return $this->apiService->PostAsync($url, $request, 'string');
+    }
+    public function ObservarBheAsync(BheObservacionRequest $request): PromiseInterface
+    {
+        $url = '/bhe/observacion';
+        return $this->apiService->PostAsync($url, $request, 'string');
+    }
+    public function ConciliarBheEmitidasAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface
+    {
+        $url = "/bhesIssued/consolidate/{$mes}/{$anio}";
+        return $this->apiService->PostAsync($url, $credenciales, 'string');
+    }
+    public function ConciliarBheRecibidasAsync(Credenciales $credenciales, int $mes, int $anio): PromiseInterface
+    {
+        $url = "/bhesReceived/consolidate/{$mes}/{$anio}";
+        return $this->apiService->PostAsync($url, $credenciales, 'string');
     }
 }
