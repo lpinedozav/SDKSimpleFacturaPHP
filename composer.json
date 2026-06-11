@@ -1,11 +1,10 @@
 {
     "name": "simplefactura/sdk",
     "description": "SDK para integrar Simple Factura",
-    "version": "1.0.1",
     "readme": "README.md",
     "type": "library",
     "license": "MIT",
-    "homepage": "https://github.com/lpinedozav/SDKSimpleFacturaPHP.git",
+    "homepage": "https://github.com/lpinedozav/SDKSimpleFacturaPHP",
     "autoload": {
         "psr-4": {
             "SDKSimpleFactura\\": "src/"
@@ -48,7 +47,7 @@
     ],
     "extra": {
         "branch-alias": {
-            "dev-main": "1.0.x-dev"
+            "dev-main": "1.1.x-dev"
         }
     }
 }
