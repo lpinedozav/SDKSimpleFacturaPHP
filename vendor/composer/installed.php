@@ -1,12 +1,14 @@
 <?php return array(
     'root' => array(
         'name' => 'simplefactura/sdk',
-        'pretty_version' => '1.0.1',
-        'version' => '1.0.1.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'f23245099ce1d75df523a35185de3f2a9793cc02',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
-        'aliases' => array(),
+        'aliases' => array(
+            0 => '1.1.x-dev',
+        ),
         'dev' => true,
     ),
     'versions' => array(
@@ -392,12 +394,14 @@
             'dev_requirement' => true,
         ),
         'simplefactura/sdk' => array(
-            'pretty_version' => '1.0.1',
-            'version' => '1.0.1.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'f23245099ce1d75df523a35185de3f2a9793cc02',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '1.1.x-dev',
+            ),
             'dev_requirement' => false,
         ),
         'staabm/side-effects-detector' => array(
@@ -473,9 +477,9 @@
             'dev_requirement' => false,
         ),
         'symfony/property-access' => array(
-            'pretty_version' => 'v8.1.0',
-            'version' => '8.1.0.0',
-            'reference' => '9261ef060f26cc7b728f67f141ba19b98a6209a9',
+            'pretty_version' => 'v7.4.8',
+            'version' => '7.4.8.0',
+            'reference' => 'b7dad9dae8b8a47ef7ecc76c8569e7d8c7d90cfc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/property-access',
             'aliases' => array(),
