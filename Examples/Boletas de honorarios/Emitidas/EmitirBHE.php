@@ -14,7 +14,7 @@ require_once 'vendor/autoload.php';
 $client = new SimpleFacturaClient();
 
 $request = new BHEmitirRequest(
-    RutEmisor: '76269769-6',
+    RutEmisor: '78181331-1',
     Correo: 'correo@ejemplo.cl',
     Retencion: TipoRetencion::Receptor,
     FechaEmision: date('Y-m-d'),
@@ -25,7 +25,7 @@ $request = new BHEmitirRequest(
         Comuna: 'Santiago',
         Region: 13
     ),
-    Emisor: new BheEmisor(Rut: '76269769-6'),
+    Emisor: new BheEmisor(Rut: '78181331-1'),
     Detalles: [
         new BheDetalle(Nombre: 'Asesoría profesional', Valor: 100000)
     ]

@@ -11,8 +11,8 @@ $client = new SimpleFacturaClient();
 //Obtener PDF proveedor
 $request = new ListadoDteRequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6',
-        rutContribuyente: "76269769-6"
+        rutEmisor: '78181331-1',
+        rutContribuyente: "78181331-1"
     ),
     ambiente: Ambiente::Certificacion,
     folio: 2232,

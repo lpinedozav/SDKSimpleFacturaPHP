@@ -29,7 +29,7 @@ class BoletasHonorariosServiceTest extends TestCase
         // Arrange: Crear la solicitud PDF
         $request = new BHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: "Casa Matriz"
             ),
             folio: 15
@@ -51,7 +51,7 @@ class BoletasHonorariosServiceTest extends TestCase
         (
             credenciales: new Credenciales
             (
-                rutEmisor: "76269769-6"
+                rutEmisor: "78181331-1"
             ),
             //folio: 15
         );
@@ -67,7 +67,7 @@ class BoletasHonorariosServiceTest extends TestCase
         // Arrange: Crear la solicitud de lista BHE
         $request = new ListaBHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             folio: null,
@@ -90,7 +90,7 @@ class BoletasHonorariosServiceTest extends TestCase
         // Arrange: Crear la solicitud de lista BHE
         $request = new ListaBHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             folio: null
@@ -110,7 +110,7 @@ class BoletasHonorariosServiceTest extends TestCase
     {
         $request = new BHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 rutContribuyente: "26429782-6",
             ),
             folio: 2
@@ -125,7 +125,7 @@ class BoletasHonorariosServiceTest extends TestCase
     {
         $request = new BHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 rutContribuyente: "26429782-6",
             ),
             //folio: 2
@@ -144,7 +144,7 @@ class BoletasHonorariosServiceTest extends TestCase
     {
         $request = new ListaBHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             folio: null,
@@ -162,7 +162,7 @@ class BoletasHonorariosServiceTest extends TestCase
     {
         $request = new ListaBHERequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             folio: null

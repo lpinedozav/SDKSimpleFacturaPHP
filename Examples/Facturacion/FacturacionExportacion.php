@@ -45,7 +45,7 @@ $requestExp = new RequestDTE(
                 FchVenc: (new DateTime())->modify('+5 months'), // Fecha vencimiento
             ),
             Emisor: new Emisor(
-                RUTEmisor: "76269769-6",
+                RUTEmisor: "78181331-1",
                 RznSoc: "Chilesystems",
                 GiroEmis: "Desarrollo de software",
                 Telefono: ["912345678"],

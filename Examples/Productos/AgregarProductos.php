@@ -12,7 +12,7 @@ $name = bin2hex(random_bytes(3)); // Genera un string aleatorio de 6 caracteres
 
 // Crear las credenciales
 $credenciales = new Credenciales(
-    rutEmisor: '76269769-6',
+    rutEmisor: '78181331-1',
     nombreSucursal: 'Casa Matriz'
 );
 

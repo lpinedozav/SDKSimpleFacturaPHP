@@ -24,7 +24,7 @@ class ClientesServiceTest extends TestCase
     public function testAgregarClientesAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void
     {
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-6',
+            rutEmisor: '78181331-1',
             nombreSucursal: 'Casa Matriz'
         );
         $clientes = new NuevoReceptorExternoRequest(
@@ -80,7 +80,7 @@ class ClientesServiceTest extends TestCase
     public function testListarClientesAsync_ReturnsOkResult_WhenAPiCallIsSuccessfully():void
     {
         $request = new Credenciales(
-            rutEmisor: '76269769-6'
+            rutEmisor: '78181331-1'
         );
         $response = $this->_clientesService->ListarClientesAsync($request)->wait();
         $this->assertNotNull($response);

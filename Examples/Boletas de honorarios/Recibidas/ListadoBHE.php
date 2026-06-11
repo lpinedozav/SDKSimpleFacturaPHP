@@ -9,7 +9,7 @@ require_once 'vendor/autoload.php';
 $client = new SimpleFacturaClient();
 $request = new ListaBHERequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6',
+        rutEmisor: '78181331-1',
         nombreSucursal: 'Casa Matriz'
     ),
     folio: null,

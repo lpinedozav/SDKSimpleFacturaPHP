@@ -11,7 +11,7 @@ require_once 'vendor/autoload.php';
 $client = new SimpleFacturaClient();
 
 $request = new PartnerDteResumenRequest(
-    Credenciales: new Credenciales(rutEmisor: '76269769-6'),
+    Credenciales: new Credenciales(rutEmisor: '78181331-1'),
     Anio: 2024,
     Mes: 12
 );

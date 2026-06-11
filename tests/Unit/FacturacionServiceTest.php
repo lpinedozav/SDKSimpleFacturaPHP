@@ -71,7 +71,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange: Crear la solicitud PDF
         $solicitudPDF = new SolicitudDte(
             new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             new DteReferenciadoExterno(
@@ -123,7 +123,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange: Crear la solicitud para obtener el timbre
         $solicitudTimbre = new SolicitudDte(
             new Credenciales(
-                rutEmisor: '76269769-6'
+                rutEmisor: '78181331-1'
             ),
             new DteReferenciadoExterno(
                 folio: 4117,
@@ -171,7 +171,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange: Crear la solicitud para obtener el XML del DTE
         $solicitudXml = new SolicitudDte(
             new Credenciales(
-                rutEmisor: '76269769-6'
+                rutEmisor: '78181331-1'
             ),
             new DteReferenciadoExterno(
                 folio: 12553,
@@ -221,7 +221,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange: Crear la solicitud para obtener el sobre XML
         $solicitudXmlSobre = new SolicitudDte(
             new Credenciales(
-                rutEmisor: '76269769-6'
+                rutEmisor: '78181331-1'
             ),
             new DteReferenciadoExterno(
                 folio: 2393,
@@ -268,7 +268,7 @@ class FacturacionServiceTest extends TestCase
     {
         $solicitudDte = new SolicitudDte(
             new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             new DteReferenciadoExterno(
@@ -299,7 +299,7 @@ class FacturacionServiceTest extends TestCase
     {
         $request = new SolicitudDte(
             new Credenciales(
-                rutEmisor: '76269769-2',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             new DteReferenciadoExterno(
@@ -315,7 +315,7 @@ class FacturacionServiceTest extends TestCase
         $this->assertEquals(400, $response->Status, 'El estado de la respuesta debe ser 400.');
         $this->assertEquals("Error interno", $response->Message, 'El mensaje debe indicar que el DTE no fue encontrado.');
         $this->assertNotNull($response->Errors, 'Los errores no deben ser nulos.');
-        $this->assertContains('Rut de emisor 76269769-2 no valido', $response->Errors, 'Los errores deben contener el mensaje "Rut de emisor 76269769-2 no valido".');
+        $this->assertContains('Rut de emisor 78181331-2 no valido', $response->Errors, 'Los errores deben contener el mensaje "Rut de emisor 78181331-2 no valido".');
     }
 
     public function testFacturacionIndividualV2DTEAsync_ReturnsOkResult_WhenInvoiceIsGeneratedSuccessfully()
@@ -332,8 +332,8 @@ class FacturacionServiceTest extends TestCase
                         FchVenc: (new DateTime())->modify('+6 months')
                     ),
                     Emisor: new Emisor(
-                        RUTEmisor: '76269769-6',
-                        RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                        RUTEmisor: '78181331-1',
+                        RznSoc: 'CHILESYSTEMS SPA',
                         GiroEmis: 'Desarrollo de software',
                         Telefono: ['912345678'],
                         CorreoEmisor: 'mvega@chilesystems.com',
@@ -384,7 +384,7 @@ class FacturacionServiceTest extends TestCase
         $this->assertNotNull($response);
         $this->assertEquals(200, $response->Status);
         $this->assertInstanceOf(InvoiceData::class, $response->Data);
-        $this->assertEquals('76269769-6', $response->Data->rutEmisor);
+        $this->assertEquals('78181331-1', $response->Data->rutEmisor);
         $this->assertEquals('17096073-4', $response->Data->rutReceptor);
         $this->assertNotNull($response->Message);
     }
@@ -402,8 +402,8 @@ class FacturacionServiceTest extends TestCase
                         FchVenc: (new DateTime())->modify('+6 months')
                     ),
                     Emisor: new Emisor(
-                        RUTEmisor: '76269769-6',
-                        RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                        RUTEmisor: '78181331-1',
+                        RznSoc: 'CHILESYSTEMS SPA',
                         GiroEmis: 'Desarrollo de software',
                         Telefono: ['912345678'],
                         CorreoEmisor: 'mvega@chilesystems.com',
@@ -488,8 +488,8 @@ class FacturacionServiceTest extends TestCase
                                     Folio: $folio
                                 ),
                                 Emisor: new Emisor(
-                                    RUTEmisor:'76269769-6',
-                                    RznSoc: 'Chilesystems',
+                                   RUTEmisor: '78181331-1',
+                                    RznSoc: 'CHILESYSTEMS SPA',
                                     GiroEmis: 'Desarrollo de software',
                                     Telefono: ['912345678'],
                                     CorreoEmisor: 'mvega@chilesystems.com',
@@ -584,7 +584,7 @@ class FacturacionServiceTest extends TestCase
                     $this->assertNotNull($result);
                     $this->assertEquals(200, $result->Status);
                     $this->assertInstanceOf(InvoiceData::class, $result->Data);
-                    $this->assertEquals('76269769-6', $result->Data->rutEmisor);
+                    $this->assertEquals('78181331-1', $result->Data->rutEmisor);
                     $this->assertEquals('55555555-5', $result->Data->rutReceptor);
                     $this->assertNotNull($result->Message);
 
@@ -617,8 +617,8 @@ class FacturacionServiceTest extends TestCase
                         FchVenc: (new DateTime())->modify('+5 months')
                     ),
                     Emisor: new Emisor(
-                        //RUTEmisor:'76269769-6',
-                        RznSoc: 'Chilesystems',
+                        //RUTEmisor: '78181331-1',
+                        RznSoc: 'CHILESYSTEMS SPA',
                         GiroEmis: 'Desarrollo de software',
                         Telefono: ['912345678'],
                         CorreoEmisor: 'mvega@chilesystems.com',
@@ -722,7 +722,7 @@ class FacturacionServiceTest extends TestCase
     {
         // Arrange
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-6',
+            rutEmisor: '78181331-1',
             nombreSucursal: 'Casa Matriz'
         );
 
@@ -744,7 +744,7 @@ class FacturacionServiceTest extends TestCase
     {
         // Arrange
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-6',
+            rutEmisor: '78181331-1',
             nombreSucursal: 'Casa Matriz'
         );
 
@@ -790,8 +790,8 @@ class FacturacionServiceTest extends TestCase
                                     Folio: $folio
                                 ),
                                 Emisor: new Emisor(
-                                    RUTEmisor: '76269769-6',
-                                    RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                                    RUTEmisor: '78181331-1',
+                                    RznSoc: 'CHILESYSTEMS SPA',
                                     GiroEmis: 'Desarrollo de software',
                                     Telefono: ['912345678'],
                                     CorreoEmisor: 'felipe.anzola@erke.cl',
@@ -855,7 +855,7 @@ class FacturacionServiceTest extends TestCase
                     $this->assertNotNull($result, 'El resultado no debe ser nulo.');
                     $this->assertEquals(200, $result->Status, 'El estado de la respuesta debe ser 200.');
                     $this->assertInstanceOf(InvoiceData::class, $result->Data, 'Los datos deben ser una instancia de InvoiceData.');
-                    $this->assertEquals('76269769-6', $result->Data->rutEmisor, 'El RUT del emisor debe ser "76269769-6".');
+                    $this->assertEquals('78181331-1', $result->Data->rutEmisor, 'El RUT del emisor debe ser "78181331-1".');
                     $this->assertEquals('77225200-5', $result->Data->rutReceptor, 'El RUT del receptor debe ser "77225200-5".');
                     $this->assertNotNull($result->Message, 'El mensaje no debe ser nulo.');
                     $this->assertNull($result->Errors, 'Los errores deben ser nulos.');
@@ -890,8 +890,8 @@ class FacturacionServiceTest extends TestCase
                         FchVenc: (new DateTime())->modify('+6 months')
                     ),
                     Emisor: new Emisor(
-                        RUTEmisor: '76269769-6',
-                        RznSoc: 'SERVICIOS INFORMATICOS CHILESYSTEMS EIRL',
+                        RUTEmisor: '78181331-1',
+                        RznSoc: 'CHILESYSTEMS SPA',
                         GiroEmis: 'Desarrollo de software',
                         Telefono: ['912345678'],
                         CorreoEmisor: 'felipe.anzola@erke.cl',
@@ -966,7 +966,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 rutContribuyente: '10422710-4',
                 nombreSucursal: 'Casa Matriz'
             ),
@@ -991,7 +991,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-2',
+                rutEmisor: '78181331-1',
                 rutContribuyente: '10422710-4',
                 nombreSucursal: 'Casa Matriz'
             ),
@@ -1015,7 +1015,7 @@ class FacturacionServiceTest extends TestCase
     {
         // Arrange
         $request = new EnvioMailRequest(
-            rutEmpresa: "76269769-6",
+            rutEmpresa: "78181331-1",
             dte: new DteClass(
                 folio: 2149,
                 tipoDte: 33
@@ -1043,7 +1043,7 @@ class FacturacionServiceTest extends TestCase
     {
         // Arrange
         $request = new EnvioMailRequest(
-            rutEmpresa: "76269769-5",
+            rutEmpresa: "78181331-1",
             dte: new DteClass(
                 folio: 2149,
                 tipoDte: 33
@@ -1072,7 +1072,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6'
+                rutEmisor: '78181331-1'
             ),
             ambiente: Ambiente::Certificacion,
             desde: new DateTime("2023-10-25"), // Fecha desde
@@ -1094,7 +1094,7 @@ class FacturacionServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-9'
+                rutEmisor: '78181331-2'
             ),
             ambiente: Ambiente::Certificacion,
             desde: new DateTime("2023-10-25"), // Fecha desde
@@ -1116,7 +1116,7 @@ class FacturacionServiceTest extends TestCase
     {
         // Arrange
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-6'
+            rutEmisor: '78181331-1'
         );
 
         $mes = 5;
@@ -1136,7 +1136,7 @@ class FacturacionServiceTest extends TestCase
     {
         // Arrange
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-9'
+            rutEmisor: '78181331-9'
         );
 
         $mes = 5;
@@ -1155,7 +1155,7 @@ class FacturacionServiceTest extends TestCase
     {
         $request = new FolioRequest(
             new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: 'Casa Matriz'
             ),
             $cantidad,

@@ -28,8 +28,8 @@ $request = new RequestDTE(
                 FchVenc: (new DateTime())->modify('+6 months')
             ),
             Emisor: new Emisor(
-                RUTEmisor: "76269769-6",
-                RznSoc: "SERVICIOS INFORMATICOS CHILESYSTEMS EIRL",
+                RUTEmisor: "78181331-1",
+                RznSoc: "CHILESYSTEMS SPA",
                 GiroEmis: "Desarrollo de software",
                 Telefono: ["912345678"],
                 CorreoEmisor: "felipe.anzola@erke.cl",

@@ -27,7 +27,7 @@ class FolioServiceTest extends TestCase
     public function testConsultaFoliosDisponiblesAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void
     {
         $request = new SolicitudFoliosRequest(
-            rutEmpresa: '76269769-6',
+            rutEmpresa: '78181331-1',
             tipoDTE: 33,
             ambiente: 0
         );
@@ -35,13 +35,13 @@ class FolioServiceTest extends TestCase
         $response = $this->_folioService->ConsultaFoliosDisponiblesAsync($request)->wait();
         $this->assertNotNull($response);
         $this->assertEquals(200, $response->Status);
-        $this->assertEquals("El rut 76269769-6 tiene " . $response->Data . " folios disponibles del tipo 33", $response->Message);
+        $this->assertEquals("El rut 78181331-1 tiene " . $response->Data . " folios disponibles del tipo 33", $response->Message);
         $this->assertTrue(count($response->Errors) === 0, 'No debe haber errores.');
     }
     public function testConsultaFoliosDisponiblesAsync_ReturnsError_WhenApiCallIsFail():void
     {
         $request = new SolicitudFoliosRequest(
-            rutEmpresa: '76269769-6',
+            rutEmpresa: '78181331-1',
             ambiente: 0
         );
         $response = $this->_folioService->ConsultaFoliosDisponiblesAsync($request)->wait();
@@ -66,7 +66,7 @@ class FolioServiceTest extends TestCase
             try {
                 $request = new FolioRequest(
                     credenciales: new Credenciales(
-                        rutEmisor: '76269769-6',
+                        rutEmisor: '78181331-1',
                         nombreSucursal: "Casa Matriz"
                     ),
                     cantidad: 1,
@@ -93,7 +93,7 @@ class FolioServiceTest extends TestCase
     {
         $request = new FolioRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: "Casa Matriz"
             ),
             cantidad: 1,
@@ -109,7 +109,7 @@ class FolioServiceTest extends TestCase
     {
         $request = new FolioRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 nombreSucursal: "Casa Matriz"
             ),
             ambiente: Ambiente::Certificacion,
@@ -141,7 +141,7 @@ class FolioServiceTest extends TestCase
     public function testFoliosSinUsoAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void
     {
         $request = new SolicitudFoliosRequest(
-            rutEmpresa: '76269769-6',
+            rutEmpresa: '78181331-1',
             tipoDTE: 33,
             ambiente: 0
         );
@@ -155,7 +155,7 @@ class FolioServiceTest extends TestCase
     public function testFoliosSinUsoAsync_ReturnsError_WhenApiCallIsFail():void
     {
         $request = new SolicitudFoliosRequest(
-            rutEmpresa: '76269769-6',
+            rutEmpresa: '78181331-1',
             ambiente: 0
         );
         $response = $this->_folioService->FoliosSinUsoAsync($request)->wait();

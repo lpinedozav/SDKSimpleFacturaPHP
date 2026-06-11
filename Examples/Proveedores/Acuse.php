@@ -15,7 +15,7 @@ $client = new SimpleFacturaClient();
 //Acuse Recibo
 $request = new AcuseReciboExternoRequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6',
+        rutEmisor: '78181331-1',
         rutContribuyente: "76372100-0",
         nombreSucursal: 'Casa Matriz'
     ),

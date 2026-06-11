@@ -10,7 +10,7 @@ require_once 'vendor/autoload.php';
 $client = new SimpleFacturaClient();
 $request = new ListadoDteRequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6'
+        rutEmisor: '78181331-1'
     ),
     ambiente: Ambiente::Certificacion,
     desde: new DateTime("2023-10-25"), // Fecha desde

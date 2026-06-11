@@ -27,7 +27,7 @@ class ConfiguracionServiceTest extends TestCase
     public function testDatosEmpresaAsync_ReturnsOkResult_WhenApiCallIsSuccessfully(): void
     {
         $request = new Credenciales(
-            rutEmisor: '76269769-6'
+            rutEmisor: '78181331-1'
         );
         $response = $this->configuracionService->DatosEmpresaAsync($request)->wait();
         $this->assertNotNull($response, 'El resultado no debe ser nulo.');

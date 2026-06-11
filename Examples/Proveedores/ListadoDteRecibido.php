@@ -12,7 +12,7 @@ $client = new SimpleFacturaClient();
 //Listado DTE Recibidos
 $request = new ListadoDteRequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6'
+        rutEmisor: '78181331-1'
     ),
     ambiente: Ambiente::Produccion,
     folio: null,

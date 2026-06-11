@@ -13,7 +13,7 @@ $client = new SimpleFacturaClient();
 
 // Crear una instancia de SolicitudDte con los datos necesarios
 $credenciales = new Credenciales(
-    rutEmisor: '76269769-6',
+    rutEmisor: '78181331-1',
     nombreSucursal: 'Casa Matriz'
 );
 

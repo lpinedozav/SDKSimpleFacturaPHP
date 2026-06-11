@@ -61,7 +61,7 @@ class ProveedoresServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6'
+                rutEmisor: '78181331-1'
             ),
             ambiente: Ambiente::Produccion,
             folio: null,
@@ -110,7 +110,7 @@ class ProveedoresServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
+                rutEmisor: '78181331-1',
                 rutContribuyente: '96689310-9'
             ),
             ambiente: Ambiente::Produccion,
@@ -156,8 +156,8 @@ class ProveedoresServiceTest extends TestCase
         // Arrange
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
-                rutEmisor: '76269769-6',
-                rutContribuyente: '76269769-6'
+                rutEmisor: '78181331-1',
+                rutContribuyente: '78181331-1'
             ),
             ambiente: Ambiente::Certificacion,
             folio: 2232,
@@ -180,7 +180,7 @@ class ProveedoresServiceTest extends TestCase
         $request = new ListadoDteRequest(
             credenciales: new Credenciales(
                 rutEmisor: '', // Valor inválido para provocar un error
-                rutContribuyente: '76269769-6'
+                rutContribuyente: '78181331-1'
             ),
             ambiente: Ambiente::Certificacion,
             folio: 2232,
@@ -201,7 +201,7 @@ class ProveedoresServiceTest extends TestCase
     {
         // Arrange
         $credenciales = new Credenciales(
-            rutEmisor: "76269769-6"
+            rutEmisor: "78181331-1"
         );
 
         $mes = 5;

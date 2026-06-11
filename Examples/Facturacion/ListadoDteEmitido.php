@@ -11,7 +11,7 @@ require_once 'vendor/autoload.php';
 $client = new SimpleFacturaClient();
 $request = new ListadoDteRequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6',
+        rutEmisor: '78181331-1',
         rutContribuyente: "10422710-4",
         nombreSucursal: 'Casa Matriz'
     ),

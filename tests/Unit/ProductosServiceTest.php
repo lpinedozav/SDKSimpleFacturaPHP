@@ -29,7 +29,7 @@ class ProductosServiceTest extends TestCase
 
         // Crear las credenciales
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-6',
+            rutEmisor: '78181331-1',
             nombreSucursal: 'Casa Matriz'
         );
 
@@ -64,7 +64,7 @@ class ProductosServiceTest extends TestCase
     {
            // Crear las credenciales
         $credenciales = new Credenciales(
-            rutEmisor: '76269769-6',
+            rutEmisor: '78181331-1',
             nombreSucursal: 'Casa Matriz'
         );
 
@@ -97,7 +97,7 @@ class ProductosServiceTest extends TestCase
     {
         // Arrange
         $request = new Credenciales(
-            rutEmisor: "76269769-6",
+            rutEmisor: "78181331-1",
             nombreSucursal: "Casa Matriz"
         );
 

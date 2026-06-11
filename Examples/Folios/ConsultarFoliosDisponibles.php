@@ -9,7 +9,7 @@ require_once 'vendor/autoload.php';
 
 $client = new SimpleFacturaClient();
 $request = new SolicitudFoliosRequest(
-    rutEmpresa: '76269769-6',
+    rutEmpresa: '78181331-1',
     tipoDTE: 33,
     ambiente: 0
 );

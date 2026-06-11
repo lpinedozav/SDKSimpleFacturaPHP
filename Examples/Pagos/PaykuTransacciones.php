@@ -11,7 +11,7 @@ require_once 'vendor/autoload.php';
 $client = new SimpleFacturaClient();
 
 $request = new PaykuTransaccionesRequest(
-    Credenciales: new Credenciales(rutEmisor: '76269769-6'),
+    Credenciales: new Credenciales(rutEmisor: '78181331-1'),
     Desde: new DateTime('2024-01-01'),
     Hasta: new DateTime('2024-12-31')
 );

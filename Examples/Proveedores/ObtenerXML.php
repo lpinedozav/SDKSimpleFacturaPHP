@@ -12,7 +12,7 @@ $client = new SimpleFacturaClient();
 //Obtener xml proveedor
 $request = new ListadoDteRequest(
     credenciales: new Credenciales(
-        rutEmisor: '76269769-6',
+        rutEmisor: '78181331-1',
         rutContribuyente: "96689310-9"
     ),
     ambiente: Ambiente::Produccion,

@@ -23,7 +23,7 @@ class SucursalServiceTest extends TestCase
     public function testListadoSucursalesAsync_ReturnsOkResult_WhenApiCallIsSuccessfully():void
     {
         $request = new Credenciales(
-            rutEmisor: '76269769-6',
+            rutEmisor: '78181331-1',
         );
         $response = $this->_sucursalService->ListadoSucursalesAsync($request)->wait();
         $this->assertNotNull($response);

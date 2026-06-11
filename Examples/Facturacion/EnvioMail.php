@@ -9,7 +9,7 @@ require_once 'vendor/autoload.php';
 
 $client = new SimpleFacturaClient();
 $request = new EnvioMailRequest(
-    rutEmpresa: "76269769-6",
+    rutEmpresa: "78181331-1",
     dte: new DteClass(
         folio: 2149,
         tipoDte: 33
