@@ -23,13 +23,11 @@ use PHPUnit\Framework\MockObject\Rule\InvocationOrder;
  */
 trait MockObjectApi
 {
-    /** @noinspection MagicMethodsValidityInspection */
     public function __phpunit_hasMatchers(): bool
     {
         return $this->__phpunit_getInvocationHandler()->hasMatchers();
     }
 
-    /** @noinspection MagicMethodsValidityInspection */
     public function __phpunit_verify(bool $unsetInvocationMocker = true): void
     {
         $this->__phpunit_getInvocationHandler()->verify();
@@ -65,7 +63,7 @@ trait MockObjectApi
                 }
                 // @codeCoverageIgnoreStart
             } catch (NoTestCaseObjectOnCallStackException) {
-                EventFacade::emitter()->testRunnerTriggeredDeprecation($message);
+                EventFacade::emitter()->testRunnerTriggeredPhpunitDeprecation($message);
                 // @codeCoverageIgnoreEnd
             }
         }

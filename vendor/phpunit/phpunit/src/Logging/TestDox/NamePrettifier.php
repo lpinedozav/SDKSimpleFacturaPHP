@@ -57,7 +57,7 @@ final class NamePrettifier
     /**
      * @var array<string, int>
      */
-    private static array $strings = [];
+    private array $strings = [];
 
     /**
      * @param class-string $className
@@ -118,10 +118,10 @@ final class NamePrettifier
 
         $string = rtrim($name, '0123456789');
 
-        if (array_key_exists($string, self::$strings)) {
+        if (array_key_exists($string, $this->strings)) {
             $name = $string;
         } elseif ($string === $name) {
-            self::$strings[$string] = 1;
+            $this->strings[$string] = 1;
         }
 
         if (str_starts_with($name, 'test_')) {
@@ -167,7 +167,7 @@ final class NamePrettifier
             }
         }
 
-        return $buffer;
+        return trim($buffer);
     }
 
     public function prettifyTestCase(TestCase $test, bool $colorize): string
@@ -246,21 +246,7 @@ final class NamePrettifier
             $value = $providedDataValues[$i++] ?? null;
 
             if (is_object($value)) {
-                $reflector = new ReflectionObject($value);
-
-                if ($reflector->isEnum()) {
-                    $enumReflector = new ReflectionEnum($value);
-
-                    if ($enumReflector->isBacked()) {
-                        $value = $value->value;
-                    } else {
-                        $value = $value->name;
-                    }
-                } elseif ($reflector->hasMethod('__toString')) {
-                    $value = (string) $value;
-                } else {
-                    $value = $value::class;
-                }
+                $value = $this->objectToString($value);
             }
 
             if (!is_scalar($value)) {
@@ -294,5 +280,29 @@ final class NamePrettifier
         }
 
         return $providedData;
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    private function objectToString(object $value): string
+    {
+        $reflector = new ReflectionObject($value);
+
+        if ($reflector->isEnum()) {
+            $enumReflector = new ReflectionEnum($value);
+
+            if ($enumReflector->isBacked()) {
+                return (string) $value->value;
+            }
+
+            return $value->name;
+        }
+
+        if ($reflector->hasMethod('__toString')) {
+            return $value->__toString();
+        }
+
+        return $value::class;
     }
 }

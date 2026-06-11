@@ -44,8 +44,7 @@ final readonly class IssueFilter
                 return false;
             }
 
-            if ($this->source->ignoreSelfDeprecations() &&
-                ($event->trigger()->isTest() || $event->trigger()->isSelf())) {
+            if ($this->source->ignoreSelfDeprecations() && $event->trigger()->isSelf()) {
                 return false;
             }
 
@@ -61,7 +60,7 @@ final readonly class IssueFilter
                 return false;
             }
 
-            if ($this->source->restrictDeprecations() && !(new SourceFilter)->includes($this->source, $event->file())) {
+            if ($this->source->restrictDeprecations() && !SourceFilter::instance()->includes($event->file())) {
                 return false;
             }
         }
@@ -71,7 +70,7 @@ final readonly class IssueFilter
                 return false;
             }
 
-            if ($this->source->restrictNotices() && !(new SourceFilter)->includes($this->source, $event->file())) {
+            if ($this->source->restrictNotices() && !SourceFilter::instance()->includes($event->file())) {
                 return false;
             }
         }
@@ -81,7 +80,7 @@ final readonly class IssueFilter
                 return false;
             }
 
-            if ($this->source->restrictNotices() && !(new SourceFilter)->includes($this->source, $event->file())) {
+            if ($this->source->restrictNotices() && !SourceFilter::instance()->includes($event->file())) {
                 return false;
             }
         }
@@ -91,7 +90,7 @@ final readonly class IssueFilter
                 return false;
             }
 
-            if ($this->source->restrictWarnings() && !(new SourceFilter)->includes($this->source, $event->file())) {
+            if ($this->source->restrictWarnings() && !SourceFilter::instance()->includes($event->file())) {
                 return false;
             }
         }
@@ -101,7 +100,7 @@ final readonly class IssueFilter
                 return false;
             }
 
-            if ($this->source->restrictWarnings() && !(new SourceFilter)->includes($this->source, $event->file())) {
+            if ($this->source->restrictWarnings() && !SourceFilter::instance()->includes($event->file())) {
                 return false;
             }
         }
